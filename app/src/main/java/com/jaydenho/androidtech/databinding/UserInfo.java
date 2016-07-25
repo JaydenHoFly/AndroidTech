@@ -4,22 +4,20 @@ package com.jaydenho.androidtech.databinding;
  * Created by hedazhao on 2016/7/22.
  */
 public class UserInfo {
-    private String name;
-    private int age;
+    private final String name;
+    private final int age;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public UserInfo(String name, int age) {
         this.name = name;
+        this.age = age;
     }
 
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public String getName() {
+        return name;
     }
+
 }

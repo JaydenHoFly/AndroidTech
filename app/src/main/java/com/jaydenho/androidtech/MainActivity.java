@@ -10,7 +10,7 @@ import com.jaydenho.androidtech.databinding.DataBindingAty;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView mDataBinding = null;
+    private TextView mDataBindingBtn = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
-        mDataBinding = (TextView) findViewById(R.id.btn_data_binding);
-        mDataBinding.setOnClickListener(this);
+        mDataBindingBtn = (TextView) findViewById(R.id.btn_data_binding);
+        mDataBindingBtn.setOnClickListener(this);
     }
 
     @Override
