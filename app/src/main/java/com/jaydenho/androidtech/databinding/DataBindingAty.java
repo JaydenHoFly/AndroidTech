@@ -13,9 +13,6 @@ import com.jaydenho.androidtech.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by hedazhao on 2016/7/22.
- */
 public class DataBindingAty extends AppCompatActivity {
 
     private static final String TAG = DataBindingAty.class.getSimpleName();
@@ -43,7 +40,7 @@ public class DataBindingAty extends AppCompatActivity {
         mUser = new UserInfo("jayden", 22);
         mBinding.setUser(mUser);
 
-        mNames = new ArrayList<>();
+        mNames = new ArrayList<String>();
         mNames.add("lanlan");
         mNames.add("dada");
         mBinding.setNames(mNames);
