@@ -3,11 +3,21 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import
             alias="UserInfo"
             type="com.jaydenho.androidtech.databinding.UserInfo" />
 
         <import type="java.util.List" />
+
+        <import
+            alias="MyMap"
+            type="java.util.Map" />
+
+        <import type="android.view.View.OnClickListener" />
+
+        <import type="com.jaydenho.androidtech.databinding.DataBindingAty" />
 
         <variable
             name="user"
@@ -20,6 +30,22 @@
         <variable
             name="namesIndex"
             type="int" />
+
+        <variable
+            name="map"
+            type="MyMap&lt;String,Integer&gt;" />
+
+        <variable
+            name="mapIndex"
+            type="String" />
+
+        <variable
+            name="onClickListener"
+            type="OnClickListener" />
+
+        <variable
+            name="dataBindingAty"
+            type="DataBindingAty" />
     </data>
 
     <LinearLayout
@@ -32,19 +58,46 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <TextView
+            style="@style/JTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{user.name}" />
 
         <TextView
+            android:id="@+id/click01"
+            style="@style/JTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{names[0]}" />
+            android:onClick="@{(view)-> onClickListener.onClick(view)}"
+            android:text="click01" />
 
         <TextView
+            android:id="@+id/click02"
+            style="@style/JTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()-> dataBindingAty.onClickMethod(user)}"
+            android:text="click02" />
+
+        <TextView
+            android:id="@+id/click03"
+            style="@style/JTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="click03"
+            android:visibility="@{user == null ? View.GONE : View.VISIBLE}" />
+
+        <TextView
+            style="@style/JTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{names[namesIndex]}" />
+
+        <TextView
+            style="@style/JTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(map[&quot;mapIndex&quot;])}" />
 
     </LinearLayout>
 </layout>

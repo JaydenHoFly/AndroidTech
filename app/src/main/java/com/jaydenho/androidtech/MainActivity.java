@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,9 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jaydenho.androidtech.databinding.DataBindingAty;
+import com.jaydenho.androidtech.test.TestAty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public interface DashboardIds {
         int DATA_BINDING = 1;
+        int TEST = 2;
     }
 
     @Override
@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDashboardInfos = new ArrayList<>();
         DashboardInfo dataBinding = new DashboardInfo(DashboardIds.DATA_BINDING, "DataBinding");
         mDashboardInfos.add(dataBinding);
+        DashboardInfo test = new DashboardInfo(DashboardIds.TEST, "Test");
+        mDashboardInfos.add(test);
         mDashboardAdapter = new DashboardAdapter();
     }
 
@@ -60,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (mDashboardInfos.get(i).getId()) {
                     case DashboardIds.DATA_BINDING:
                         startActivity(new Intent(mContext, DataBindingAty.class));
+                        break;
+                    case DashboardIds.TEST:
+                        startActivity(new Intent(mContext, TestAty.class));
                         break;
                 }
             }

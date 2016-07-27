@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".databinding.DataBindingAty" />
+        <activity android:name=".test.TestAty" />
     </application>
 
 </manifest>
