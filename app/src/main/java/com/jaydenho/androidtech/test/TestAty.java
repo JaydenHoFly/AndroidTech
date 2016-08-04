@@ -32,5 +32,5 @@ public class TestAty extends AppCompatActivity {
         list.remove(list.indexOf(2));
         Log.d(TAG, Arrays.toString(list.toArray()));
     } 
-	 //asdfsasafsf
+	 //asdfsasafsfasdfa
 }
