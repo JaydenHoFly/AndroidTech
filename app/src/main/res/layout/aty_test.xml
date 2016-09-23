@@ -15,4 +15,10 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/home_ad_close_btn_press" />
 
+    <ImageView
+        android:id="@+id/test_image_loader_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/home_ad_close_btn_press" />
+
 </LinearLayout>

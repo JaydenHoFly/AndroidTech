@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="jtext" format="string" />
+    <attr name="j_text" format="string" />
+    <attr name="j_radius" format="dimension" />
+    <attr name="j_color" format="color" />
+
+    <declare-styleable name="CustomView">
+        <attr name="jtext" />
+        <attr name="j_text" />
+    </declare-styleable>
+
+    <declare-styleable name="LoveView">
+        <attr name="j_radius" />
+        <attr name="j_color" />
+    </declare-styleable>
+</resources>

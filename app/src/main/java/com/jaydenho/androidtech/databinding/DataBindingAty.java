@@ -1,17 +1,27 @@
 package com.jaydenho.androidtech.databinding;
 
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableField;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jaydenho.androidtech.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +33,7 @@ public class DataBindingAty extends AppCompatActivity {
     private static final String TAG = DataBindingAty.class.getSimpleName();
     private com.jaydenho.androidtech.databinding.AtyDataBindingBinding mBinding = null;
     private UserInfo mUser = null;
-    private List<String> mNames = null;
+    private final ObservableArrayList<Integer> mNames = new ObservableArrayList<>();
     private int namesIndex;
     private Handler mHandler = new Handler() {
         @Override
@@ -36,7 +46,7 @@ public class DataBindingAty extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.aty_data_binding);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.aty_data_binding, new CustomSetterComponent());
         initData();
     }
 
@@ -51,9 +61,8 @@ public class DataBindingAty extends AppCompatActivity {
         });
         mBinding.setUser(mUser);
 
-        mNames = new ArrayList<String>();
-        mNames.add("lanlan");
-        mNames.add("dada");
+        mNames.add(1);
+        mNames.add(2);
         mBinding.setNames(mNames);
 
         namesIndex = 0;
@@ -61,11 +70,31 @@ public class DataBindingAty extends AppCompatActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mNames.set(1, "adad");
-                namesIndex = 1;
+                namesIndex = 10;
                 mBinding.setNamesIndex(namesIndex);
+                mUser.score.set(80f);
+                mUser.setName("candice");
+                mNames.set(0, 3);
+                mNames.add(0,4);
             }
         }, 2000);
+
+        HandlerThread ht = new HandlerThread("thread");
+        ht.start();
+        Handler handler = new Handler(ht.getLooper()){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+            }
+        };
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mUser.setName("leo");
+                mNames.set(0,5);
+            }
+        },3000);
 
         Map<String, Integer> map = new HashMap<>();
         map.put("jayden", 22);
@@ -85,6 +114,9 @@ public class DataBindingAty extends AppCompatActivity {
         };
         mBinding.setOnClickListener(l);
         mBinding.setDataBindingAty(this);
+
+        mUser.score.set(90f);
+
     }
 
     public void onClickMethod(UserInfo user) {
