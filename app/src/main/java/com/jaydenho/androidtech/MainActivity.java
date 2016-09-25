@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.test.TestAty;
 import com.jaydenho.androidtech.view.anim.AttrAty;
+import com.jaydenho.androidtech.view.anim.ShootIconAty;
 import com.jaydenho.androidtech.view.anim.ValueAnimatorAty;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, TestAty.class));
                         break;
                     case DashboardIds.ANIM:
-                        startActivity(new Intent(mContext, ValueAnimatorAty.class));
+                        startActivity(new Intent(mContext, ShootIconAty.class));
                         break;
                 }
             }

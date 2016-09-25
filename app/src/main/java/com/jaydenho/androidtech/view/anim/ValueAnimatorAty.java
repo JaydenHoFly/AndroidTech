@@ -1,17 +1,23 @@
 package com.jaydenho.androidtech.view.anim;
 
+import android.animation.AnimatorSet;
 import android.animation.IntEvaluator;
+import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnimationSet;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaydenho.androidtech.R;
@@ -22,6 +28,7 @@ import com.jaydenho.androidtech.databinding.AtyValueAnimatorBinding;
  */
 public class ValueAnimatorAty extends Activity implements View.OnClickListener {
 
+    private static final String TAG = ValueAnimatorAty.class.getSimpleName();
     private AtyValueAnimatorBinding mBinding = null;
     private TextView mCircleBallTV = null;
     private LoveView mLoveView = null;
@@ -30,6 +37,9 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
     private boolean isInitAnimation = false;
     private ValueAnimator mLoveAnimator = null;
     private ObjectAnimator mLoveObjectAnimator = null;
+    private ObjectAnimator mCallObjectAnimator = null;
+    private AnimatorSet mBallAnimatorSet = null;
+    private ImageView mTelephoneIV = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +51,7 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
     private void initView() {
         mCircleBallTV = (TextView) findViewById(R.id.tv_anim);
         mLoveView = (LoveView) findViewById(R.id.love_view);
+        mTelephoneIV = (ImageView) findViewById(R.id.telephone_iv);
         mBinding.setOnClickListener(this);
 
         mCircleBallTV.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -51,6 +62,8 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
                     initLetterAnimator();
                     initLoveAnimator();
                     initLoveObjectAnimator();
+                    initCallAnimation();
+                    initAnimationSet();
                     isInitAnimation = true;
                 }
             }
@@ -88,22 +101,79 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
 
     public void initLoveAnimator() {
         int radius = 200;
-        mLoveAnimator = ValueAnimator.ofInt(radius / 2, radius, radius * 2);
+        PropertyValuesHolder radiusHolder = PropertyValuesHolder.ofInt("radius", radius / 2, radius, radius * 2);
+        PropertyValuesHolder colorHolder = PropertyValuesHolder.ofObject("color", new TypeEvaluator() {
+            @Override
+            public Object evaluate(float fraction, Object startValue, Object endValue) {
+                if (fraction < 0.5) {
+                    return startValue;
+                }
+                return endValue;
+            }
+        }, getResources().getColorStateList(R.color.colorAccent), getResources().getColorStateList(R.color.colorPrimaryDark));
+//        mLoveAnimator = ValueAnimator.ofInt(radius / 2, radius, radius * 2);
+        mLoveAnimator = ValueAnimator.ofPropertyValuesHolder(colorHolder, radiusHolder);
         mLoveAnimator.setDuration(3000);
         mLoveAnimator.setInterpolator(new BounceInterpolator());
         mLoveAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                mLoveView.setRadius((int) animation.getAnimatedValue());
+                Log.d(TAG, "animation.value: " + animation.getAnimatedValue());
+                if (animation.getAnimatedValue() instanceof Integer) {
+                    mLoveView.setRadius((int) animation.getAnimatedValue());
+                }
             }
         });
     }
 
     public void initLoveObjectAnimator() {
         int radius = 200;
-        mLoveObjectAnimator = ObjectAnimator.ofInt(mLoveView, "radius", radius / 2, radius, radius * 2);
+        PropertyValuesHolder radiusHolder = PropertyValuesHolder.ofInt("radius", radius / 2, radius, radius * 2);
+        PropertyValuesHolder colorHolder = PropertyValuesHolder.ofObject("color", new TypeEvaluator() {
+            @Override
+            public Object evaluate(float fraction, Object startValue, Object endValue) {
+                if (fraction < 0.5) {
+                    return startValue;
+                }
+                return endValue;
+            }
+        }, getResources().getColorStateList(R.color.colorAccent), getResources().getColorStateList(R.color.colorPrimaryDark));
+//        mLoveObjectAnimator = ObjectAnimator.ofInt(mLoveView, "radius", radius / 2, radius, radius * 2);
+        mLoveObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(mLoveView, colorHolder, radiusHolder);
+        mLoveObjectAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Log.d(TAG, "animation.value: " + animation.getAnimatedValue());
+            }
+        });
         mLoveObjectAnimator.setDuration(3000);
         mLoveObjectAnimator.setInterpolator(new BounceInterpolator());
+    }
+
+    public void initCallAnimation() {
+        Keyframe firstKeyFrame = Keyframe.ofFloat(0, -30);
+        Keyframe secondKeyFrame = Keyframe.ofFloat(0.1f, 30);
+        Keyframe thirdKeyFrame = Keyframe.ofFloat(0.2f, -30);
+        Keyframe fourthKeyFrame = Keyframe.ofFloat(0.3f, 30);
+        Keyframe fifthKeyFrame = Keyframe.ofFloat(0.4f, 0);
+        Keyframe fifth1KeyFrame = Keyframe.ofFloat(0.5f, 0);
+        Keyframe sixthKeyFrame = Keyframe.ofFloat(0.6f, 0);
+        Keyframe seventhKeyFrame = Keyframe.ofFloat(0.7f, -30);
+        Keyframe eighthKeyFrame = Keyframe.ofFloat(0.8f, 30);
+        Keyframe ninthKeyFrame = Keyframe.ofFloat(0.9f, -30);
+        Keyframe tenthKeyFrame = Keyframe.ofFloat(1f, 30);
+        PropertyValuesHolder callHolder = PropertyValuesHolder.ofKeyframe("rotation", firstKeyFrame, secondKeyFrame, thirdKeyFrame, fourthKeyFrame, fifthKeyFrame, fifth1KeyFrame, sixthKeyFrame, seventhKeyFrame, eighthKeyFrame, ninthKeyFrame, tenthKeyFrame);
+        mCallObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(mTelephoneIV, callHolder);
+        mCallObjectAnimator.setDuration(1000);
+        mCallObjectAnimator.setRepeatMode(ValueAnimator.RESTART);
+        mCallObjectAnimator.setRepeatCount(5);
+    }
+
+    private void initAnimationSet(){
+        mBallAnimatorSet = new AnimatorSet();
+        mBallAnimatorSet.playTogether(mBallAnimator, mLetterAnimator);
+//        mBallAnimatorSet.play(mLetterAnimator).before(mBallAnimator);
+        mBallAnimatorSet.setDuration(2000);
     }
 
     public void startLoveAnimation() {
@@ -132,6 +202,16 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn_love_object:
                 startLoveObjectAnimation();
+                break;
+            case R.id.btn_call:
+                if (mCallObjectAnimator != null) {
+                    mCallObjectAnimator.start();
+                }
+                break;
+            case R.id.btn_set:
+                if(mBallAnimatorSet != null) {
+                    mBallAnimatorSet.start();
+                }
                 break;
         }
     }

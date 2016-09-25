@@ -22,6 +22,7 @@
         <activity android:name=".test.TestAty" />
         <activity android:name=".view.anim.AttrAty" />
         <activity android:name=".view.anim.ValueAnimatorAty" />
+        <activity android:name=".view.anim.ShootIconAty" />
     </application>
 
 </manifest>
