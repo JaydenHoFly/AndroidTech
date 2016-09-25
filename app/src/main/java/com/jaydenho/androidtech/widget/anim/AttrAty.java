@@ -1,4 +1,4 @@
-package com.jaydenho.androidtech.view.anim;
+package com.jaydenho.androidtech.widget.anim;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;

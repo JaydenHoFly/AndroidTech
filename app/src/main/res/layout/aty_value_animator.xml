@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:background="@mipmap/icon_telephone" />
 
-        <com.jaydenho.androidtech.view.anim.LoveView
+        <com.jaydenho.androidtech.widget.anim.LoveView
             android:id="@+id/love_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

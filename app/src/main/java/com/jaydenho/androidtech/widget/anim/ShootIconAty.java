@@ -1,4 +1,4 @@
-package com.jaydenho.androidtech.view.anim;
+package com.jaydenho.androidtech.widget.anim;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -7,7 +7,6 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -84,12 +83,6 @@ public class ShootIconAty extends Activity implements View.OnClickListener {
         PropertyValuesHolder alphaHolder = PropertyValuesHolder.ofFloat("alpha", 0, 1);
         PropertyValuesHolder rotateHolder = PropertyValuesHolder.ofFloat("rotation", 0, 360, 720);
         return ObjectAnimator.ofPropertyValuesHolder(target, xHolder, yHolder, xScaleHolder, yScaleHolder, alphaHolder, rotateHolder);
-    }
-
-    private ObjectAnimator getScaleAnimator(ImageView target) {
-        PropertyValuesHolder xHolder = PropertyValuesHolder.ofInt("scaleX", 0, 1);
-        PropertyValuesHolder yHolder = PropertyValuesHolder.ofInt("scaleY", 0, 1);
-        return ObjectAnimator.ofPropertyValuesHolder(target, xHolder, yHolder);
     }
 
     private void initScreenSize() {

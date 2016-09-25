@@ -1,4 +1,4 @@
-package com.jaydenho.androidtech.view.anim;
+package com.jaydenho.androidtech.widget.anim;
 
 import android.content.Context;
 import android.content.res.ColorStateList;

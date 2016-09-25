@@ -20,9 +20,9 @@
         </activity>
         <activity android:name=".databinding.DataBindingAty" />
         <activity android:name=".test.TestAty" />
-        <activity android:name=".view.anim.AttrAty" />
-        <activity android:name=".view.anim.ValueAnimatorAty" />
-        <activity android:name=".view.anim.ShootIconAty" />
+        <activity android:name=".widget.anim.AttrAty" />
+        <activity android:name=".widget.anim.ValueAnimatorAty" />
+        <activity android:name=".widget.anim.ShootIconAty" />
     </application>
 
 </manifest>

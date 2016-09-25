@@ -1,4 +1,4 @@
-package com.jaydenho.androidtech.view.anim;
+package com.jaydenho.androidtech.widget.anim;
 
 import android.animation.AnimatorSet;
 import android.animation.IntEvaluator;
@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnimationSet;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;

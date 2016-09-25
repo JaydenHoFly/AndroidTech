@@ -7,6 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -14,9 +20,7 @@ import android.widget.TextView;
 
 import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.test.TestAty;
-import com.jaydenho.androidtech.view.anim.AttrAty;
-import com.jaydenho.androidtech.view.anim.ShootIconAty;
-import com.jaydenho.androidtech.view.anim.ValueAnimatorAty;
+import com.jaydenho.androidtech.widget.anim.ShootIconAty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +30,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = MainActivity.class.getSimpleName();
     private Context mContext = null;
     private ListView mDashboardsLv = null;
-    private List<DashboardInfo> mDashboardInfos = null;
     private DashboardAdapter mDashboardAdapter = null;
+    private LayoutAnimationController mListViewAnimationController = null;
+    private List<DashboardInfo> mDashboardInfos = null;
 
     public interface DashboardIds {
         int DATA_BINDING = 1;
@@ -46,6 +51,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView() {
         mDashboardsLv = (ListView) findViewById(R.id.lv_dashboards);
+        initListViewAnimation();
+        mDashboardsLv.setLayoutAnimation(mListViewAnimationController);
+    }
+
+    private void initListViewAnimation() {
+        Animation translateAnimation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, -0.5f, Animation.ABSOLUTE, 0, Animation.ABSOLUTE, 0, Animation.ABSOLUTE, 0);
+        Animation alphaAnimation = new AlphaAnimation(0, 1);
+        AnimationSet set = new AnimationSet(true);
+        set.addAnimation(translateAnimation);
+        set.addAnimation(alphaAnimation);
+        set.setDuration(800);
+        set.setInterpolator(new LinearInterpolator());
+        mListViewAnimationController = new LayoutAnimationController(set);
+        mListViewAnimationController.setOrder(LayoutAnimationController.ORDER_NORMAL);
     }
 
     private void initData() {
@@ -78,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+        mDashboardsLv.startLayoutAnimation();
     }
 
     @Override
