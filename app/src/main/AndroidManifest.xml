@@ -23,6 +23,7 @@
         <activity android:name=".widget.anim.AttrAty" />
         <activity android:name=".widget.anim.ValueAnimatorAty" />
         <activity android:name=".widget.anim.ShootIconAty" />
+        <activity android:name=".widget.view.BasicAttrsAty" />
     </application>
 
 </manifest>

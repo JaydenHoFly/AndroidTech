@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.test.TestAty;
 import com.jaydenho.androidtech.widget.anim.ShootIconAty;
+import com.jaydenho.androidtech.widget.view.BasicAttrsAty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int DATA_BINDING = 1;
         int TEST = 2;
         int ANIM = 3;
+        int VIEW = 4;
     }
 
     @Override
@@ -74,7 +76,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDashboardInfos.add(dataBinding);
         DashboardInfo test = new DashboardInfo(DashboardIds.TEST, "Test");
         mDashboardInfos.add(test);
-        DashboardInfo view = new DashboardInfo(DashboardIds.ANIM, "View");
+        DashboardInfo anim = new DashboardInfo(DashboardIds.ANIM, "Anim");
+        mDashboardInfos.add(anim);
+        DashboardInfo view = new DashboardInfo(DashboardIds.VIEW, "View");
         mDashboardInfos.add(view);
         mDashboardAdapter = new DashboardAdapter();
     }
@@ -93,6 +97,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case DashboardIds.ANIM:
                         startActivity(new Intent(mContext, ShootIconAty.class));
+                        break;
+                    case DashboardIds.VIEW:
+                        startActivity(new Intent(mContext, BasicAttrsAty.class));
                         break;
                 }
             }
