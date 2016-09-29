@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.jaydenho.androidtech.R;
@@ -31,6 +33,7 @@ public class TestAty extends AppCompatActivity {
 
     private static final String TAG = TestAty.class.getSimpleName();
     private ImageView mImageLoaderTestIv = null;
+    private BrowserExchangeDialogPPW mPPW = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class TestAty extends AppCompatActivity {
         Log.d(TAG, "finalUser: " + finalUser.toString());
 
         mImageLoaderTestIv = (ImageView) findViewById(R.id.test_image_loader_iv);
-        ImageLoader.getInstance().displayImage("http://pic34.nipic.com/20131021/11569127_170602617166_2.jpg", mImageLoaderTestIv, getSujectIconDisplayOptions());
+        /*ImageLoader.getInstance().displayImage("http://pic34.nipic.com/20131021/11569127_170602617166_2.jpg", mImageLoaderTestIv, getSujectIconDisplayOptions());
         ImageLoader.getInstance().loadImage("http://pic60.nipic.com/file/20150303/12216461_110913232000_2.jpg", getSujectIconDisplayOptions(), new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -72,14 +75,71 @@ public class TestAty extends AppCompatActivity {
             public void onLoadingCancelled(String s, View view) {
 
             }
-        });
+        });*/
         String str = "我是原始值";
         checkString(str);
         Log.d(TAG, "checkString: " + str);
 
         testProbability();
+
+        initPPW();
     }
 
+    private void initPPW() {
+        mImageLoaderTestIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPPW(mImageLoaderTestIv);
+            }
+        });
+        mPPW = new BrowserExchangeDialogPPW(this);
+        mPPW.setContentText("nihaoafdafsfs");
+    }
+
+    private void showPPW(View v) {
+        int[] location = new int[2];
+        v.getLocationOnScreen(location);
+        int anchorX = location[0];
+        int anchorY = location[1];
+        View ppwContentView = mPPW.getContentView();
+        ppwContentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        Log.d(TAG,"mppw width : " + ppwContentView.getWidth() + " height: " + ppwContentView.getHeight() + " measureWidth: " + ppwContentView.getMeasuredWidth() + " measureHeight: " + ppwContentView.getMeasuredHeight());
+        mPPW.showAtLocation(v, Gravity.NO_GRAVITY, location[0], location[1] - ppwContentView.getMeasuredHeight());
+//        mPPW.showAsDropDown(mImageLoaderTestIv, 0, -(mImageLoaderTestIv.getHeight() + mPPW.getHeight()));
+    }
+
+    /**
+     * 计算出来的位置，y方向就在anchorView的上面和下面对齐显示，x方向就是与屏幕右边对齐显示
+     * 如果anchorView的位置有变化，就可以适当自己额外加入偏移来修正
+     *
+     * @param anchorView  呼出window的view
+     * @param contentView window的内容布局
+     * @return window显示的左上角的xOff, yOff坐标
+     */
+   /* private static int[] calculatePopWindowPos(final View anchorView, final View contentView) {
+        final int windowPos[] = new int[2];
+        final int anchorLoc[] = new int[2];
+        // 获取锚点View在屏幕上的左上角坐标位置
+        anchorView.getLocationOnScreen(anchorLoc);
+        final int anchorHeight = anchorView.getHeight();
+        // 获取屏幕的高宽
+        final int screenHeight = ScreenUtils.getScreenHeight(anchorView.getContext());
+        final int screenWidth = ScreenUtils.getScreenWidth(anchorView.getContext());
+        contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        // 计算contentView的高宽
+        final int windowHeight = contentView.getMeasuredHeight();
+        final int windowWidth = contentView.getMeasuredWidth();
+        // 判断需要向上弹出还是向下弹出显示
+        final boolean isNeedShowUp = (screenHeight - anchorLoc[1] - anchorHeight < windowHeight);
+        if (isNeedShowUp) {
+            windowPos[0] = screenWidth - windowWidth;
+            windowPos[1] = anchorLoc[1] - windowHeight;
+        } else {
+            windowPos[0] = screenWidth - windowWidth;
+            windowPos[1] = anchorLoc[1] + anchorHeight;
+        }
+        return windowPos;
+    }*/
     private void testProbability() {
         Map<String, Integer> testResult = new HashMap<>();
         long start = System.currentTimeMillis();
