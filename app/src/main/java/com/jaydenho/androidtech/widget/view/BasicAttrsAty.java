@@ -16,6 +16,8 @@ public class BasicAttrsAty extends Activity {
     private AtyBasicAttrsViewBinding mBinding = null;
     private ViewGroup mRootView = null;
     private BasicAttrsView mBasicView = null;
+    private LotteryView mLotteryView = null;
+    private QQMsgClearView mQQMsgClearView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class BasicAttrsAty extends Activity {
     private void initView() {
         mRootView = (ViewGroup) findViewById(R.id.root_view);
         mBasicView = new BasicAttrsView(this);
-        mRootView.addView(mBasicView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mLotteryView = new LotteryView(this);
+        mQQMsgClearView = new QQMsgClearView(this);
+        mRootView.addView(mQQMsgClearView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 }
