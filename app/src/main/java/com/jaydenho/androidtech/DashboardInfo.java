@@ -21,4 +21,8 @@ public class DashboardInfo {
         return id;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof DashboardInfo) && (((DashboardInfo) o).getId() == this.id);
+    }
 }

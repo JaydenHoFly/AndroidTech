@@ -70,7 +70,8 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
     }
 
     private void initLetterAnimator() {
-        mLetterAnimator = ValueAnimator.ofObject(new LetterEvaluator(), 'A', 'Z');
+        mLetterAnimator = ValueAnimator.ofPropertyValuesHolder(PropertyValuesHolder.ofKeyframe("", Keyframe.ofObject(0.2f, 'A'), Keyframe.ofObject(0.5f, 'Z'), Keyframe.ofObject(1, '3')));
+//        mLetterAnimator = ValueAnimator.ofObject(new LetterEvaluator(), 'A', '3', 'Z');
         mLetterAnimator.setInterpolator(new AccelerateInterpolator());
         mLetterAnimator.setDuration(5000);
         mLetterAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -168,7 +169,7 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
         mCallObjectAnimator.setRepeatCount(5);
     }
 
-    private void initAnimationSet(){
+    private void initAnimationSet() {
         mBallAnimatorSet = new AnimatorSet();
         mBallAnimatorSet.playTogether(mBallAnimator, mLetterAnimator);
 //        mBallAnimatorSet.play(mLetterAnimator).before(mBallAnimator);
@@ -191,10 +192,15 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_drop_ball:
-                mBallAnimator.start();
+                if(mBallAnimator != null){
+                    //需要判空再操作，因为手机设置中可以关闭动画，导致Animator对象为null
+                    mBallAnimator.start();
+                }
                 break;
             case R.id.btn_letter:
-                mLetterAnimator.start();
+                if(mLetterAnimator != null){
+                    mLetterAnimator.start();
+                }
                 break;
             case R.id.btn_love:
                 startLoveAnimation();
@@ -208,7 +214,7 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.btn_set:
-                if(mBallAnimatorSet != null) {
+                if (mBallAnimatorSet != null) {
                     mBallAnimatorSet.start();
                 }
                 break;
@@ -219,6 +225,7 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
 
         @Override
         public Character evaluate(float fraction, Character startValue, Character endValue) {
+            Log.d(TAG, "startValue: " + startValue + " endValue: " + endValue);
             int endAscii = (int) endValue;
             int startAscii = (int) startValue;
             return (char) ((int) (startAscii + (endAscii - startAscii) * fraction));

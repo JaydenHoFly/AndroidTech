@@ -78,7 +78,20 @@ public class BasicAttrsView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         initPaint();
-        learnCanvas(canvas);
+        drawA(canvas);
+    }
+
+    private void drawA(Canvas canvas) {
+        int centerX = 200;
+        int centerY = 200;
+        String text = "texttexttext";
+        mPaint.setTextSize(80);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawCircle(centerX, centerY, centerX, mPaint);
+        Rect textRect = new Rect();
+        mPaint.getTextBounds(text, 0, text.length(), textRect);
+        canvas.drawText(text, centerX, centerY + textRect.height() / 2, mPaint);
     }
 
     private void learnCanvas(Canvas canvas) {
@@ -244,6 +257,11 @@ public class BasicAttrsView extends View {
         canvas.drawPath(path, mPaint);
     }
 
+    /**
+     * 绘制文字的最大矩形框和最小矩形框
+     *
+     * @param canvas
+     */
     private void drawTextBounds(Canvas canvas) {
         int textX = 200;
         int textY = 200;
@@ -351,7 +369,7 @@ public class BasicAttrsView extends View {
         mPaint.setStyle(Paint.Style.STROKE);
     }
 
-    private void closeHardAccelerate(){
+    private void closeHardAccelerate() {
         setLayerType(LAYER_TYPE_SOFTWARE, null);
     }
 }

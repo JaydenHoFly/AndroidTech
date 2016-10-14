@@ -31,6 +31,6 @@ public class BasicAttrsAty extends Activity {
         mBasicView = new BasicAttrsView(this);
         mLotteryView = new LotteryView(this);
         mQQMsgClearView = new QQMsgClearView(this);
-        mRootView.addView(mQQMsgClearView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mRootView.addView(mBasicView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 }
