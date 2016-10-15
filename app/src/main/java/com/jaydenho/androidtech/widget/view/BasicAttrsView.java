@@ -3,11 +3,17 @@ package com.jaydenho.androidtech.widget.view;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.DashPathEffect;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuffXfermode;
@@ -43,18 +49,27 @@ public class BasicAttrsView extends View {
     private int mWaveY;
     private Bitmap mRiverBitmap = null;
 
+    private ObjectAnimator mDashPathMoveAnimator = null;
+    private int mDashPathPhase = 0;
+
+    private Bitmap mColorMatrixBitmap = null;
+
     public BasicAttrsView(Context context) {
         super(context);
         init();
     }
 
     private void init() {
+        closeHardAccelerate();
         mPaint = new Paint();
         mFingerPath = new Path();
         mWavePath = new Path();
         startWaveAnimator();
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);//禁用硬件加速
         mRiverBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.img_river);
+      /*  startWaveAnimator();
+        startDashPathMoveAnimator();*/
+        initColorMatrixBitmap();
     }
 
     @Override
@@ -67,11 +82,135 @@ public class BasicAttrsView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mPaint.setAntiAlias(true);
-        mPaint.setARGB(255, 255, 0, 0);
-        mPaint.setStrokeWidth(5);
+        initPaint();
+        drawA(canvas);
+    }
+
+    private void drawA(Canvas canvas) {
+        int centerX = 200;
+        int centerY = 200;
+        String text = "texttexttext";
+        mPaint.setTextSize(80);
         mPaint.setStyle(Paint.Style.STROKE);
-        drawWave(canvas);
+        mPaint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawCircle(centerX, centerY, centerX, mPaint);
+        Rect textRect = new Rect();
+        mPaint.getTextBounds(text, 0, text.length(), textRect);
+        canvas.drawText(text, centerX, centerY + textRect.height() / 2, mPaint);
+    }
+
+    private void learnCanvas(Canvas canvas) {
+        canvas.drawColor(Color.RED);
+        int id1 = canvas.saveLayer(0, 0, 500, 500, mPaint, Canvas.MATRIX_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG);
+        canvas.rotate(40);
+        mPaint.setColor(Color.GREEN);
+        canvas.drawRect(100, 100, 200, 200, mPaint);
+        canvas.restoreToCount(id1);
+        mPaint.setColor(Color.BLUE);
+        canvas.drawRect(100, 100, 200, 200, mPaint);
+    }
+
+    private void drawColorMatrix(Canvas canvas) {
+        initPaint();
+        mPaint.setStyle(Paint.Style.FILL);
+
+        mPaint.setARGB(255, 200, 100, 100);
+        Rect rect = new Rect(100, 100, 500, 300);
+        canvas.drawRect(rect, mPaint);
+
+        canvas.translate(500, 0);
+
+        ColorMatrix blueColorMatrix = new ColorMatrix(new float[]{
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0,
+                0, 0, 1, 0, 0,
+                0, 0, 0, 1, 0,
+        });
+        mPaint.setColorFilter(new ColorMatrixColorFilter(blueColorMatrix));
+        canvas.drawRect(rect, mPaint);
+    }
+
+    private void drawPoolColorMatrix(Canvas canvas) {
+        initPaint();
+        Rect rect = new Rect(0, 0, mColorMatrixBitmap.getWidth(), mColorMatrixBitmap.getHeight());
+
+        mPaint.setStyle(Paint.Style.FILL);
+
+        canvas.drawBitmap(mColorMatrixBitmap, null, rect, mPaint);
+
+        canvas.translate(0, mColorMatrixBitmap.getHeight() + 100);
+        oppositeFilter();
+        canvas.drawBitmap(mColorMatrixBitmap, null, rect, mPaint);
+    }
+
+    private void oppositeFilter() {
+        mPaint.setColorFilter(new ColorMatrixColorFilter(new ColorMatrix(new float[]{//反色
+                0, 1, 0, 0, 0,
+                1, 0, 0, 0, 0,
+                0, 0, 1, 0, 0,
+                0, 0, 0, 1, 0,
+        })));
+    }
+
+    private void grayFilter() {
+        mPaint.setColorFilter(new ColorMatrixColorFilter(new ColorMatrix(new float[]{//灰白照片
+                0.213f, 0.715f, 0.072f, 0, 0,
+                0.213f, 0.715f, 0.072f, 0, 0,
+                0.213f, 0.715f, 0.072f, 0, 0,
+                0, 0, 0, 1, 0,
+        })));
+    }
+
+    private void initColorMatrixBitmap() {
+        mColorMatrixBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.blue_pool);
+    }
+
+    private void drawDashPath(Canvas canvas) {
+        Path path = new Path();
+        path.moveTo(200, 500);
+        path.lineTo(500, 200);
+        path.lineTo(800, 500);
+        mPaint.setPathEffect(null);
+        mPaint.setARGB(255, 255, 0, 0);
+        canvas.drawPath(path, mPaint);
+
+        mPaint.setARGB(255, 0, 255, 0);
+        mPaint.setPathEffect(new DashPathEffect(new float[]{20, 10, 100, 100}, mDashPathPhase));
+        canvas.translate(0, 30);
+        canvas.drawPath(path, mPaint);
+
+        mPaint.setARGB(255, 0, 0, 255);
+        mPaint.setPathEffect(new DashPathEffect(new float[]{20, 10, 100, 100}, 15));
+        canvas.translate(0, 30);
+        canvas.drawPath(path, mPaint);
+    }
+
+    /**
+     * 行走的斑马线
+     */
+    private void startDashPathMoveAnimator() {
+        mDashPathMoveAnimator = ObjectAnimator.ofInt(this, "dashPathPhase", 0, 230);
+        mDashPathMoveAnimator.setDuration(1000);
+        mDashPathMoveAnimator.setInterpolator(new LinearInterpolator());
+        mDashPathMoveAnimator.setRepeatMode(ValueAnimator.RESTART);
+        mDashPathMoveAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mDashPathMoveAnimator.start();
+    }
+
+    public void setDashPathPhase(int phase) {
+        mDashPathPhase = phase;
+        postInvalidate();
+    }
+
+    private void drawJoin(Canvas canvas) {
+        mPaint.setStrokeWidth(80);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        mPaint.setStrokeJoin(Paint.Join.MITER);
+        Path path = new Path();
+        path.moveTo(100, 100);
+        path.lineTo(300, 100);
+        path.lineTo(100, 400);
+        canvas.drawPath(path, mPaint);
     }
 
     private void drawXFerMode(Canvas canvas) {
@@ -134,6 +273,11 @@ public class BasicAttrsView extends View {
         canvas.drawPath(path, mPaint);
     }
 
+    /**
+     * 绘制文字的最大矩形框和最小矩形框
+     *
+     * @param canvas
+     */
     private void drawTextBounds(Canvas canvas) {
         int textX = 200;
         int textY = 200;
@@ -231,5 +375,17 @@ public class BasicAttrsView extends View {
                 break;
         }
         return true;
+    }
+
+    private void initPaint() {
+        mPaint.reset();
+        mPaint.setAntiAlias(true);
+        mPaint.setARGB(255, 255, 0, 0);
+        mPaint.setStrokeWidth(5);
+        mPaint.setStyle(Paint.Style.STROKE);
+    }
+
+    private void closeHardAccelerate() {
+        setLayerType(LAYER_TYPE_SOFTWARE, null);
     }
 }
