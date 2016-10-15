@@ -4,9 +4,13 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
@@ -37,6 +41,7 @@ public class BasicAttrsView extends View {
     private ObjectAnimator mWaveYAnimator = null;
     private int mWaveX;
     private int mWaveY;
+    private Bitmap mRiverBitmap = null;
 
     public BasicAttrsView(Context context) {
         super(context);
@@ -48,12 +53,14 @@ public class BasicAttrsView extends View {
         mFingerPath = new Path();
         mWavePath = new Path();
         startWaveAnimator();
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);//禁用硬件加速
+        mRiverBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.img_river);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.d(TAG,"onMeasure");
+        Log.d(TAG, "onMeasure");
         mWaveStartHeight = getHeight();
     }
 
@@ -65,6 +72,17 @@ public class BasicAttrsView extends View {
         mPaint.setStrokeWidth(5);
         mPaint.setStyle(Paint.Style.STROKE);
         drawWave(canvas);
+    }
+
+    private void drawXFerMode(Canvas canvas) {
+        int width = 500;
+        int height = width * (mRiverBitmap.getHeight() / mRiverBitmap.getWidth());
+        int layerId = canvas.saveLayer(0, 0, width, height, mPaint, Canvas.ALL_SAVE_FLAG);
+
+        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setColor(Color.RED);
+
+        canvas.restoreToCount(layerId);
     }
 
     private void drawWave(Canvas canvas) {
