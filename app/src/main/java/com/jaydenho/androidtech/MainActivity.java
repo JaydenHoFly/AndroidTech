@@ -20,9 +20,11 @@ import android.widget.TextView;
 
 import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.test.TestAty;
+import com.jaydenho.androidtech.test.TestListViewAty;
 import com.jaydenho.androidtech.widget.anim.ShootIconAty;
 import com.jaydenho.androidtech.widget.anim.ValueAnimatorAty;
 import com.jaydenho.androidtech.widget.view.BasicAttrsAty;
+import com.jaydenho.androidtech.widget.view.ViewPagerAty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
@@ -100,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, ValueAnimatorAty.class));
                         break;
                     case DashboardIds.VIEW:
-                        startActivity(new Intent(mContext, BasicAttrsAty.class));
+                        startActivity(new Intent(mContext, ViewPagerAty.class));
                         break;
                 }
             }

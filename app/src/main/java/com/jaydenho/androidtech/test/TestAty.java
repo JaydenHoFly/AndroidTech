@@ -1,14 +1,25 @@
 package com.jaydenho.androidtech.test;
 
+import android.app.ActivityManager;
+import android.app.job.JobScheduler;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.util.SparseIntArray;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jaydenho.androidtech.R;
 import com.jaydenho.androidtech.databinding.UserInfo;
@@ -16,6 +27,9 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 /**
  * Created by hedazhao on 2016/7/26.
@@ -34,11 +49,29 @@ public class TestAty extends AppCompatActivity {
     private static final String TAG = TestAty.class.getSimpleName();
     private ImageView mImageLoaderTestIv = null;
     private BrowserExchangeDialogPPW mPPW = null;
+    private TextView mNameTV = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aty_test);
+
+        mNameTV = (TextView) findViewById(R.id.tv_name);
+        String name = "一二三四五六七";
+        String testStr = "你好，测试。saf,.;1；2：3？4！";
+     /*   String regex = "[\\u3002\\uff1b\\uff0c\\uff1a\\u201c\\u201d\\uff08\\uff09\\u3001\\uff1f\\u300a\\u300b]";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(testStr);
+        if (m.find()) {
+            Log.d(TAG,"group0: " + m.group(0));
+        }*/
+        mNameTV.setText(cutTextEllipseEnd(name, 5));
+
+//        String[] strArray = testStr.split("[\\u3002\\uff1b\\uff0c\\uff1a\\u201c\\u201d\\uff08\\uff09\\u3001\\uff1f\\u300a\\u300b]");
+        String[] strArray = testStr.split("[\\u3002|\\uff1f|\\uff01|\\uff0c|\\u3001|\\uff1b|\\uff1a|\\u201c|\\u201d|\\u2018|\\u2019|\\uff08|\\uff09|\\u300a|\\u300b|\\u3008|\\u3009|\\u3010|\\u3011|\\u300e|\\u300f|\\u300c|\\u300d|\\ufe43|\\ufe44|\\u3014|\\u3015|\\u2026|\\u2014|\\uff5e|\\ufe4f|\\uffe5]");
+        for (String str : strArray) {
+            Log.d(TAG, " str: " + str);
+        }
 
         List<Integer> list = new ArrayList<>();
         list.add(2);
@@ -83,6 +116,76 @@ public class TestAty extends AppCompatActivity {
         testProbability();
 
         initPPW();
+
+        mHandler.sendEmptyMessageDelayed(1, 2000);
+
+        a();
+
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+    }
+
+    public static void a() {
+        String jsonStr = "{\"a\":\"png\\/jpg\"}";
+        String jsonStr2 = "{\"a\":\"png/jpg\"}";
+        String result = "";
+        String result2 = "";
+        try {
+            JSONObject json = new JSONObject(jsonStr);
+            JSONObject json2 = new JSONObject(jsonStr2);
+            result = json.optString("a");
+            result2 = json2.optString("a");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "result: " + result + " result2: " + result2);
+    }
+
+    private Handler mHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            Intent intent = new Intent(TestAty.this, TestListViewAty.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivityForResult(intent, 1);
+            finish();
+            return true;
+        }
+    });
+
+    public Resources getResources() {
+        Resources res = super.getResources();
+        Configuration config = new Configuration();
+        config.setToDefaults();
+        res.updateConfiguration(config, res.getDisplayMetrics());
+        return res;
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
+        super.startActivityForResult(intent, requestCode, options);
+        overridePendingTransition(R.anim.right_in_anim, R.anim.left_out_anim);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.left_in_anim, R.anim.right_out_anim);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult resultCode: " + resultCode);
+    }
+
+    public static String cutTextEllipseEnd(String text, int maxLength) {
+        if (text.length() >= maxLength + 1) {
+            text = text.substring(0, maxLength) + "...";
+        }
+        return text;
     }
 
     private void initPPW() {
@@ -103,7 +206,7 @@ public class TestAty extends AppCompatActivity {
         int anchorY = location[1];
         View ppwContentView = mPPW.getContentView();
         ppwContentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        Log.d(TAG,"mppw width : " + ppwContentView.getWidth() + " height: " + ppwContentView.getHeight() + " measureWidth: " + ppwContentView.getMeasuredWidth() + " measureHeight: " + ppwContentView.getMeasuredHeight());
+        Log.d(TAG, "mppw width : " + ppwContentView.getWidth() + " height: " + ppwContentView.getHeight() + " measureWidth: " + ppwContentView.getMeasuredWidth() + " measureHeight: " + ppwContentView.getMeasuredHeight());
         mPPW.showAtLocation(v, Gravity.NO_GRAVITY, location[0], location[1] - ppwContentView.getMeasuredHeight());
 //        mPPW.showAsDropDown(mImageLoaderTestIv, 0, -(mImageLoaderTestIv.getHeight() + mPPW.getHeight()));
     }
@@ -112,8 +215,6 @@ public class TestAty extends AppCompatActivity {
      * 计算出来的位置，y方向就在anchorView的上面和下面对齐显示，x方向就是与屏幕右边对齐显示
      * 如果anchorView的位置有变化，就可以适当自己额外加入偏移来修正
      *
-     * @param anchorView  呼出window的view
-     * @param contentView window的内容布局
      * @return window显示的左上角的xOff, yOff坐标
      */
    /* private static int[] calculatePopWindowPos(final View anchorView, final View contentView) {

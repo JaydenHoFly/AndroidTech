@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.jaydenho.androidtech.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,12 +15,26 @@ public class JUnitTestUtil {
         return email.contains("@");
     }
 
-    public String getString(Context context){
+    public String getString(Context context) {
         return context.getString(R.string.app_name);
     }
 
-    public void calcList(List<String> data){
+    public void calcList(List<String> data) {
         data.add("one");
         data.clear();
+    }
+
+    public interface ICallback {
+        void onSuccess(List<String> data);
+
+        void onFail();
+    }
+
+    public void makeRequest(final ICallback callback) {
+        List<String> data = new ArrayList<>();
+        data.add("john");
+        data.add("jayden");
+//        callback.onSuccess(data);
+        callback.onFail();
     }
 }

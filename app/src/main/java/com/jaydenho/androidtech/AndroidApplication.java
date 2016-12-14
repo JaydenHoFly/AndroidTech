@@ -2,6 +2,7 @@ package com.jaydenho.androidtech;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -15,8 +16,18 @@ public class AndroidApplication extends Application {
 
     @Override
     public void onCreate() {
+        StrictMode.ThreadPolicy tp = new StrictMode.ThreadPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .build();
+        StrictMode.setThreadPolicy(tp);
         super.onCreate();
-        initImageLoader(this);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+//        initImageLoader(this);
     }
 
     public static void initImageLoader(Context context) {

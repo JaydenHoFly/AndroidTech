@@ -71,7 +71,7 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
 
     private void initLetterAnimator() {
         mLetterAnimator = ValueAnimator.ofPropertyValuesHolder(PropertyValuesHolder.ofKeyframe("", Keyframe.ofObject(0.2f, 'A'), Keyframe.ofObject(0.5f, 'Z'), Keyframe.ofObject(1, '3')));
-//        mLetterAnimator = ValueAnimator.ofObject(new LetterEvaluator(), 'A', '3', 'Z');
+        mLetterAnimator = ValueAnimator.ofObject(new LetterEvaluator(), 'A', '3', 'Z');
         mLetterAnimator.setInterpolator(new AccelerateInterpolator());
         mLetterAnimator.setDuration(5000);
         mLetterAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -166,7 +166,7 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
         mCallObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(mTelephoneIV, callHolder);
         mCallObjectAnimator.setDuration(1000);
         mCallObjectAnimator.setRepeatMode(ValueAnimator.RESTART);
-        mCallObjectAnimator.setRepeatCount(5);
+        mCallObjectAnimator.setRepeatCount(ValueAnimator.INFINITE);
     }
 
     private void initAnimationSet() {
@@ -192,18 +192,21 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_drop_ball:
-                if(mBallAnimator != null){
+                if (mBallAnimator != null) {
                     //需要判空再操作，因为手机设置中可以关闭动画，导致Animator对象为null
                     mBallAnimator.start();
                 }
                 break;
             case R.id.btn_letter:
-                if(mLetterAnimator != null){
+                if (mLetterAnimator != null) {
                     mLetterAnimator.start();
                 }
                 break;
             case R.id.btn_love:
-                startLoveAnimation();
+//                startLoveAnimation();
+                if (mCallObjectAnimator != null) {
+                    mCallObjectAnimator.cancel();
+                }
                 break;
             case R.id.btn_love_object:
                 startLoveObjectAnimation();
