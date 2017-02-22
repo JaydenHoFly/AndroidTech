@@ -21,10 +21,13 @@ import android.widget.TextView;
 import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.test.TestAty;
 import com.jaydenho.androidtech.test.TestListViewAty;
+import com.jaydenho.androidtech.widget.anim.AttrAty;
 import com.jaydenho.androidtech.widget.anim.ShootIconAty;
 import com.jaydenho.androidtech.widget.anim.ValueAnimatorAty;
 import com.jaydenho.androidtech.widget.view.BasicAttrsAty;
 import com.jaydenho.androidtech.widget.view.ViewPagerAty;
+import com.jaydenho.androidtech.widget.view.scroll.ScrollAty;
+import com.jaydenho.androidtech.widget.view.viewpager.InfiniteAutoScrollViewPagerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
+      /*  setTheme(R.style.AppTheme);*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
@@ -100,10 +103,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, TestAty.class));
                         break;
                     case DashboardIds.ANIM:
-                        startActivity(new Intent(mContext, ValueAnimatorAty.class));
+                        startActivity(new Intent(mContext, AttrAty.class));
                         break;
                     case DashboardIds.VIEW:
-                        startActivity(new Intent(mContext, ViewPagerAty.class));
+                        startActivity(new Intent(mContext, InfiniteAutoScrollViewPagerActivity.class));
                         break;
                 }
             }

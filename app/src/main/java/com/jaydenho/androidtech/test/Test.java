@@ -1,6 +1,22 @@
 package com.jaydenho.androidtech.test;
 
+import android.content.pm.PackageInfo;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by hedazhao on 2016/8/31.
@@ -21,6 +37,94 @@ public class Test {
         BaseAdapterModel model2 = new BaseAdapterModel(1, "", null);
         System.out.println("isTheSameAd(model1, model2): " + isTheSameAd(model1, model2));
 
+        Test t = new Test();
+        t.testThreadException();
+
+        Father f = t.new Son();
+        Son s = t.new Son();
+        Son1 f1 = t.new Son1();
+        f.doSomething(new HashMap());
+        s.doSomething(new HashMap());
+        f1.doSomething(new HashMap());
+
+        List<Long> list1 = new ArrayList<>();
+        list1.add(20L);
+        list1.add(30L);
+        list1.add(20L);
+        List<Long> list2 = new ArrayList<>(new HashSet(list1));
+        System.out.println("no duplicate list.size: " + list2.size());
+
+        int result = (int) (1073741825 + 0.4f);
+        System.out.println("(int) (1073741825 + 0.4f) " + result);
+        System.out.println("(int) (65537 + 0.4f) " + (int) (65537 + 0.4f));
+        System.out.println("(int) (65533 + 0.4f) " + (int) (65533 + 0.4f));
+
+        isAndroidSystemApp("com.android.xxx");
+        isAndroidSystemApp("com.moto.android.xxx");
+        isAndroidSystemApp("net.com.android.xxx");
+
+        testSplit1();
+    }
+
+    private static void testReportByGroup(int size) {
+        System.out.println("==========test==========");
+        int[] infos = new int[size];
+        for (int i = 0; i < size; i++) {
+            infos[i] = i;
+        }
+        reportByGroup(true, infos);
+    }
+
+    private static void testSplit1() {
+        String alliance = "100:1";
+        String[] allianceArgs = alliance.split(":");
+        alliance = allianceArgs.length != 0 ? allianceArgs[0] : "101";
+        String styleId = "0";
+        styleId = alliance.length() > 1 ? allianceArgs[1] : styleId;
+        System.out.println("alliance: " + alliance + " styleId: " + styleId);
+    }
+
+    public static boolean isAndroidSystemApp(String info) {
+        String regex = "^\\bcom.android.*$";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(info);
+        boolean result = matcher.matches();
+        System.out.println("info is android system app: " + result);
+        return result;
+    }
+
+    protected static void reportByGroup(boolean isSystemApps, int[] infos) {
+        int maxInfosIndex = Math.min(infos.length, 500) - 1;
+        int nextInfosGroupFirstIndex = 0;//下一组infos中的第一个info的下标(在总infos中的下标)
+        int groupSize;
+        int[] infosGroup;
+        String reportJsonString;
+        while (nextInfosGroupFirstIndex <= maxInfosIndex) {//当下一组中的第一个元素下标等于最大下标时,说明还有一个元素需要上报
+            System.out.println("---------test-group---------");
+            groupSize = Math.min(maxInfosIndex - nextInfosGroupFirstIndex + 1, 30);
+            infosGroup = new int[groupSize];
+            System.arraycopy(infos, nextInfosGroupFirstIndex, infosGroup, 0, groupSize);
+            System.out.println("reportJsonString : " + Arrays.toString(infosGroup));
+            nextInfosGroupFirstIndex += groupSize;
+        }
+    }
+
+    public void testThreadException() {
+        try {
+            occurThreadException();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.out.print(e.getMessage());
+        }
+    }
+
+    public void occurThreadException() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                throw new ArrayIndexOutOfBoundsException("thread fault");
+            }
+        }).start();
     }
 
 
@@ -70,5 +174,39 @@ public class Test {
             }
         }
         return false;
+    }
+
+    public class Father {
+        public void doSomething(Map map) {
+            System.out.print("by father");
+        }
+    }
+
+    public class Son extends Father {
+        @Override
+        public void doSomething(Map map) {
+            super.doSomething(map);
+        }
+
+        public void doSomething(HashMap map) {
+            System.out.print("by son");
+        }
+    }
+
+    public class Father1 {
+        public void doSomething(HashMap map) {
+            System.out.print("1 by father");
+        }
+    }
+
+    public class Son1 extends Father1 {
+        @Override
+        public void doSomething(HashMap map) {
+            super.doSomething(map);
+        }
+
+        public void doSomething(Map map) {
+            System.out.println("1 by son");
+        }
     }
 }

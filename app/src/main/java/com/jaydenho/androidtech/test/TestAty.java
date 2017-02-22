@@ -51,6 +51,8 @@ public class TestAty extends AppCompatActivity {
     private BrowserExchangeDialogPPW mPPW = null;
     private TextView mNameTV = null;
 
+    private boolean mRestore = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,11 +123,34 @@ public class TestAty extends AppCompatActivity {
 
         a();
 
+        Log.d(TAG, "onCreate");
+        if(savedInstanceState != null) {
+            mRestore = savedInstanceState.getBoolean("restore", mRestore);
+        }
+
     }
 
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
+    }
+
+    public void testThreadException() {
+        try {
+            occurThreadException();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.out.print(e.getMessage());
+        }
+    }
+
+    public void occurThreadException() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                throw new ArrayIndexOutOfBoundsException("thread fault");
+            }
+        }).start();
     }
 
     public static void a() {
@@ -148,12 +173,28 @@ public class TestAty extends AppCompatActivity {
         @Override
         public boolean handleMessage(Message msg) {
             Intent intent = new Intent(TestAty.this, TestListViewAty.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityForResult(intent, 1);
-            finish();
+//            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//            intent.putExtra("handler",new Handler());
+//            startActivityForResult(intent, 1);
+//            finish();
+            startActivity(intent);
             return true;
         }
     });
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState");
+        outState.putBoolean("restore", mRestore);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(TAG, "onRestoreInstanceState");
+        mRestore = savedInstanceState.getBoolean("restore", mRestore);
+    }
 
     public Resources getResources() {
         Resources res = super.getResources();

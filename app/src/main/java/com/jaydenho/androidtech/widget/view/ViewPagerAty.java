@@ -1,6 +1,7 @@
 package com.jaydenho.androidtech.widget.view;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -8,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.jaydenho.androidtech.R;
 
@@ -42,6 +44,17 @@ public class ViewPagerAty extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN); // hide status bar
+        }
         setContentView(R.layout.aty_viewpager);
         initViews();
         mAdapter = new MyViewPagerAdapter();
@@ -73,6 +86,9 @@ public class ViewPagerAty extends Activity {
         mLastPosition = -1;
         mCurrentPosition = 0;
         mViewPagerIndicator.setViewPager(mVP);
+
+        Log.d(TAG, "mVP.getCurrentItem(): " + mVP.getCurrentItem());
+        mVP.setCurrentItem(1);
     }
 
     private void initViews() {
@@ -142,13 +158,13 @@ public class ViewPagerAty extends Activity {
 
     private void setGifResource(@NonNull ViewPagerItemView v, int position) {
         if (!mGifPositionSet.contains(position)) {
-            if(position >= GIF_ARRAY.length) {
+            if (position >= GIF_ARRAY.length) {
                 throw new ArrayIndexOutOfBoundsException("this position is out of gif_array bounds. position: " + position + " gif_array.length: " + GIF_ARRAY.length);
             }
             v.getGifView().setGifResource(GIF_ARRAY[position]);
             mGifPositionSet.add(position);
         } else {
-            Log.d(TAG,"gif has already added. position: " + position);
+            Log.d(TAG, "gif has already added. position: " + position);
         }
     }
 
