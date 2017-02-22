@@ -16,6 +16,7 @@ import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
@@ -46,6 +47,7 @@ public class BasicAttrsView extends View {
     private ObjectAnimator mWaveYAnimator = null;
     private int mWaveX;
     private int mWaveY;
+    private Bitmap mRiverBitmap = null;
 
     private ObjectAnimator mDashPathMoveAnimator = null;
     private int mDashPathPhase = 0;
@@ -62,6 +64,9 @@ public class BasicAttrsView extends View {
         mPaint = new Paint();
         mFingerPath = new Path();
         mWavePath = new Path();
+        startWaveAnimator();
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);//禁用硬件加速
+        mRiverBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.img_river);
       /*  startWaveAnimator();
         startDashPathMoveAnimator();*/
         initColorMatrixBitmap();
@@ -206,6 +211,17 @@ public class BasicAttrsView extends View {
         path.lineTo(300, 100);
         path.lineTo(100, 400);
         canvas.drawPath(path, mPaint);
+    }
+
+    private void drawXFerMode(Canvas canvas) {
+        int width = 500;
+        int height = width * (mRiverBitmap.getHeight() / mRiverBitmap.getWidth());
+        int layerId = canvas.saveLayer(0, 0, width, height, mPaint, Canvas.ALL_SAVE_FLAG);
+
+        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setColor(Color.RED);
+
+        canvas.restoreToCount(layerId);
     }
 
     private void drawWave(Canvas canvas) {
