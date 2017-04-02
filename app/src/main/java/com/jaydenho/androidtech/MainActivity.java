@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jaydenho.androidtech.databinding.DataBindingAty;
+import com.jaydenho.androidtech.hotfix.HotFixActivity;
 import com.jaydenho.androidtech.test.TestAty;
 import com.jaydenho.androidtech.test.TestListViewAty;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int TEST = 2;
         int ANIM = 3;
         int VIEW = 4;
+        int HOT_FIX = 5;
     }
 
     @Override
@@ -87,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDashboardInfos.add(anim);
         DashboardInfo view = new DashboardInfo(DashboardIds.VIEW, "View");
         mDashboardInfos.add(view);
+        DashboardInfo hotFix = new DashboardInfo(DashboardIds.HOT_FIX, "HotFix");
+        mDashboardInfos.add(hotFix);
         mDashboardAdapter = new DashboardAdapter();
     }
 
@@ -107,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case DashboardIds.VIEW:
                         startActivity(new Intent(mContext, InfiniteAutoScrollViewPagerActivity.class));
+                        break;
+                    case DashboardIds.HOT_FIX:
+                        startActivity(new Intent(mContext, HotFixActivity.class));
                         break;
                 }
             }

@@ -1,7 +1,5 @@
 package com.jaydenho.androidtech.designpatterns.proxy;
 
-import com.google.repacked.kotlin.jvm.internal.Intrinsics;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -13,7 +11,6 @@ public class MyInvocationHandler implements InvocationHandler {
     private ISubject mSubject = null;
 
     public MyInvocationHandler(ISubject subject) {
-        Intrinsics.checkNotNull(subject, "subject is null");
         this.mSubject = subject;
     }
 

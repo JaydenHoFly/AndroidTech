@@ -1,17 +1,11 @@
 package com.jaydenho.androidtech.test;
 
-import android.content.pm.PackageInfo;
-import android.util.Log;
+import android.graphics.Path;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -24,15 +18,6 @@ import java.util.regex.Pattern;
 public class Test {
 
     public static void main(String args[]) {
-        UserInfo user1 = new UserInfo("zs");
-        final UserInfo user2 = user1;
-        UserInfo user3 = user1;
-        user1.setName("ls");
-        user1 = new UserInfo("wu");
-        System.out.println("user2: " + user2.getName() + " & user3: " + user3.getName());
-        System.out.println("leagueOrderId: " + getLeagueOrderId(1164, 110));
-        System.out.println("leagueOrderId1: " + getLeagueOrderId1(1164, 110));
-
         BaseAdapterModel model1 = new BaseAdapterModel(1, null, null);
         BaseAdapterModel model2 = new BaseAdapterModel(1, "", null);
         System.out.println("isTheSameAd(model1, model2): " + isTheSameAd(model1, model2));
@@ -64,6 +49,33 @@ public class Test {
         isAndroidSystemApp("net.com.android.xxx");
 
         testSplit1();
+        testApk("jinritoutiao");
+        testApk("jinritoutiao.apk");
+        testApk("");
+
+        isBlank("" +
+                "");
+        isBlank(" \"");
+
+        System.out.print("getLeagueOrderId(1137, 114): " + getLeagueOrderId(1137, 114));
+
+        testListInert();
+    }
+
+    private  static void testListInert() {
+        List<String> list = new ArrayList<>();
+        list.add(0,"1");
+        list.add(1,"2");
+    }
+    private static boolean isBlank(String text) {
+        return text == null || text.trim().length() == 0;
+    }
+
+    private static void testApk(String appDownloadName) {
+        if (!appDownloadName.endsWith(".apk")) {
+            appDownloadName += ".apk";
+        }
+        System.out.println("appDownloadName: " + appDownloadName);
     }
 
     private static void testReportByGroup(int size) {
@@ -132,7 +144,7 @@ public class Test {
      * * @return 联盟广告订单Id 构造规则：ositionId + leagueId4位，leagueId位数不够前置补0，最后转成负数
      */
     public static String getLeagueOrderId(int positionId, int leagueId) {
-        return "-" + String.valueOf(positionId) + String.format(Locale.CHINA, "%04d", leagueId);
+        return "-" + String.valueOf(positionId) + String.format(Locale.ENGLISH, "%04d", leagueId);
     }
 
     public static String getLeagueOrderId1(int positionId, int leagueId) {

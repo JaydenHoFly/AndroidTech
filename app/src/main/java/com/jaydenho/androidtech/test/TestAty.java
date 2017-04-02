@@ -1,45 +1,50 @@
 package com.jaydenho.androidtech.test;
 
-import android.app.ActivityManager;
-import android.app.job.JobScheduler;
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
-import android.util.SparseBooleanArray;
-import android.util.SparseIntArray;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jaydenho.androidtech.R;
-import com.jaydenho.androidtech.databinding.UserInfo;
+import com.jaydenho.androidtech.util.CommonUtil;
+import com.jaydenho.androidtech.util.FileUtils;
+import com.jaydenho.androidtech.util.LocationUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 /**
  * Created by hedazhao on 2016/7/26.
@@ -67,7 +72,8 @@ public class TestAty extends AppCompatActivity {
         if (m.find()) {
             Log.d(TAG,"group0: " + m.group(0));
         }*/
-        mNameTV.setText(cutTextEllipseEnd(name, 5));
+//        mNameTV.setText(cutTextEllipseEnd(name, 5));
+        mNameTV.setText(Html.fromHtml("&quot;你好&quot;"));
 
 //        String[] strArray = testStr.split("[\\u3002\\uff1b\\uff0c\\uff1a\\u201c\\u201d\\uff08\\uff09\\u3001\\uff1f\\u300a\\u300b]");
         String[] strArray = testStr.split("[\\u3002|\\uff1f|\\uff01|\\uff0c|\\u3001|\\uff1b|\\uff1a|\\u201c|\\u201d|\\u2018|\\u2019|\\uff08|\\uff09|\\u300a|\\u300b|\\u3008|\\u3009|\\u3010|\\u3011|\\u300e|\\u300f|\\u300c|\\u300d|\\ufe43|\\ufe44|\\u3014|\\u3015|\\u2026|\\u2014|\\uff5e|\\ufe4f|\\uffe5]");
@@ -82,11 +88,6 @@ public class TestAty extends AppCompatActivity {
         list.remove(Integer.valueOf(1));
         list.remove(list.indexOf(2));
         Log.d(TAG, Arrays.toString(list.toArray()));
-
-        UserInfo user = new UserInfo("zs", 10);
-        final UserInfo finalUser = user;
-        user = new UserInfo("ls", 11);
-        Log.d(TAG, "finalUser: " + finalUser.toString());
 
         mImageLoaderTestIv = (ImageView) findViewById(R.id.test_image_loader_iv);
         /*ImageLoader.getInstance().displayImage("http://pic34.nipic.com/20131021/11569127_170602617166_2.jpg", mImageLoaderTestIv, getSujectIconDisplayOptions());
@@ -124,15 +125,174 @@ public class TestAty extends AppCompatActivity {
         a();
 
         Log.d(TAG, "onCreate");
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             mRestore = savedInstanceState.getBoolean("restore", mRestore);
         }
 
+        Log.d(TAG, "branch: " + getPhoneBrand() + " model: " + Build.MODEL + " devide: " + Build.DEVICE + " product" + Build.PRODUCT);
+
+        IdentityHashMap<String, String> map = new IdentityHashMap<>();
+        map.put("show", "1323");
+        map.put("show", "1323");
+        map.put("show", "1324");
+
+        startLocation();
+
+        List<String> orderIds = new ArrayList<>();
+        orderIds.add("11377");
+        orderIds.add("11374");
+        orderIds.add("11378");
+        orderIds.add("11371");
+        testSortString(orderIds);
+
+        jump();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                writeParcel2File();
+            }
+        }).start();
+
+        Log.d(TAG, "getLeagueOrderId(1137, 114): " + getLeagueOrderId(1137, 114));
+
+        testStringFormat();
+
+        testListFormat();
+    }
+
+    private void testListFormat() {
+        List<String> list = new ArrayList<>();
+        list.add("nihao");
+        Object o = list;
+        if (o instanceof List) {
+            List<Integer> list1 = (List<Integer>) o;
+            try {
+                for (Integer i : list1) {
+                    Log.d(TAG, "i: " + i);
+                }
+            } catch (ClassCastException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void testStringFormat() {
+        Log.e(TAG, String.format("test format %d-%s-%s", 12, "21", 12));
+        Log.e(TAG, String.format("test format %d-%s-%s", 12, "21", null));
+        Log.e(TAG, String.format("test format %d-%s-%s", 12, "21", null) + null);
+    }
+
+    private void writeParcel2File() {
+        UserInfo u1 = new UserInfo("李四");
+        UserInfo u2 = new UserInfo("张三");
+        List<UserInfo> us = new ArrayList<>();
+        us.add(u1);
+        us.add(u2);
+        UserInfo[] ua = new UserInfo[2];
+        ua[0] = u1;
+        ua[1] = u2;
+        String path1 = CommonUtil.BASE_PATH + File.separator + "parcelable" + File.separator + "u.txt";
+        String path2 = CommonUtil.BASE_PATH + File.separator + "parcelable" + File.separator + "us.txt";
+        String path3 = CommonUtil.BASE_PATH + File.separator + "parcelable" + File.separator + "ua.txt";
+
+        try {
+            FileUtils.writeFile(path1, u1, true);
+            FileUtils.writeFile(path2, us, true);
+            FileUtils.writeFile(path3, ua, true);
+
+            UserInfo uc1 = FileUtils.readFile(path1, UserInfo.class);
+            List usc = FileUtils.readFile(path2, List.class);
+            UserInfo[] uac = FileUtils.readFile(path3, UserInfo[].class);
+
+            Log.d(TAG, "u1c: " + uc1.toString());
+            Log.d(TAG, "usc: " + Arrays.toString(usc.toArray()));
+            Log.d(TAG, "uac: " + Arrays.toString(uac));
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * * @return 联盟广告订单Id 构造规则：ositionId + leagueId4位，leagueId位数不够前置补0，最后转成负数
+     */
+    public static String getLeagueOrderId(int positionId, int leagueId) {
+        return "-" + String.valueOf(positionId) + String.format(Locale.ENGLISH, "%04d", leagueId);
+    }
+
+    private void jump() {
+        WebView webview = (WebView) findViewById(R.id.wv);
+        String url = "file:///android_asset/Xhtml.html";
+//        String url = "http://blog.csdn.net/jiangwei0910410003/article/details/16859039";
+
+        webview.setWebViewClient(new MyWebViewClient());
+        WebSettings wSet = webview.getSettings();
+        wSet.setJavaScriptEnabled(true);
+        webview.loadUrl(url);
+    }
+
+    private class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            Intent intent;
+            try {
+                intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+                return false;
+            }
+            intent.setComponent(null);
+            try {
+                view.getContext().startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                return false;
+            }
+            return true;
+        }
+
+    }
+
+    private void testSortString(List<String> orderIds) {
+        Collections.sort(orderIds);
+        Log.d(TAG, Arrays.toString(orderIds.toArray()));
+    }
+
+    private LocationUtil mLocationUtil = null;
+
+    /**
+     * 获取一次定位信息,用户广告模块
+     */
+    private void startLocation() {
+        mLocationUtil = new LocationUtil(this);
+        mLocationUtil.start();
+    }
+
+    private void destroyLocation() {
+        if (mLocationUtil != null) {
+            mLocationUtil.destroy();
+        }
+    }
+
+    public static String getPhoneBrand() {
+        return Build.BRAND;
     }
 
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+        destroyLocation();
     }
 
     public void testThreadException() {
@@ -177,7 +337,7 @@ public class TestAty extends AppCompatActivity {
 //            intent.putExtra("handler",new Handler());
 //            startActivityForResult(intent, 1);
 //            finish();
-            startActivity(intent);
+//            startActivity(intent);
             return true;
         }
     });
@@ -229,14 +389,31 @@ public class TestAty extends AppCompatActivity {
         return text;
     }
 
+    boolean a;
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (!a) {
+            showPPW(mNameTV);
+        }
+        a = true;
+    }
+
     private void initPPW() {
         mImageLoaderTestIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPPW(mImageLoaderTestIv);
+                showPPW(mNameTV);
             }
         });
         mPPW = new BrowserExchangeDialogPPW(this);
+        mPPW.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(TestAty.this, 1);
+            }
+        });
         mPPW.setContentText("nihaoafdafsfs");
     }
 
@@ -248,8 +425,17 @@ public class TestAty extends AppCompatActivity {
         View ppwContentView = mPPW.getContentView();
         ppwContentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         Log.d(TAG, "mppw width : " + ppwContentView.getWidth() + " height: " + ppwContentView.getHeight() + " measureWidth: " + ppwContentView.getMeasuredWidth() + " measureHeight: " + ppwContentView.getMeasuredHeight());
-        mPPW.showAtLocation(v, Gravity.NO_GRAVITY, location[0], location[1] - ppwContentView.getMeasuredHeight());
+//        mPPW.showAtLocation(v, Gravity.NO_GRAVITY, location[0], location[1] - ppwContentView.getMeasuredHeight());
 //        mPPW.showAsDropDown(mImageLoaderTestIv, 0, -(mImageLoaderTestIv.getHeight() + mPPW.getHeight()));
+        backgroundAlpha(this, 0.4f);
+        mPPW.showAtLocation(v, Gravity.CENTER, 0, 0);
+    }
+
+    public void backgroundAlpha(Activity activity, float bgAlpha) {
+        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        activity.getWindow().setAttributes(lp);
     }
 
     /**

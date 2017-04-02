@@ -32,6 +32,7 @@ public class TestListViewAty extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG,"onCreate");
         setContentView(R.layout.aty_test_list_view);
         mLV = (ListView) findViewById(R.id.lv_test);
         mData = new ArrayList<>();
