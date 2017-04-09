@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="@dimen/test_width"
+        android:layout_height="@dimen/test_height"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/splash_ad_content_bg"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="none"
+        android:singleLine="true"
+        android:text="一二三四五六七八九&quot;"
+        android:textSize="13sp"/>
 
     <ImageView
         android:layout_width="19.5dp"
         android:layout_height="19.5dp"
-        android:src="@mipmap/home_ad_close_btn" />
+        android:src="@mipmap/home_ad_close_btn"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/home_ad_close_btn_press" />
+        android:src="@mipmap/home_ad_close_btn_press"/>
 
     <ImageView
         android:id="@+id/test_image_loader_iv"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerInParent="true"
-        android:src="@mipmap/home_ad_close_btn_press" />
+        android:src="@mipmap/home_ad_close_btn_press"/>
 
+    <WebView
+        android:id="@+id/wv"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent"></WebView>
 </RelativeLayout>

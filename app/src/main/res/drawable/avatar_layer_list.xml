@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/user_face_drawable"
+        android:width="29dp"
+        android:height="29dp"
+        android:left="46dp"
+        android:drawable="@drawable/third_qq_circle_press"
+        />
+    <item
+        android:id="@+id/user_face_drawable"
+        android:width="29dp"
+        android:height="29dp"
+        android:left="23dp"
+        android:drawable="@drawable/third_weibo_circle"
+        />
+    <item
+        android:id="@+id/user_face_drawable"
+        android:width="29dp"
+        android:height="29dp"
+        android:drawable="@drawable/third_qq_circle"
+        />
+
+</layer-list>

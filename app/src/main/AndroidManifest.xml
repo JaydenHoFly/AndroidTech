@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jaydenho.androidtech">
+          package="com.jaydenho.androidtech">
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-        android:name=".AndroidApplication"
+        android:name=".hotfix.MyTinkerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashActivity"
+            android:theme="@style/AppTheme.LaunchTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".databinding.DataBindingAty" />
-        <activity android:name=".test.TestAty" />
-        <activity android:name=".widget.anim.AttrAty" />
-        <activity android:name=".widget.anim.ValueAnimatorAty" />
-        <activity android:name=".widget.anim.ShootIconAty" />
-        <activity android:name=".widget.view.BasicAttrsAty" />
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".databinding.DataBindingAty"/>
+        <activity
+            android:name=".test.TestAty"
+            android:launchMode="singleTop"/>
+        <activity android:name=".widget.anim.AttrAty"/>
+        <activity android:name=".widget.anim.ValueAnimatorAty"/>
+        <activity android:name=".widget.anim.ShootIconAty"/>
+        <activity android:name=".widget.view.BasicAttrsAty"/>
+        <activity android:name=".widget.view.scroll.ScrollAty"/>
+        <activity
+            android:name=".test.TestListViewAty"/>
+        <activity android:name=".widget.view.ViewPagerAty"/>
+        <activity android:name=".widget.view.viewpager.InfiniteAutoScrollViewPagerActivity"/>
+        <activity android:name=".hotfix.HotFixActivity"/>
     </application>
 
 </manifest>

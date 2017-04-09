@@ -19,10 +19,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jaydenho.androidtech.databinding.DataBindingAty;
+import com.jaydenho.androidtech.hotfix.HotFixActivity;
 import com.jaydenho.androidtech.test.TestAty;
+import com.jaydenho.androidtech.test.TestListViewAty;
+import com.jaydenho.androidtech.widget.anim.AttrAty;
 import com.jaydenho.androidtech.widget.anim.ShootIconAty;
 import com.jaydenho.androidtech.widget.anim.ValueAnimatorAty;
 import com.jaydenho.androidtech.widget.view.BasicAttrsAty;
+import com.jaydenho.androidtech.widget.view.ViewPagerAty;
+import com.jaydenho.androidtech.widget.view.scroll.ScrollAty;
+import com.jaydenho.androidtech.widget.view.viewpager.InfiniteAutoScrollViewPagerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +47,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int TEST = 2;
         int ANIM = 3;
         int VIEW = 4;
+        int HOT_FIX = 5;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+      /*  setTheme(R.style.AppTheme);*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
@@ -81,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDashboardInfos.add(anim);
         DashboardInfo view = new DashboardInfo(DashboardIds.VIEW, "View");
         mDashboardInfos.add(view);
+        DashboardInfo hotFix = new DashboardInfo(DashboardIds.HOT_FIX, "HotFix");
+        mDashboardInfos.add(hotFix);
         mDashboardAdapter = new DashboardAdapter();
     }
 
@@ -97,10 +107,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, TestAty.class));
                         break;
                     case DashboardIds.ANIM:
-                        startActivity(new Intent(mContext, ValueAnimatorAty.class));
+                        startActivity(new Intent(mContext, AttrAty.class));
                         break;
                     case DashboardIds.VIEW:
-                        startActivity(new Intent(mContext, BasicAttrsAty.class));
+                        startActivity(new Intent(mContext, InfiniteAutoScrollViewPagerActivity.class));
+                        break;
+                    case DashboardIds.HOT_FIX:
+                        startActivity(new Intent(mContext, HotFixActivity.class));
                         break;
                 }
             }

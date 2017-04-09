@@ -3,13 +3,13 @@
 
     <data>
 
-        <import type="android.view.View" />
+        <import type="android.view.View"/>
 
-        <import type="android.view.View.OnClickListener" />
+        <import type="android.view.View.OnClickListener"/>
 
         <variable
             name="onClickListener"
-            type="OnClickListener" />
+            type="OnClickListener"/>
     </data>
 
     <LinearLayout
@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{(view)->onClickListener.onClick(view)}"
-                android:text="alpha" />
+                android:text="alpha"/>
 
             <TextView
                 android:id="@+id/btn_scale"
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{(view)->onClickListener.onClick(view)}"
-                android:text="scale" />
+                android:text="scale"/>
 
             <TextView
                 android:id="@+id/btn_translate"
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{(view)->onClickListener.onClick(view)}"
-                android:text="translate" />
+                android:text="translate"/>
 
             <TextView
                 android:id="@+id/btn_rotate"
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{(view)->onClickListener.onClick(view)}"
-                android:text="rotate" />
+                android:text="rotate"/>
         </LinearLayout>
 
         <TextView
@@ -60,6 +60,11 @@
             android:layout_height="300dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:background="@color/colorAccent" />
+            android:background="@color/colorAccent"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/vector_01"/>
     </LinearLayout>
 </layout>
