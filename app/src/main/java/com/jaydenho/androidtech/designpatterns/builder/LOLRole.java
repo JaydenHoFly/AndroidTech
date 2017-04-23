@@ -1,11 +1,12 @@
 package com.jaydenho.androidtech.designpatterns.builder;
 
 import com.jaydenho.androidtech.designpatterns.command.ILOLRoleAction;
+import com.jaydenho.androidtech.designpatterns.decorator.ILOLRoleVisual;
 
 /**
  * Created by hedazhao on 2017/2/17.
  */
-public abstract class LOLRole implements ILOLRoleAction, ILOLRoleAttr {
+public abstract class LOLRole implements ILOLRoleAction, ILOLRoleAttr, ILOLRoleVisual {
 
     private IRune mRune = null;
 

@@ -20,4 +20,18 @@ public class Carter extends LOLRole {
 
     }
 
+    @Override
+    public String getName() {
+        return "Carter";
+    }
+
+    @Override
+    public String getLeftShoe() {
+        return "棉鞋";
+    }
+
+    @Override
+    public String getMedal() {
+        return "";
+    }
 }

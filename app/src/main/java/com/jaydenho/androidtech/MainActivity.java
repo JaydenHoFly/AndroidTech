@@ -20,14 +20,9 @@ import android.widget.TextView;
 
 import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.hotfix.HotFixActivity;
+import com.jaydenho.androidtech.plugin.droidplugin.hookactivity.HookHelper;
 import com.jaydenho.androidtech.test.TestAty;
-import com.jaydenho.androidtech.test.TestListViewAty;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
-import com.jaydenho.androidtech.widget.anim.ShootIconAty;
-import com.jaydenho.androidtech.widget.anim.ValueAnimatorAty;
-import com.jaydenho.androidtech.widget.view.BasicAttrsAty;
-import com.jaydenho.androidtech.widget.view.ViewPagerAty;
-import com.jaydenho.androidtech.widget.view.scroll.ScrollAty;
 import com.jaydenho.androidtech.widget.view.viewpager.InfiniteAutoScrollViewPagerActivity;
 
 import java.util.ArrayList;
@@ -48,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int ANIM = 3;
         int VIEW = 4;
         int HOT_FIX = 5;
+        int PLUGIN = 6;
     }
 
     @Override
@@ -58,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initData();
         initEvent();
+        HookHelper.changeActivityInstrumentation(this);
     }
 
     private void initView() {
@@ -91,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDashboardInfos.add(view);
         DashboardInfo hotFix = new DashboardInfo(DashboardIds.HOT_FIX, "HotFix");
         mDashboardInfos.add(hotFix);
+        DashboardInfo plugin = new DashboardInfo(DashboardIds.PLUGIN, "Plugin");
+        mDashboardInfos.add(plugin);
+
         mDashboardAdapter = new DashboardAdapter();
     }
 
@@ -114,6 +114,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case DashboardIds.HOT_FIX:
                         startActivity(new Intent(mContext, HotFixActivity.class));
+                        break;
+                    case DashboardIds.PLUGIN:
+                        Intent intent = new Intent("com.jaydenho.androidtech.plugin.droidplugin.PluginActivity");
+                        /*intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+                        getApplicationContext().startActivity(intent);*/
+
+                        startActivity(intent);
                         break;
                 }
             }
@@ -164,4 +172,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+        try {
+            // 在这里进行Hook
+            HookHelper.attachContext();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
