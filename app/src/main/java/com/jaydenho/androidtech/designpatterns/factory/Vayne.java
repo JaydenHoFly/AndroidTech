@@ -35,4 +35,19 @@ public class Vayne extends LOLRole implements IADCarry {
     public int getSpeed() {
         return super.getSpeed() + 20;
     }
+
+    @Override
+    public String getName() {
+        return "Vayne";
+    }
+
+    @Override
+    public String getLeftShoe() {
+        return "光脚";
+    }
+
+    @Override
+    public String getMedal() {
+        return "";
+    }
 }

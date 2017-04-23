@@ -1,5 +1,7 @@
 package com.jaydenho.androidtech.test;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -43,6 +45,8 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 import java.util.Set;
 
@@ -159,6 +163,15 @@ public class TestAty extends AppCompatActivity {
         testStringFormat();
 
         testListFormat();
+
+    }
+
+    class dns extends Observable implements Observer{
+
+        @Override
+        public void update(Observable o, Object arg) {
+
+        }
     }
 
     private void testListFormat() {

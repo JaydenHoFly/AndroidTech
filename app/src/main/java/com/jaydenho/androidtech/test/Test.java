@@ -57,11 +57,18 @@ public class Test {
                 "");
         isBlank(" \"");
 
-        System.out.print("getLeagueOrderId(1137, 114): " + getLeagueOrderId(1137, 114));
+        System.out.println("getLeagueOrderId(1137, 114): " + getLeagueOrderId(1137, 114));
 
         testListInert();
+
+        testYu();
     }
 
+    private static void testYu() {
+        System.out.println("3 % 2: " +   3 % 2);
+        System.out.println("3 % 2.0: " +   3 % 2.0);
+
+    }
     private  static void testListInert() {
         List<String> list = new ArrayList<>();
         list.add(0,"1");

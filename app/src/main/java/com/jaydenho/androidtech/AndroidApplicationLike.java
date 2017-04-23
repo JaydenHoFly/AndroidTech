@@ -40,7 +40,7 @@ public class AndroidApplicationLike extends DefaultApplicationLike {
         super.onCreate();
 //        initImageLoader(this);
         initTinker();
-        CrashHandler.getInstance().init(getApplication());
+//        CrashHandler.getInstance().init(getApplication());
     }
 
     @Override
