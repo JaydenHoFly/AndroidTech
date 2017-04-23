@@ -1,4 +1,4 @@
-package com.jaydenho.androidtech.plugin.droidplugin;
+package com.jaydenho.androidtech.plugin.droidplugin.hookactivity;
 
 import android.app.Activity;
 import android.app.Instrumentation;
