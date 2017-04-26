@@ -166,7 +166,7 @@ public class TestAty extends AppCompatActivity {
 
     }
 
-    class dns extends Observable implements Observer{
+    class dns extends Observable implements Observer {
 
         @Override
         public void update(Observable o, Object arg) {
@@ -196,6 +196,9 @@ public class TestAty extends AppCompatActivity {
         Log.e(TAG, String.format("test format %d-%s-%s", 12, "21", null) + null);
     }
 
+    /**
+     * 存储序列化对象
+     */
     private void writeParcel2File() {
         UserInfo u1 = new UserInfo("李四");
         UserInfo u2 = new UserInfo("张三");
@@ -210,10 +213,6 @@ public class TestAty extends AppCompatActivity {
         String path3 = CommonUtil.BASE_PATH + File.separator + "parcelable" + File.separator + "ua.txt";
 
         try {
-            FileUtils.writeFile(path1, u1, true);
-            FileUtils.writeFile(path2, us, true);
-            FileUtils.writeFile(path3, ua, true);
-
             UserInfo uc1 = FileUtils.readFile(path1, UserInfo.class);
             List usc = FileUtils.readFile(path2, List.class);
             UserInfo[] uac = FileUtils.readFile(path3, UserInfo[].class);
@@ -221,6 +220,15 @@ public class TestAty extends AppCompatActivity {
             Log.d(TAG, "u1c: " + uc1.toString());
             Log.d(TAG, "usc: " + Arrays.toString(usc.toArray()));
             Log.d(TAG, "uac: " + Arrays.toString(uac));
+
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            FileUtils.writeFile(path1, u1, false);
+            FileUtils.writeFile(path2, us, false);
+            FileUtils.writeFile(path3, ua, false);
         } catch (RuntimeException e) {
             e.printStackTrace();
         }

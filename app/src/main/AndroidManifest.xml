@@ -40,12 +40,13 @@
         <activity android:name=".widget.view.ViewPagerAty"/>
         <activity android:name=".widget.view.viewpager.InfiniteAutoScrollViewPagerActivity"/>
         <activity android:name=".hotfix.HotFixActivity"/>
-        <activity android:name=".plugin.droidplugin.hookactivity.PluginActivity">
+        <activity android:name=".plugin.droidplugin.PluginActivity">
             <intent-filter>
                 <action android:name="com.jaydenho.androidtech.plugin.droidplugin.PluginActivity"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity android:name=".plugin.droidplugin.PluginActivityStub"/>
     </application>
 
 </manifest>
