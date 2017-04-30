@@ -1,8 +1,11 @@
-package com.jaydenho.androidtech.plugin.droidplugin.hookAMS;
+package com.jaydenho.androidtech.plugin.droidplugin.hookams;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Message;
 import android.util.Log;
+
+import com.jaydenho.androidtech.plugin.droidplugin.hookclassloader.muticlassloader.LoadedApkClassLoaderHookHelper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -34,7 +37,18 @@ public class ActivityThreadMHHandler implements InvocationHandler {
                         Intent intent = (Intent) intentField.get(activityClientRecord);
                         Intent target = intent.getParcelableExtra(ActivityManagerNativeProxyHandler.EXTRA_KEY_TARGET_ACTIVITY);
                         intent.setComponent(target.getComponent());
-                    } catch (RuntimeException e) {
+
+                        Field activityInfoField = activityClientRecord.getClass().getDeclaredField("activityInfo");
+                        activityInfoField.setAccessible(true);
+
+                        // 根据 getPackageInfo 根据这个 包名获取 LoadedApk的信息; 因此这里我们需要手动填上, 从而能够命中缓存
+                        ActivityInfo activityInfo = (ActivityInfo) activityInfoField.get(activityClientRecord);
+
+                        activityInfo.applicationInfo.packageName = target.getPackage() == null ?
+                                target.getComponent().getPackageName() : target.getPackage();
+
+                        AMSHookHelper.hookPackageManager();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;

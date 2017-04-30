@@ -1,4 +1,4 @@
-package com.jaydenho.androidtech.plugin.droidplugin.hookAMS;
+package com.jaydenho.androidtech.plugin.droidplugin.hookams;
 
 import android.content.ComponentName;
 import android.content.Intent;

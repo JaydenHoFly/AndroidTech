@@ -26,8 +26,11 @@ import com.tencent.tinker.loader.shareutil.ShareConstants;
         loadVerifyFlag = false)                                   //tinkerLoadVerifyFlag
 public class AndroidApplicationLike extends DefaultApplicationLike {
 
+    private static Application sApplicationInstance = null;
+
     public AndroidApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
         super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
+        sApplicationInstance = application;
     }
 
     @Override
@@ -41,6 +44,10 @@ public class AndroidApplicationLike extends DefaultApplicationLike {
 //        initImageLoader(this);
         initTinker();
 //        CrashHandler.getInstance().init(getApplication());
+    }
+
+    public static Application getApplicationInstance() {
+        return sApplicationInstance;
     }
 
     @Override
