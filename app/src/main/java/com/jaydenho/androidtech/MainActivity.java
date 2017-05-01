@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.hotfix.HotFixActivity;
+import com.jaydenho.androidtech.ipc.binder.AIDLActivity;
 import com.jaydenho.androidtech.plugin.droidplugin.hookactivity.HookHelper;
 import com.jaydenho.androidtech.test.TestAty;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int VIEW = 4;
         int HOT_FIX = 5;
         int PLUGIN = 6;
+        int BINDER = 7;
     }
 
     @Override
@@ -90,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDashboardInfos.add(hotFix);
         DashboardInfo plugin = new DashboardInfo(DashboardIds.PLUGIN, "Plugin");
         mDashboardInfos.add(plugin);
+        DashboardInfo binder = new DashboardInfo(DashboardIds.BINDER, "Binder");
+        mDashboardInfos.add(binder);
 
         mDashboardAdapter = new DashboardAdapter();
     }
@@ -122,6 +126,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         getApplicationContext().startActivity(intent);*/
 
                         startActivity(intent);
+                        break;
+                    case DashboardIds.BINDER:
+                        startActivity(new Intent(mContext, AIDLActivity.class));
                         break;
                 }
             }

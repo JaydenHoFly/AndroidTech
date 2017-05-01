@@ -1,1 +1,1 @@
-include ':app', ':extensionalviewpager'
+include ':app', ':extensionalviewpager', ':learnbinder'

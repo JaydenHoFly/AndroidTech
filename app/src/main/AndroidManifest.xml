@@ -47,6 +47,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".plugin.droidplugin.PluginActivityStub"/>
+        <activity android:name=".ipc.binder.AIDLActivity"/>
     </application>
 
 </manifest>
