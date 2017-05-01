@@ -166,7 +166,7 @@ public class TestAty extends AppCompatActivity {
 
     }
 
-    class dns extends Observable implements Observer{
+    class dns extends Observable implements Observer {
 
         @Override
         public void update(Observable o, Object arg) {
@@ -196,6 +196,9 @@ public class TestAty extends AppCompatActivity {
         Log.e(TAG, String.format("test format %d-%s-%s", 12, "21", null) + null);
     }
 
+    /**
+     * 存储序列化对象
+     */
     private void writeParcel2File() {
         UserInfo u1 = new UserInfo("李四");
         UserInfo u2 = new UserInfo("张三");
@@ -210,10 +213,6 @@ public class TestAty extends AppCompatActivity {
         String path3 = CommonUtil.BASE_PATH + File.separator + "parcelable" + File.separator + "ua.txt";
 
         try {
-            FileUtils.writeFile(path1, u1, true);
-            FileUtils.writeFile(path2, us, true);
-            FileUtils.writeFile(path3, ua, true);
-
             UserInfo uc1 = FileUtils.readFile(path1, UserInfo.class);
             List usc = FileUtils.readFile(path2, List.class);
             UserInfo[] uac = FileUtils.readFile(path3, UserInfo[].class);
@@ -221,6 +220,15 @@ public class TestAty extends AppCompatActivity {
             Log.d(TAG, "u1c: " + uc1.toString());
             Log.d(TAG, "usc: " + Arrays.toString(usc.toArray()));
             Log.d(TAG, "uac: " + Arrays.toString(uac));
+
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            FileUtils.writeFile(path1, u1, false);
+            FileUtils.writeFile(path2, us, false);
+            FileUtils.writeFile(path3, ua, false);
         } catch (RuntimeException e) {
             e.printStackTrace();
         }
@@ -235,7 +243,7 @@ public class TestAty extends AppCompatActivity {
 
     private void jump() {
         WebView webview = (WebView) findViewById(R.id.wv);
-        String url = "file:///android_asset/Xhtml.html";
+        String url = "http://cat.sh.cn.criteo.com/delivery/ckn.php?cppv=1&cpp=7dHKgHx5TEp6eHVYMVR1U3E2ZlpFMlZWTnpiWDROTml5UmpqWmYwYmZXOFFqektDM3FJb2hZZ2EwMVd6d1lGN1A2dDlzWTNYTmZSV0VObGNUbytjdkJ3dm41U1pZa2FXY2tzazFNZ1lLNzFKVnlwTnJYeWtmWkZhRitJUUFQelhMSy9YWlpHc3pwek5paEp3M05HMGJ3TFhXemlYemRtWEpLN0FHZUcrTDNYZzNmdjFXUTAwU3FINTJrc1B5dTZxWGx5a1J2WGplM3B3eit6OGZlSGhEQnZkWk1SQnBTU1loaWk4UFI0d0R4eWpqdjVrVHhTejRLT2EzSUxWdU1Ia1BGUk9kTVAxTGpJZGpPYXVYRlZrS2h1WkVPdC81YkUzRFRGU2xUWlNUMUxkRndnVU03ODljZGlRZ20vU2dQbE00VGJpZFlMVGNHeFl3MG4xdkk5cGdNa2NMOFRtdDNhZS9qWTFNTFJ0c2Q2dk1lVGNINGNsYTlwam1tWDhvM0VQOHZjK0svNkZ1TlRpRTZ5Ui9FREMra05LVWUwMjhjcUhod0FDZ0RFanpRajdSaDF3dDhuclhCMnVaSlc2YWphanp0TUxvOEN5bE10TURnV3lLK2xkWWNUTHF2MXNob1V6TnJZQ0FETlNObGkyVXc0ND18&maxdest=ctrip%3A%2F%2Fwireless%2FInlandHotel%3FcheckInDate%3D20170504%26checkOutDate%3D20170505%26hotelId%3D687592%26allianceid%3D288562%26sid%3D960124%26sourceid%3D2504%26ouid%3DAndroid_Singapore_687592";
 //        String url = "http://blog.csdn.net/jiangwei0910410003/article/details/16859039";
 
         webview.setWebViewClient(new MyWebViewClient());
@@ -247,7 +255,8 @@ public class TestAty extends AppCompatActivity {
     private class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Intent intent;
+            return false;
+            /*Intent intent;
             try {
                 intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
             } catch (URISyntaxException e) {
@@ -260,7 +269,7 @@ public class TestAty extends AppCompatActivity {
             } catch (ActivityNotFoundException e) {
                 return false;
             }
-            return true;
+            return true;*/
         }
 
     }
