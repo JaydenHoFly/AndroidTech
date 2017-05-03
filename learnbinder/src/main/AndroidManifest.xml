@@ -25,6 +25,15 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>
+        <service
+            android:name=".learnaidl.BookService"
+            android:process=":remote"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.jaydenho.learnbinder.bookaidl"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

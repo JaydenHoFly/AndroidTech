@@ -2,23 +2,22 @@ package com.jaydenho.learnbinder.learnaidl;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 
 /**
- * Created by Administrator on 2017/5/1.
+ * Created by Administrator on 2017/5/3.
  */
-public class SignService extends Service {
 
-    private IBinder stub = new ISign.Stub() {
-
+public class BookService extends Service {
+    private Binder stub = new IBook.Stub() {
         @Override
-        public String sign(String params) throws RemoteException {
-            return "you are " + params;
+        public int getBookPrice(String name) throws RemoteException {
+            return 100;
         }
     };
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
