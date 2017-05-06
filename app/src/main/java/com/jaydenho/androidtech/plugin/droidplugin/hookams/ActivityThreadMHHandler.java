@@ -41,7 +41,7 @@ public class ActivityThreadMHHandler implements InvocationHandler {
                         Field activityInfoField = activityClientRecord.getClass().getDeclaredField("activityInfo");
                         activityInfoField.setAccessible(true);
 
-                        // 根据 getPackageInfo 根据这个 包名获取 LoadedApk的信息; 因此这里我们需要手动填上, 从而能够命中缓存
+                        // getPackageInfo 根据这个 包名获取 LoadedApk的信息; 因此这里我们需要手动填上, 从而能够命中缓存
                         ActivityInfo activityInfo = (ActivityInfo) activityInfoField.get(activityClientRecord);
 
                         activityInfo.applicationInfo.packageName = target.getPackage() == null ?

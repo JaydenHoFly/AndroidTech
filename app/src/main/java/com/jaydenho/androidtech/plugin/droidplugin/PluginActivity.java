@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jaydenho.androidtech.plugin.droidplugin.hookactivity.HookHelper;
 import com.jaydenho.androidtech.plugin.droidplugin.hookams.AMSHookHelper;
 import com.jaydenho.androidtech.plugin.droidplugin.hookbinder.BinderHookHelper;
 import com.jaydenho.androidtech.plugin.droidplugin.hookclassloader.muticlassloader.LoadedApkClassLoaderHookHelper;
@@ -79,7 +80,8 @@ public class PluginActivity extends Activity {
 
             AMSHookHelper.hookActivityManagerNative();
             AMSHookHelper.hookActivityThreadMH();
-
+            HookHelper.changeActivityInstrumentation(this);
+            HookHelper.attachContext();
         } catch (Throwable e) {
             e.printStackTrace();
         }

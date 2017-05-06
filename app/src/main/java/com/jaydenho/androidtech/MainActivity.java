@@ -3,7 +3,9 @@ package com.jaydenho.androidtech;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +23,16 @@ import android.widget.TextView;
 import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.hotfix.HotFixActivity;
 import com.jaydenho.androidtech.ipc.binder.AIDLActivity;
+import com.jaydenho.androidtech.plugin.droidplugin.Utils;
 import com.jaydenho.androidtech.plugin.droidplugin.hookactivity.HookHelper;
 import com.jaydenho.androidtech.test.TestAty;
+import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
 import com.jaydenho.androidtech.widget.view.viewpager.InfiniteAutoScrollViewPagerActivity;
+import com.morgoo.droidplugin.pm.PluginManager;
+import com.morgoo.helper.compat.PackageManagerCompat;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int HOT_FIX = 5;
         int PLUGIN = 6;
         int BINDER = 7;
+        int START_PLUGIN_1 = 8;
     }
 
     @Override
@@ -56,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initData();
         initEvent();
-        HookHelper.changeActivityInstrumentation(this);
     }
 
     private void initView() {
@@ -95,6 +102,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DashboardInfo binder = new DashboardInfo(DashboardIds.BINDER, "Binder");
         mDashboardInfos.add(binder);
 
+        DashboardInfo startPlugin1 = new DashboardInfo(DashboardIds.START_PLUGIN_1, "StartPlugin1");
+        mDashboardInfos.add(startPlugin1);
+
         mDashboardAdapter = new DashboardAdapter();
     }
 
@@ -129,6 +139,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case DashboardIds.BINDER:
                         startActivity(new Intent(mContext, AIDLActivity.class));
+                        break;
+                    case DashboardIds.START_PLUGIN_1:
+                        Utils.extractAssets(mContext, "plugin1-debug.apk");
+//                        String pluginPath = CommonUtil.BASE_PATH + File.separator + "plugin" + File.separator + "plugin1" + File.separator + "plugin1.apk";
+                        File pluginFile = mContext.getFileStreamPath("plugin1-debug.apk");
+                        try {
+                            int result = PluginManager.getInstance().installPackage(pluginFile.getAbsolutePath(), PackageManagerCompat.INSTALL_REPLACE_EXISTING);
+                            Log.d(TAG, "DashboardIds.START_PLUGIN_1 result: " + result);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                        startActivity(new Intent("com.jayden.plugin1.launchactivity"));
                         break;
                 }
             }
@@ -179,14 +201,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(newBase);
-        try {
-            // 在这里进行Hook
-            HookHelper.attachContext();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
