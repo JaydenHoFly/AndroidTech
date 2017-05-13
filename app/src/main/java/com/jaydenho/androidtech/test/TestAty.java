@@ -7,6 +7,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +21,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -68,15 +74,15 @@ public class TestAty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aty_test);
 
-        mNameTV = (TextView) findViewById(R.id.tv_name);
+       /* mNameTV = (TextView) findViewById(R.id.tv_name);
         String name = "一二三四五六七";
         String testStr = "你好，测试。saf,.;1；2：3？4！";
-     /*   String regex = "[\\u3002\\uff1b\\uff0c\\uff1a\\u201c\\u201d\\uff08\\uff09\\u3001\\uff1f\\u300a\\u300b]";
+     *//*   String regex = "[\\u3002\\uff1b\\uff0c\\uff1a\\u201c\\u201d\\uff08\\uff09\\u3001\\uff1f\\u300a\\u300b]";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(testStr);
         if (m.find()) {
             Log.d(TAG,"group0: " + m.group(0));
-        }*/
+        }*//*
 //        mNameTV.setText(cutTextEllipseEnd(name, 5));
         mNameTV.setText(Html.fromHtml("&quot;你好&quot;"));
 
@@ -95,7 +101,7 @@ public class TestAty extends AppCompatActivity {
         Log.d(TAG, Arrays.toString(list.toArray()));
 
         mImageLoaderTestIv = (ImageView) findViewById(R.id.test_image_loader_iv);
-        /*ImageLoader.getInstance().displayImage("http://pic34.nipic.com/20131021/11569127_170602617166_2.jpg", mImageLoaderTestIv, getSujectIconDisplayOptions());
+        *//*ImageLoader.getInstance().displayImage("http://pic34.nipic.com/20131021/11569127_170602617166_2.jpg", mImageLoaderTestIv, getSujectIconDisplayOptions());
         ImageLoader.getInstance().loadImage("http://pic60.nipic.com/file/20150303/12216461_110913232000_2.jpg", getSujectIconDisplayOptions(), new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -116,7 +122,7 @@ public class TestAty extends AppCompatActivity {
             public void onLoadingCancelled(String s, View view) {
 
             }
-        });*/
+        });*//*
         String str = "我是原始值";
         checkString(str);
         Log.d(TAG, "checkString: " + str);
@@ -148,11 +154,11 @@ public class TestAty extends AppCompatActivity {
         orderIds.add("11374");
         orderIds.add("11378");
         orderIds.add("11371");
-        testSortString(orderIds);
+        testSortString(orderIds);*/
 
         jump();
 
-        new Thread(new Runnable() {
+  /*      new Thread(new Runnable() {
             @Override
             public void run() {
                 writeParcel2File();
@@ -163,7 +169,7 @@ public class TestAty extends AppCompatActivity {
 
         testStringFormat();
 
-        testListFormat();
+        testListFormat();*/
 
     }
 
@@ -191,6 +197,12 @@ public class TestAty extends AppCompatActivity {
         }
     }
 
+    private void testArrayIterator() {
+        String[] strs = null;
+        for(String str : strs) {
+
+        }
+    }
     private void testStringFormat() {
         Log.e(TAG, String.format("test format %d-%s-%s", 12, "21", 12));
         Log.e(TAG, String.format("test format %d-%s-%s", 12, "21", null));
@@ -247,9 +259,10 @@ public class TestAty extends AppCompatActivity {
     private void jump() {
         WebView webview = (WebView) findViewById(R.id.wv);
 //        String url = "https://m.maila88.com/mailaIndex?mailaAppKey=MDLwQB58MLrXyAWXiRzzH&mailaOs=android";
-        String url = "https://cas.sh.cn.criteo.com/delivery/r/afr.php?did=59097ccea1ee61ec88f5c69594ef1f00&z=123&u=%7CswkfdbcQtkvui12846RboqJLwRhNPVl34PioXE6yyZw%3D%7C&c1=64huUomFIxsbbfC6BUo1bAIUwNPLnARfF4Ndf6RWTRNKshGo9uOJFa4y7YpWro_E7A97gold_uS11r4nF0bccBvIrKjJhZ4AqRzgtbI5nEF55zoPt8_RpxWuuhJSjLsERRFRmY0_PuZSHbtQSTS4J_tvOsae3ab_VV3HbU0hEjZZY07sx_ywh_fNb9fS9n-XBA2TvhvMY52La7qe1grEZPiwNN1jxaYPQDIGqyNrWVHG5gCAiivf4X65dP7YoGLCxxJZ47IzAuavjHD_yOtuvHYg52IgvrElK_iuQ7pInlVdwka_OU9OM7MFVumvlkeh";
+//        String url = "https://cas.sh.cn.criteo.com/delivery/r/afr.php?did=59097ccea1ee61ec88f5c69594ef1f00&z=123&u=%7CswkfdbcQtkvui12846RboqJLwRhNPVl34PioXE6yyZw%3D%7C&c1=64huUomFIxsbbfC6BUo1bAIUwNPLnARfF4Ndf6RWTRNKshGo9uOJFa4y7YpWro_E7A97gold_uS11r4nF0bccBvIrKjJhZ4AqRzgtbI5nEF55zoPt8_RpxWuuhJSjLsERRFRmY0_PuZSHbtQSTS4J_tvOsae3ab_VV3HbU0hEjZZY07sx_ywh_fNb9fS9n-XBA2TvhvMY52La7qe1grEZPiwNN1jxaYPQDIGqyNrWVHG5gCAiivf4X65dP7YoGLCxxJZ47IzAuavjHD_yOtuvHYg52IgvrElK_iuQ7pInlVdwka_OU9OM7MFVumvlkeh";
 //        String url = "http://dl.xunlei.com/";
 //        String url = "http://cat.sh.cn.criteo.com/delivery/ckn.php?cppv=1&cpp=7dHKgHx5TEp6eHVYMVR1U3E2ZlpFMlZWTnpiWDROTml5UmpqWmYwYmZXOFFqektDM3FJb2hZZ2EwMVd6d1lGN1A2dDlzWTNYTmZSV0VObGNUbytjdkJ3dm41U1pZa2FXY2tzazFNZ1lLNzFKVnlwTnJYeWtmWkZhRitJUUFQelhMSy9YWlpHc3pwek5paEp3M05HMGJ3TFhXemlYemRtWEpLN0FHZUcrTDNYZzNmdjFXUTAwU3FINTJrc1B5dTZxWGx5a1J2WGplM3B3eit6OGZlSGhEQnZkWk1SQnBTU1loaWk4UFI0d0R4eWpqdjVrVHhTejRLT2EzSUxWdU1Ia1BGUk9kTVAxTGpJZGpPYXVYRlZrS2h1WkVPdC81YkUzRFRGU2xUWlNUMUxkRndnVU03ODljZGlRZ20vU2dQbE00VGJpZFlMVGNHeFl3MG4xdkk5cGdNa2NMOFRtdDNhZS9qWTFNTFJ0c2Q2dk1lVGNINGNsYTlwam1tWDhvM0VQOHZjK0svNkZ1TlRpRTZ5Ui9FREMra05LVWUwMjhjcUhod0FDZ0RFanpRajdSaDF3dDhuclhCMnVaSlc2YWphanp0TUxvOEN5bE10TURnV3lLK2xkWWNUTHF2MXNob1V6TnJZQ0FETlNObGkyVXc0ND18&maxdest=ctrip%3A%2F%2Fwireless%2FInlandHotel%3FcheckInDate%3D20170504%26checkOutDate%3D20170505%26hotelId%3D687592%26allianceid%3D288562%26sid%3D960124%26sourceid%3D2504%26ouid%3DAndroid_Singapore_687592";
+        String url = "https://m.ctrip.com/webapp/hotel/hoteldetail/687592/checkin-1-7.html?allianceid=288562&sid=964106&sourceid=2504&sepopup=12";
 //        String url = "http://blog.csdn.net/jiangwei0910410003/article/details/16859039";
 
         adIntentUtils = new ADIntentUtils(this);
@@ -267,10 +280,48 @@ public class TestAty extends AppCompatActivity {
 
     private class MyWebViewClient extends WebViewClient {
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            return adIntentUtils.shouldOverrideUrlLoadingByApp(view, url) || super.shouldOverrideUrlLoading(view, url);
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            Log.d(TAG,"onPageStarted url: " + url);
         }
 
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            Log.d(TAG,"onPageFinished url: " + url);
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if(!url.startsWith("http")){
+                return true;
+            }
+            return false;
+//            return adIntentUtils.shouldOverrideUrlLoadingByApp(view, url) || super.shouldOverrideUrlLoading(view, url);
+        }
+
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            Log.d(TAG,"onReceivedError");
+        }
+
+        @Override
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            super.onReceivedError(view, request, error);
+            Log.d(TAG,"onReceivedError");
+        }
+
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            super.onReceivedSslError(view, handler, error);
+            Log.d(TAG,"onReceivedSslError");
+        }
+
+        @Override
+        public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+            super.onReceivedHttpError(view, request, errorResponse);
+            Log.d(TAG,"onReceivedHttpError");
+        }
     }
 
     private void testSortString(List<String> orderIds) {
@@ -415,10 +466,10 @@ public class TestAty extends AppCompatActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (!a) {
+     /*   if (!a) {
             showPPW(mNameTV);
         }
-        a = true;
+        a = true;*/
     }
 
     private void initPPW() {

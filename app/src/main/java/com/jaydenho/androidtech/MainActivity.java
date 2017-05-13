@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.jaydenho.androidtech.plugin.droidplugin.hookactivity.HookHelper;
 import com.jaydenho.androidtech.test.TestAty;
 import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
+import com.jaydenho.androidtech.widget.recyclerview.RecyclerViewActivity;
 import com.jaydenho.androidtech.widget.view.viewpager.InfiniteAutoScrollViewPagerActivity;
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.morgoo.helper.compat.PackageManagerCompat;
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, AttrAty.class));
                         break;
                     case DashboardIds.VIEW:
-                        startActivity(new Intent(mContext, InfiniteAutoScrollViewPagerActivity.class));
+                        startActivity(new Intent(mContext, RecyclerViewActivity.class));
                         break;
                     case DashboardIds.HOT_FIX:
                         startActivity(new Intent(mContext, HotFixActivity.class));

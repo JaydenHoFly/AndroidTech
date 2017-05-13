@@ -29,6 +29,7 @@
         <activity android:name=".databinding.DataBindingAty"/>
         <activity
             android:name=".test.TestAty"
+            android:hardwareAccelerated="false"
             android:launchMode="singleTop"/>
         <activity android:name=".widget.anim.AttrAty"/>
         <activity android:name=".widget.anim.ValueAnimatorAty"/>
@@ -48,6 +49,8 @@
         </activity>
         <activity android:name=".plugin.droidplugin.PluginActivityStub"/>
         <activity android:name=".ipc.binder.AIDLActivity"/>
+        <activity android:name=".MainActivity2"/>
+        <activity android:name=".widget.recyclerview.RecyclerViewActivity"/>
     </application>
 
 </manifest>

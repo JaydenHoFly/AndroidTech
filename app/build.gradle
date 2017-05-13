@@ -64,6 +64,7 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
     //local unit test
     // Required -- JUnit 4 framework
     testCompile 'junit:junit:4.12'
@@ -86,7 +87,6 @@ dependencies {
     compile 'com.github.Cutta:GifView:1.1'
     compile project(':extensionalviewpager')
     compile project(':DroidPlugin')
-
     //Tinker
     //可选，用于生成application类
     provided("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
