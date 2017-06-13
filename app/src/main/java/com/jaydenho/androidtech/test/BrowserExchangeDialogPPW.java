@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -33,13 +35,15 @@ public class BrowserExchangeDialogPPW extends PopupWindow {
 
     private void init() {
         LinearLayout parentView = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.ppw_browser_exchange_dialog, null);
+        //根据源码,parentView的width在popupwindow中一律被设置成了match_parent
+        parentView.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
         initView(parentView);
         setFocusable(true);
         setOutsideTouchable(true);
         setBackgroundDrawable(new ColorDrawable(0x00000000));
 //            setAnimationStyle(R.style.AnimBottom);
-        setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
-        setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        setWidth((int) mContext.getResources().getDimension(R.dimen.test_width));
+        setHeight((int) mContext.getResources().getDimension(R.dimen.test_height));
         setContentView(parentView);
     }
 

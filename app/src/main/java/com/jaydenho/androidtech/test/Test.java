@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,6 +63,12 @@ public class Test {
         testListInert();
 
         testYu();
+
+        testTimeUnit();
+    }
+
+    private static void testTimeUnit(){
+        System.out.print("TimeUnit.MINUTES.toMillis(2):" + TimeUnit.MINUTES.toMillis(2));
     }
 
     private static void testYu() {

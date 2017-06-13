@@ -41,9 +41,9 @@ public class AndroidApplicationLike extends DefaultApplicationLike {
                 .build();
         StrictMode.setThreadPolicy(tp);
         super.onCreate();
-//        initImageLoader(this);
+        initImageLoader(getApplicationInstance());
         initTinker();
-        CrashHandler.getInstance().init(getApplication());
+//        CrashHandler.getInstance().init(getApplication());
     }
 
     public static Application getApplicationInstance() {

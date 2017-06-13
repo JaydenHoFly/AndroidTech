@@ -47,5 +47,13 @@ public class RecyclerViewActivity extends BaseActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new CustomItemTouchHelperCallback(mCustomAdapter));
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
 
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+            }
+        });
+
     }
 }

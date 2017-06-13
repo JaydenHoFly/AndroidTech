@@ -37,6 +37,7 @@ import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.util.FileUtils;
 import com.jaydenho.androidtech.util.LocationUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,8 +74,8 @@ public class TestAty extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aty_test);
-
-       /* mNameTV = (TextView) findViewById(R.id.tv_name);
+        mNameTV = (TextView) findViewById(R.id.tv_name);
+       /*
         String name = "一二三四五六七";
         String testStr = "你好，测试。saf,.;1；2：3？4！";
      *//*   String regex = "[\\u3002\\uff1b\\uff0c\\uff1a\\u201c\\u201d\\uff08\\uff09\\u3001\\uff1f\\u300a\\u300b]";
@@ -129,8 +130,6 @@ public class TestAty extends AppCompatActivity {
 
         testProbability();
 
-        initPPW();
-
         mHandler.sendEmptyMessageDelayed(1, 2000);
 
         a();
@@ -156,7 +155,11 @@ public class TestAty extends AppCompatActivity {
         orderIds.add("11371");
         testSortString(orderIds);*/
 
-        jump();
+        mImageLoaderTestIv = (ImageView) findViewById(R.id.test_image_loader_iv);
+        ImageLoader.getInstance().displayImage("http://pic34.nipic.com/20131021/11569127_170602617166_2.jpg", mImageLoaderTestIv, getSujectIconDisplayOptions());
+        initPPW();
+
+//        jump();
 
   /*      new Thread(new Runnable() {
             @Override
@@ -199,10 +202,11 @@ public class TestAty extends AppCompatActivity {
 
     private void testArrayIterator() {
         String[] strs = null;
-        for(String str : strs) {
+        for (String str : strs) {
 
         }
     }
+
     private void testStringFormat() {
         Log.e(TAG, String.format("test format %d-%s-%s", 12, "21", 12));
         Log.e(TAG, String.format("test format %d-%s-%s", 12, "21", null));
@@ -282,18 +286,18 @@ public class TestAty extends AppCompatActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            Log.d(TAG,"onPageStarted url: " + url);
+            Log.d(TAG, "onPageStarted url: " + url);
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            Log.d(TAG,"onPageFinished url: " + url);
+            Log.d(TAG, "onPageFinished url: " + url);
         }
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if(!url.startsWith("http")){
+            if (!url.startsWith("http")) {
                 return true;
             }
             return false;
@@ -302,25 +306,25 @@ public class TestAty extends AppCompatActivity {
 
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            Log.d(TAG,"onReceivedError");
+            Log.d(TAG, "onReceivedError");
         }
 
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             super.onReceivedError(view, request, error);
-            Log.d(TAG,"onReceivedError");
+            Log.d(TAG, "onReceivedError");
         }
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             super.onReceivedSslError(view, handler, error);
-            Log.d(TAG,"onReceivedSslError");
+            Log.d(TAG, "onReceivedSslError");
         }
 
         @Override
         public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
             super.onReceivedHttpError(view, request, errorResponse);
-            Log.d(TAG,"onReceivedHttpError");
+            Log.d(TAG, "onReceivedHttpError");
         }
     }
 
@@ -466,10 +470,10 @@ public class TestAty extends AppCompatActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-     /*   if (!a) {
+        if (!a) {
             showPPW(mNameTV);
         }
-        a = true;*/
+        a = true;
     }
 
     private void initPPW() {
