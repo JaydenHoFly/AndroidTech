@@ -28,18 +28,18 @@ public class SimpleLinearLayout extends ViewGroup {
         int measureWidth = MeasureSpec.getSize(widthMeasureSpec);
         int measureHeight = MeasureSpec.getSize(heightMeasureSpec);
 
-        int height = 0;
-        int width = 0;
+        int heightMax = 0;
+        int widthTotal = 0;
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
-            measureChild(child, widthMeasureSpec, heightMeasureSpec);
+            measureChildWithMargins(child, widthMeasureSpec, widthTotal, heightMeasureSpec, 0);
             MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
-            height = Math.max(child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin, height);
-            width += child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
+            heightMax = Math.max(child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin, heightMax);
+            widthTotal += child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
         }
-        setMeasuredDimension(MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.EXACTLY ? measureWidth : Math.min(measureWidth, width + getPaddingLeft() + getPaddingRight()),
-                MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.EXACTLY ? measureHeight : Math.min(measureHeight, height + getPaddingTop() + getPaddingBottom()));
+        setMeasuredDimension(MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.EXACTLY ? measureWidth : Math.min(measureWidth, widthTotal + getPaddingLeft() + getPaddingRight()),
+                MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.EXACTLY ? measureHeight : Math.min(measureHeight, heightMax + getPaddingTop() + getPaddingBottom()));
     }
 
     @Override
