@@ -51,6 +51,7 @@
         <activity android:name=".ipc.binder.AIDLActivity"/>
         <activity android:name=".MainActivity2"/>
         <activity android:name=".widget.recyclerview.RecyclerViewActivity"/>
+        <activity android:name=".widget.view.custom.CustomViewAty"/>
     </application>
 
 </manifest>
