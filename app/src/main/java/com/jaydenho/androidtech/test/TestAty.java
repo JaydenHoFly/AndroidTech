@@ -50,6 +50,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -174,6 +175,20 @@ public class TestAty extends AppCompatActivity {
 
         testListFormat();*/
 
+//        printThread();
+    }
+
+    private void printThread() {
+        Map<Thread, StackTraceElement[]> stacks = Thread.getAllStackTraces();
+        Set<Thread> set = stacks.keySet();
+        for (Thread key : set) {
+            StackTraceElement[] stackTraceElements = stacks.get(key);
+            Log.d(TAG, "---- print thread: " + key.getName() + " start ----");
+            for (StackTraceElement st : stackTraceElements) {
+                Log.d(TAG, "StackTraceElement: " + st.toString());
+            }
+            Log.d(TAG, "---- print thread: " + key.getName() + " end ----");
+        }
     }
 
     class dns extends Observable implements Observer {
