@@ -19,6 +19,8 @@ import android.graphics.Path;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Region;
+import android.graphics.RegionIterator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -83,7 +85,31 @@ public class BasicAttrsView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         initPaint();
-        drawA(canvas);
+        learnCanvas(canvas);
+    }
+
+    private void learnRegion(Canvas canvas) {
+        mPaint.setColor(getResources().getColor(R.color.colorAccent));
+        mPaint.setStyle(Paint.Style.STROKE);
+        Rect r1 = new Rect(100, 50, 150, 200);
+        Rect r2 = new Rect(50, 100, 200, 150);
+        canvas.drawRect(r1, mPaint);
+        canvas.drawRect(r2, mPaint);
+
+        mPaint.setColor(Color.GREEN);
+        mPaint.setStyle(Paint.Style.FILL);
+        Region rgn = new Region();
+        rgn.set(r1);
+        rgn.op(r2, Region.Op.DIFFERENCE);
+        drawRegion(canvas, rgn, mPaint);
+    }
+
+    private void drawRegion(Canvas canvas, Region region, Paint paint) {
+        RegionIterator regionIterator = new RegionIterator(region);
+        Rect r = new Rect();
+        while (regionIterator.next(r)) {
+            canvas.drawRect(r, paint);
+        }
     }
 
     private void drawA(Canvas canvas) {

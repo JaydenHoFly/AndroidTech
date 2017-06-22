@@ -33,21 +33,8 @@ public class LoveView extends View {
 
     private void getAttrs(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.LoveView);
-        int indexCount = typedArray.getIndexCount();
-        int index;
-        int radius = 0;
-        ColorStateList color = null;
-        for (int i = 0; i < indexCount; i++) {
-            index = typedArray.getIndex(i);
-            switch (index) {
-                case R.styleable.LoveView_j_radius:
-                    radius = typedArray.getDimensionPixelOffset(index, 10);
-                    break;
-                case R.styleable.LoveView_j_color:
-                    color = typedArray.getColorStateList(index);
-                    break;
-            }
-        }
+        int radius = typedArray.getDimensionPixelOffset(R.styleable.LoveView_j_radius, 10);
+        ColorStateList color = typedArray.getColorStateList(R.styleable.LoveView_j_color);
         typedArray.recycle();
         setColor(color != null ? color : ColorStateList.valueOf(0xFF000000));
         setRadius(radius);
