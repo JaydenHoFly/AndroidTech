@@ -19,6 +19,8 @@ import java.lang.ref.WeakReference;
 
 /**
  * Created by hedazhao on 2017/6/23.
+ * 方法一、先生成遮罩Bitmap，然后通过Xfermode的特性将遮罩和目标图像结合，得到圆角图片；
+ * 方法二、利用BitmapShader（图章），用目标图片生成BitmapShader，然后利用带BitmapShader的Paint绘制各类图形，生成的图形中，底图就是目标图片；
  */
 
 public class CircleImageView extends android.support.v7.widget.AppCompatImageView {

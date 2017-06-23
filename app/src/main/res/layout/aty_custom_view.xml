@@ -104,9 +104,10 @@
     </com.jaydenho.androidtech.widget.view.custom.WaterFlowLayout>
 
     <com.jaydenho.androidtech.widget.view.CircleImageView
+        android:id="@+id/circleImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/bg_launch"
+        android:src="@mipmap/blue_pool"
         app:j_corner="50"/>
 
     <ImageView
