@@ -53,8 +53,8 @@ public class TelescopeView extends View {
             mBgBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvasBg = new Canvas(mBgBitmap);
             //只是将mSceneBitmap通过canvasBg绘制在了mBgBitmap上，并没有绘制在屏幕上，这步操作目的是生成一个和控件大小一致的Bitmap
-            //无论你利用绘图函数绘多大一块，在哪绘制，与Shader无关。因为Shader总是在控件的左上角开始，而你绘制的部分只是显示出来的部分而已。没有绘制的部分虽然已经生成，但只是不会显示出来罢了。
             canvasBg.drawBitmap(mSceneBitmap, null, new Rect(0, 0, getWidth(), getHeight()), mPaint);
+            //无论你利用绘图函数绘多大一块，在哪绘制，与Shader无关。因为Shader总是在控件的左上角开始，而你绘制的部分只是显示出来的部分而已。没有绘制的部分虽然已经生成，但只是不会显示出来罢了。
             mBitmapShader = new BitmapShader(mBgBitmap, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
         }
         if (mFingerPoint.x != -1 && mFingerPoint.y != -1) {
