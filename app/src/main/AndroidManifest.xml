@@ -31,6 +31,7 @@
             android:name=".test.TestAty"
             android:hardwareAccelerated="false"
             android:launchMode="singleTop"/>
+        <activity android:name=".test.TestAty2"/>
         <activity android:name=".widget.anim.AttrAty"/>
         <activity android:name=".widget.anim.ValueAnimatorAty"/>
         <activity android:name=".widget.anim.ShootIconAty"/>

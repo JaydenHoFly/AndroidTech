@@ -27,6 +27,7 @@ import com.jaydenho.androidtech.ipc.binder.AIDLActivity;
 import com.jaydenho.androidtech.plugin.droidplugin.Utils;
 import com.jaydenho.androidtech.plugin.droidplugin.hookactivity.HookHelper;
 import com.jaydenho.androidtech.test.TestAty;
+import com.jaydenho.androidtech.test.TestAty2;
 import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
 import com.jaydenho.androidtech.widget.recyclerview.RecyclerViewActivity;
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, DataBindingAty.class));
                         break;
                     case DashboardIds.TEST:
-                        startActivity(new Intent(mContext, TestAty.class));
+                        startActivity(new Intent(mContext, TestAty2.class));
                         break;
                     case DashboardIds.ANIM:
                         startActivity(new Intent(mContext, AttrAty.class));
