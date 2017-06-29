@@ -108,10 +108,21 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@mipmap/blue_pool"
+        android:visibility="gone"
         app:j_corner="50"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/third_weibo_circle"/>
+    <com.jaydenho.androidtech.widget.view.PullScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/splash_default_bird"/>
+        </LinearLayout>
+    </com.jaydenho.androidtech.widget.view.PullScrollView>
 </LinearLayout>
