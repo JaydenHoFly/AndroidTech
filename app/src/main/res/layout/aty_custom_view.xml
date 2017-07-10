@@ -113,7 +113,8 @@
 
     <com.jaydenho.androidtech.widget.view.PullScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,4 +126,19 @@
                 android:src="@mipmap/splash_default_bird"/>
         </LinearLayout>
     </com.jaydenho.androidtech.widget.view.PullScrollView>
+
+    <com.jaydenho.androidtech.widget.view.matrix.LearnMatrixView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="100dp"
+        android:visibility="gone"/>
+
+    <com.jaydenho.androidtech.widget.view.custom.ZoomImageView
+        android:id="@+id/zoomImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:src="@mipmap/splash_ad_content_bg"/>
 </LinearLayout>
