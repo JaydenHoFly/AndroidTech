@@ -2,7 +2,9 @@ package com.jaydenho.androidtech.widget.view.custom;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -17,6 +19,8 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
+
+import com.jaydenho.androidtech.R;
 
 /**
  * Created by hedazhao on 2017/7/5.
@@ -63,6 +67,10 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView
 
     public ZoomImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        TypedArray t = context.obtainStyledAttributes(attrs, R.styleable.ZoomImageView);
+        float f = t.getFloat(R.styleable.ZoomImageView_j_zoom_corner, 0.3f);
+        Log.d(TAG, "corner: " + f);
+        t.recycle();
         init(context);
     }
 
@@ -172,6 +180,17 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView
                     mMatrix.postTranslate(dx, dy);
                     checkBorderWhenDrag(isXDrag, isYDrag);
                     setImageMatrix(mMatrix);
+                    Log.d(TAG, "------------------");
+                    Log.d(TAG, "getX(): " + getX() + " getY(): " + getY());
+                    Log.d(TAG, "getLeft() " + getLeft() + " getTop(): " + getTop());
+                    Rect rect1 = new Rect();
+                    getLocalVisibleRect(rect1);
+                    Rect rect2 = new Rect();
+                    getGlobalVisibleRect(rect2);
+                    Log.d(TAG, "localVisibleRect " + rect1.toString() + " globalVisibleRect: " + rect2.toString());
+                    Log.d(TAG, "event.getX(): " + event.getX() + " event.getY() " + event.getY());
+                    Log.d(TAG, "event.getRawX(): " + event.getRawX() + " event.getRawY() " + event.getRawY());
+                    Log.d(TAG, "------------------");
                 }
                 break;
         }
@@ -183,12 +202,12 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView
     @Override
     public void onGlobalLayout() {
         if (!once) {
-            resetDrawable();
+            initDrawable();
             once = true;
         }
     }
 
-    private void resetDrawable() {
+    private void initDrawable() {
         Drawable d = getDrawable();
         int dw = d.getIntrinsicWidth();
         int dh = d.getIntrinsicHeight();
@@ -208,6 +227,10 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView
         mMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
         mMatrix.postScale(scale, scale, width / 2, height / 2);
         setImageMatrix(mMatrix);
+        Log.d(TAG, "dw: " + dw + " dh: " + dh);
+        Log.d(TAG, "width: " + width + " height: " + height);
+        Log.d(TAG, "scale: " + scale);
+        Log.d(TAG, "onGlobalLayout matrix: " + mMatrix.toString());
     }
 
     private boolean isDrag(float dx, float dy) {

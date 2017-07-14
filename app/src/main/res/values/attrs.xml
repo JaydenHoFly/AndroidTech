@@ -18,4 +18,8 @@
     <declare-styleable name="CircleImageView">
         <attr name="j_corner" format="float"/>
     </declare-styleable>
+
+    <declare-styleable name="ZoomImageView">
+        <attr name="j_zoom_corner" format="float"/>
+    </declare-styleable>
 </resources>

@@ -139,6 +139,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:layout_margin="50dp"
         android:background="@color/colorPrimary"
-        android:src="@mipmap/splash_ad_content_bg"/>
+        android:src="@mipmap/blue_pool"
+        android:visibility="gone"
+        app:j_zoom_corner="@dimen/choiceness_ad_width_height_radio"/>
+
+    <com.jaydenho.androidtech.widget.view.custom.TaiJiView
+        android:layout_width="200dp"
+        android:layout_height="200dp"/>
 </LinearLayout>
