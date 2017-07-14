@@ -147,5 +147,11 @@
 
     <com.jaydenho.androidtech.widget.view.custom.TaiJiView
         android:layout_width="200dp"
-        android:layout_height="200dp"/>
+        android:layout_height="200dp"
+        android:visibility="gone"/>
+
+    <com.jaydenho.androidtech.widget.view.custom.CircleMenuView
+        android:layout_width="200dp"
+        android:layout_height="200dp"></com.jaydenho.androidtech.widget.view.custom.CircleMenuView>
+
 </LinearLayout>
