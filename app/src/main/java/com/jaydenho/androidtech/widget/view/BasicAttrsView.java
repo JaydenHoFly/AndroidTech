@@ -12,8 +12,10 @@ import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.DashPathEffect;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PathMeasure;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
@@ -82,7 +84,35 @@ public class BasicAttrsView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         initPaint();
-        learnCanvas(canvas);
+        learnPathMeasure(canvas);
+    }
+
+    private void learnPathMeasure(Canvas canvas) {
+        canvas.translate(getWidth() / 2, getHeight() / 2);
+        Path path = new Path();
+        path.lineTo(100, 200);
+        path.rLineTo(150, -100);
+        path.close();
+        PathMeasure pathMeasure = new PathMeasure(path, false);
+        Log.d(TAG, "learnPathMeasure getLength: " + pathMeasure.getLength());
+        Path dst = new Path();
+        dst.lineTo(-100, -100);
+        boolean isSegment = pathMeasure.getSegment(0, 100, dst, true);
+        Log.d(TAG, "learnPathMeasure, isSegment: " + isSegment);
+
+        canvas.drawPath(dst, mPaint);
+    }
+
+    private void learnPath(Canvas canvas) {
+        Path path = new Path();
+        path.lineTo(100, 200);
+        path.rLineTo(150, -100);
+        path.close();
+        Matrix matrix = new Matrix();
+        matrix.postScale(2, 3);
+        matrix.postTranslate(100, 0);
+        path.transform(matrix);
+        canvas.drawPath(path, mPaint);
     }
 
     private void learnRegion(Canvas canvas) {

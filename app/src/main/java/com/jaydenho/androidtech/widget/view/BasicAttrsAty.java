@@ -34,6 +34,6 @@ public class BasicAttrsAty extends Activity {
         mLotteryView = new LotteryView(this);
         mQQMsgClearView = new QQMsgClearView(this);
         mTelescopeView = new TelescopeView(this);
-        mRootView.addView(mTelescopeView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mRootView.addView(mBasicView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 }
