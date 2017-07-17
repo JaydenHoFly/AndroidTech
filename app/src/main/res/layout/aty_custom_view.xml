@@ -152,6 +152,33 @@
 
     <com.jaydenho.androidtech.widget.view.custom.CircleMenuView
         android:layout_width="200dp"
-        android:layout_height="200dp"></com.jaydenho.androidtech.widget.view.custom.CircleMenuView>
+        android:layout_height="200dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/third_qq_circle"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/third_weibo_circle"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/third_qq_circle_press"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/third_weibo_circle"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/circle_ball"/>
+
+    </com.jaydenho.androidtech.widget.view.custom.CircleMenuView>
 
 </LinearLayout>
