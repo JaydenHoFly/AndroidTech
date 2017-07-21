@@ -107,13 +107,14 @@ public class CircleMenuView extends ViewGroup {
         float perAngle = mMenuCount == 0 ? 0 : 360 / (mMenuCount);
         //从初始角度逆时针开始布局
         Log.d(TAG, "onLayout, mStartAngle: " + mStartAngle);
-        float angle = mStartAngle % 360;
+        float angle = mStartAngle %= 360;
         Log.d(TAG, "onLayout, angle: " + angle);
         for (int i = 0; i < mMenuCount; i++) {
             View child = getChildAt(i);
             //根据三角函数，可以计算出每个菜单icon中心点的坐标
             int x = (int) (menuCentreCircleRadius * Math.cos(Math.toRadians(angle))) + mCentrePoint.x;
-            int y = (int) (menuCentreCircleRadius * Math.sin(Math.toRadians(angle))) + mCentrePoint.y;
+            //计算出的值是基于直角坐标系的，需要转换成android坐标系
+            int y = mCentrePoint.y - (int) (menuCentreCircleRadius * Math.sin(Math.toRadians(angle)));
             Log.d(TAG, "onLayout, x: " + x + " y: " + y);
             //根据菜单icon的中心点坐标得到菜单icon的layout参数
             setChildFrame(child, x, y);
@@ -175,14 +176,40 @@ public class CircleMenuView extends ViewGroup {
 
                 break;
             case MotionEvent.ACTION_MOVE:
-                double currentAngle = getAngle(mCurrentTouchX, mCurrentTouchY);
-                Log.d(TAG, "onTouchEvent currentAngle: " + currentAngle);
-                double preAngle = getAngle(mPreTouchX, mPreTouchY);
+                float preAngle = getAngle(mPreTouchX, mPreTouchY);
                 Log.d(TAG, "onTouchEvent preAngle: " + preAngle);
-                float dAngle = (float) (currentAngle - preAngle);
+                float currentAngle = getAngle(mCurrentTouchX, mCurrentTouchY);
+                Log.d(TAG, "onTouchEvent currentAngle: " + currentAngle);
+                int preQuadrant = getQuadrant(mPreTouchX, mPreTouchY);
+                Log.d(TAG, "onTouchEvent preQuadrant: " + preQuadrant);
+                int currentQuadrant = getQuadrant(mCurrentTouchX, mCurrentTouchY);
+                Log.d(TAG, "onTouchEvent currentQuadrant: " + currentQuadrant);
+                //转过的角度，逆时针转动为正值，顺时针转动为负值
+                float dAngle = 0;
+                //根据getAngle方法得出的角度，逆时针，1象限:[0,90],2象限:[90,0],3象限:[0,-90],4象限:[-90,0]
+                if (preQuadrant == currentQuadrant) {
+                    //如果前后两个触摸点都在同一个象限
+                    if (currentQuadrant == 1 || currentQuadrant == 4) {
+                        //1,4象限,角度值逆时针递增
+                        dAngle = currentAngle - preAngle;
+                    } else {
+                        //2,3象限,角度值逆时针递减，而逆时针转动dAngle应该是正值，所以交换减
+                        dAngle = preAngle - currentAngle;
+                    }
+                } else {
+                    if ((preQuadrant == 1 && currentAngle == 2) || (preQuadrant == 3 && currentAngle == 4)) {
+                        dAngle = (90 - Math.abs(currentAngle)) + (90 - Math.abs(preAngle));
+                    } else if ((preQuadrant == 2 && currentAngle == 1) || (preQuadrant == 4 && currentAngle == 3)) {
+                        dAngle = -((90 - Math.abs(currentAngle)) + (90 - Math.abs(preAngle)));
+                    } else if ((preQuadrant == 2 && currentAngle == 3) || (preQuadrant == 4 && currentAngle == 1)) {
+                        dAngle = Math.abs(currentAngle) + Math.abs(preAngle);
+                    } else if ((preQuadrant == 3 && currentAngle == 2) || (preQuadrant == 1 && currentAngle == 4)) {
+                        dAngle = -(Math.abs(currentAngle) + Math.abs(preAngle));
+                    }
+                }
                 Log.d(TAG, "onTouchEvent dAngle: " + dAngle);
                 //由于三角函数坐标系的y轴方向和控件坐标系的y轴方向是相反的，
-                mStartAngle = mStartAngle - dAngle;
+                mStartAngle += dAngle;
                 requestLayout();
                 break;
         }
@@ -198,24 +225,16 @@ public class CircleMenuView extends ViewGroup {
         double x = touchX - mCentrePoint.x;
         //android坐标系的y轴和直角坐标系相反
         double y = mCentrePoint.y - touchY;
-        return (float) Math.toDegrees(Math.asin(y / Math.hypot(x,y)));
+        return (float) Math.toDegrees(Math.asin(y / Math.hypot(x, y)));
     }
 
     private int getQuadrant(float x, float y) {
         float dx = x - mCentrePoint.x;
-        float dy = y - mCentrePoint.y;
-        if (dx > 0) {
-            if (dy > 0) {
-                return 1;
-            } else {
-                return 4;
-            }
+        float dy = mCentrePoint.y - y;
+        if (dx >= 0) {
+            return dy >= 0 ? 1 : 4;
         } else {
-            if (dy > 0) {
-                return 2;
-            } else {
-                return 3;
-            }
+            return dy >= 0 ? 2 : 3;
         }
     }
 }
