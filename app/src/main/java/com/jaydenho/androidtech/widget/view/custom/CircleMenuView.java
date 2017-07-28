@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Point;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewConfigurationCompat;
@@ -20,6 +19,7 @@ import android.view.animation.DecelerateInterpolator;
 
 /**
  * Created by hedazhao on 2017/7/14.
+ * 注意Android中的坐标系，Y轴方向和直角坐标系的Y轴相反，要换算。
  */
 
 public class CircleMenuView extends ViewGroup

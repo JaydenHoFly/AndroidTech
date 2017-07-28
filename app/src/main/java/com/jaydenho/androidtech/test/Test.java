@@ -2,10 +2,13 @@ package com.jaydenho.androidtech.test;
 
 import android.graphics.Path;
 
+import com.jaydenho.androidtech.algorithm.collections.MyArrayList;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -65,22 +68,53 @@ public class Test {
         testYu();
 
         testTimeUnit();
+
+        testMyArrayList();
     }
 
-    private static void testTimeUnit(){
-        System.out.print("TimeUnit.MINUTES.toMillis(2):" + TimeUnit.MINUTES.toMillis(2));
+    private static void testMyArrayList() {
+        MyArrayList<String> list = new MyArrayList<>();
+        list.add("1");
+        list.add(0, "2");
+        MyArrayList<String> list2 = new MyArrayList<>();
+        list2.add("-1");
+        list2.addAll(list);
+        System.out.println("testMyArrayList list: " + list.toString());
+        System.out.println("testMyArrayList list2: " + list2.toString());
+        list.remove(0);
+        list.remove("1");
+        System.out.println("testMyArrayList after remove list: " + list.toString());
+
+        List<String> l = new ArrayList<>();
+        MyArrayList<String> list3 = new MyArrayList<>();
+        list3.add("1");
+        list3.add("2");
+        list3.add("3");
+        list3.add("4");
+        Iterator it = list3.iterator();
+        while (it.hasNext()) {
+            System.out.println("testMyArrayList. iterator. next: " + it.next());
+            it.remove();
+        }
+        System.out.println("testMyArrayList. after remove. list3: " + list3.toString());
+    }
+
+    private static void testTimeUnit() {
+        System.out.println("TimeUnit.MINUTES.toMillis(2):" + TimeUnit.MINUTES.toMillis(2));
     }
 
     private static void testYu() {
-        System.out.println("3 % 2: " +   3 % 2);
-        System.out.println("3 % 2.0: " +   3 % 2.0);
+        System.out.println("3 % 2: " + 3 % 2);
+        System.out.println("3 % 2.0: " + 3 % 2.0);
 
     }
-    private  static void testListInert() {
+
+    private static void testListInert() {
         List<String> list = new ArrayList<>();
-        list.add(0,"1");
-        list.add(1,"2");
+        list.add(0, "1");
+        list.add(1, "2");
     }
+
     private static boolean isBlank(String text) {
         return text == null || text.trim().length() == 0;
     }
