@@ -1,9 +1,6 @@
 package com.jaydenho.androidtech.test;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -13,9 +10,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -35,7 +32,7 @@ import android.widget.TextView;
 import com.jaydenho.androidtech.R;
 import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.util.FileUtils;
-import com.jaydenho.androidtech.util.LocationUtil;
+import com.jaydenho.androidtech.util.LocationProvider;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -43,14 +40,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.IdentityHashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -147,8 +141,6 @@ public class TestAty extends AppCompatActivity {
         map.put("show", "1323");
         map.put("show", "1324");
 
-        startLocation();
-
         List<String> orderIds = new ArrayList<>();
         orderIds.add("11377");
         orderIds.add("11374");
@@ -160,6 +152,7 @@ public class TestAty extends AppCompatActivity {
         ImageLoader.getInstance().displayImage("http://pic34.nipic.com/20131021/11569127_170602617166_2.jpg", mImageLoaderTestIv, getSujectIconDisplayOptions());
         initPPW();
 
+        startLocation();
 //        jump();
 
   /*      new Thread(new Runnable() {
@@ -348,19 +341,27 @@ public class TestAty extends AppCompatActivity {
         Log.d(TAG, Arrays.toString(orderIds.toArray()));
     }
 
-    private LocationUtil mLocationUtil = null;
+    private LocationProvider mLocationProvider = null;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (mLocationProvider != null) {
+            mLocationProvider.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 
     /**
      * 获取一次定位信息,用户广告模块
      */
     private void startLocation() {
-        mLocationUtil = new LocationUtil(this);
-        mLocationUtil.start();
+        mLocationProvider = new LocationProvider(this);
+        mLocationProvider.start(true);
     }
 
     private void destroyLocation() {
-        if (mLocationUtil != null) {
-            mLocationUtil.destroy();
+        if (mLocationProvider != null) {
+            mLocationProvider.destroy();
         }
     }
 

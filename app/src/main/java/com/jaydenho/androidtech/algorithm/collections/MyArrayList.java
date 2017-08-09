@@ -53,8 +53,7 @@ public class MyArrayList<T> {
         checkRemovePosition(position);
         T removed = mItems[position];
         System.arraycopy(mItems, position + 1, mItems, position, mSize - (position + 1));
-        mItems[mSize - 1] = null;
-        mSize--;
+        mItems[--mSize] = null;
         return removed;
     }
 
@@ -105,8 +104,7 @@ public class MyArrayList<T> {
         T[] old = mItems;
         int addCapacity = newCapacity - oldCapacity;
         addCapacity = addCapacity > 4 ? addCapacity : addCapacity * 2;
-        mItems = (T[]) new Object[oldCapacity + addCapacity];
-        System.arraycopy(old, 0, mItems, 0, mSize);
+        mItems = Arrays.copyOf(mItems, oldCapacity + addCapacity);
     }
 
     private void checkGetPosition(int position) {

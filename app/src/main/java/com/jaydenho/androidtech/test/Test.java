@@ -4,8 +4,11 @@ import android.graphics.Path;
 
 import com.jaydenho.androidtech.algorithm.collections.MyArrayList;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -15,6 +18,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Created by hedazhao on 2016/8/31.
@@ -70,6 +74,30 @@ public class Test {
         testTimeUnit();
 
         testMyArrayList();
+
+        printConvertVideoAdTextDuration2Second("00:59");
+    }
+
+    public static void printConvertVideoAdTextDuration2Second(String textDuration) {
+        System.out.println("convertVideoAdTextDuration2Second. textDuration: " + textDuration + " result: " + convertVideoAdTextDuration2Second(textDuration));
+    }
+
+    public static int convertVideoAdTextDuration2Second(String textDuration) {
+        try {
+            String[] splitText = textDuration.split(":|：");
+            int splitTextLength = splitText.length;
+            if (splitTextLength < 2) {
+                return 0;
+            }
+            String minuteText = splitText[splitTextLength - 2];
+            String secondText = splitText[splitTextLength - 1];
+            int minute = Integer.valueOf(minuteText);
+            int second = Integer.valueOf(secondText);
+            return (int) (TimeUnit.MINUTES.toSeconds(minute) + second);
+        } catch (PatternSyntaxException | NumberFormatException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     private static void testMyArrayList() {
@@ -106,7 +134,6 @@ public class Test {
     private static void testYu() {
         System.out.println("3 % 2: " + 3 % 2);
         System.out.println("3 % 2.0: " + 3 % 2.0);
-
     }
 
     private static void testListInert() {
