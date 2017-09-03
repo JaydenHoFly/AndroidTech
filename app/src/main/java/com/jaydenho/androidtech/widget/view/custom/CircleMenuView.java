@@ -1,5 +1,6 @@
 package com.jaydenho.androidtech.widget.view.custom;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,16 +10,20 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 
 /**
  * Created by hedazhao on 2017/7/14.
+ * 注意Android中的坐标系，Y轴方向和直角坐标系的Y轴相反，要换算。
  */
 
-public class CircleMenuView extends ViewGroup {
+public class CircleMenuView extends ViewGroup
+        implements GestureDetector.OnGestureListener {
 
     private static final String TAG = "CircleMenuView";
     private int mMenuCount = 0;
@@ -44,6 +49,16 @@ public class CircleMenuView extends ViewGroup {
      */
     private int mTouchSlop;
 
+    private GestureDetector mGestureDetector = null;
+
+    private float mPreTouchX;
+    private float mPreTouchY;
+
+    private float mCurrentTouchX;
+    private float mCurrentTouchY;
+
+    private ObjectAnimator mFlingAnimator = null;
+
     public CircleMenuView(Context context) {
         this(context, null);
     }
@@ -65,6 +80,10 @@ public class CircleMenuView extends ViewGroup {
         ViewConfiguration configuration = ViewConfiguration.get(context);
         // 获取TouchSlop值
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
+        mGestureDetector = new GestureDetector(context, this);
+        mFlingAnimator = ObjectAnimator.ofFloat(this, "startAngle", 0);
+        mFlingAnimator.setDuration(800);
+        mFlingAnimator.setInterpolator(new DecelerateInterpolator());
     }
 
     @Override
@@ -140,12 +159,6 @@ public class CircleMenuView extends ViewGroup {
         canvas.drawCircle(mCentrePoint.x, mCentrePoint.y, mInnerCircleRadius, mPaint);
     }
 
-    private float mPreTouchX;
-    private float mPreTouchY;
-
-    private float mCurrentTouchX;
-    private float mCurrentTouchY;
-
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         mCurrentTouchX = ev.getX();
@@ -169,6 +182,11 @@ public class CircleMenuView extends ViewGroup {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        cancelFling();
+        if (mGestureDetector.onTouchEvent(event)) {
+            Log.d(TAG, "onTouchEvent, mGestureDetector consumed touch event");
+            return true;
+        }
         mCurrentTouchX = event.getX();
         mCurrentTouchY = event.getY();
         switch (event.getActionMasked()) {
@@ -176,13 +194,13 @@ public class CircleMenuView extends ViewGroup {
 
                 break;
             case MotionEvent.ACTION_MOVE:
-                float preAngle = getAngle(mPreTouchX, mPreTouchY);
+                float preAngle = getAngle(mCentrePoint, mPreTouchX, mPreTouchY);
                 Log.d(TAG, "onTouchEvent preAngle: " + preAngle);
-                float currentAngle = getAngle(mCurrentTouchX, mCurrentTouchY);
+                float currentAngle = getAngle(mCentrePoint, mCurrentTouchX, mCurrentTouchY);
                 Log.d(TAG, "onTouchEvent currentAngle: " + currentAngle);
-                int preQuadrant = getQuadrant(mPreTouchX, mPreTouchY);
+                int preQuadrant = getQuadrant(mCentrePoint, mPreTouchX, mPreTouchY);
                 Log.d(TAG, "onTouchEvent preQuadrant: " + preQuadrant);
-                int currentQuadrant = getQuadrant(mCurrentTouchX, mCurrentTouchY);
+                int currentQuadrant = getQuadrant(mCentrePoint, mCurrentTouchX, mCurrentTouchY);
                 Log.d(TAG, "onTouchEvent currentQuadrant: " + currentQuadrant);
                 //转过的角度，逆时针转动为正值，顺时针转动为负值
                 float dAngle = 0;
@@ -209,8 +227,7 @@ public class CircleMenuView extends ViewGroup {
                 }
                 Log.d(TAG, "onTouchEvent dAngle: " + dAngle);
                 //由于三角函数坐标系的y轴方向和控件坐标系的y轴方向是相反的，
-                mStartAngle += dAngle;
-                requestLayout();
+                setStartAngleOffset(dAngle);
                 break;
         }
         mPreTouchX = mCurrentTouchX;
@@ -218,23 +235,160 @@ public class CircleMenuView extends ViewGroup {
         return true;
     }
 
+    private void cancelFling() {
+        mFlingAnimator.cancel();
+    }
+
+    public void setStartAngleOffset(float offsetAngle) {
+        setStartAngle(mStartAngle + offsetAngle);
+    }
+
+    public void setStartAngle(float startAngle) {
+        this.mStartAngle = startAngle;
+        requestLayout();
+    }
+
     /**
      * 以圆中心点建立直角坐标系，根据sin值反向得到触摸点与圆中心点连线和x轴形成的夹角
      */
-    private float getAngle(float touchX, float touchY) {
-        double x = touchX - mCentrePoint.x;
+    private float getAngle(Point centrePoint, float touchX, float touchY) {
+        float x = touchX - centrePoint.x;
         //android坐标系的y轴和直角坐标系相反
-        double y = mCentrePoint.y - touchY;
+        float y = touchY - centrePoint.y;
+        return getAngle(x, y);
+    }
+
+    private float getAngle(float x, float y) {
+        y = -y;
         return (float) Math.toDegrees(Math.asin(y / Math.hypot(x, y)));
     }
 
+    private int getQuadrant(Point centrePoint, float x, float y) {
+        float dx = x - centrePoint.x;
+        float dy = y - centrePoint.y;
+        return getQuadrant(dx, dy);
+    }
+
     private int getQuadrant(float x, float y) {
-        float dx = x - mCentrePoint.x;
-        float dy = mCentrePoint.y - y;
-        if (dx >= 0) {
-            return dy >= 0 ? 1 : 4;
+        y = -y;
+        if (x >= 0) {
+            return y >= 0 ? 1 : 4;
         } else {
-            return dy >= 0 ? 2 : 3;
+            return y >= 0 ? 2 : 3;
+        }
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        Log.d(TAG, "onFling. e1.getX: " + e1.getX() + " e1.getY: " + e1.getY() + " e2.getX: " + e2.getX() + " e2.getY: " + e2.getY());
+        Log.d(TAG, "onFling. velocityX: " + velocityX + " velocityY: " + velocityY);
+        float flingAngle = calcFlingAngle(e2.getX(), e2.getY(), velocityX, velocityY);
+        Log.d(TAG, "onFling, flingAngle: " + flingAngle);
+        mFlingAnimator.setFloatValues(mStartAngle, mStartAngle + flingAngle);
+        mFlingAnimator.start();
+        return true;
+    }
+
+    private float calcFlingAngle(float flingX, float flingY, float velocityX, float velocityY) {
+        float flingValue = calcFlingValue(velocityX, velocityY);
+        int flingDirect = calcFlingDirect(flingX, flingY, velocityX, velocityY);
+        Log.d(TAG, "calcFlingAngle. flingValue: " + flingValue + " flingDirect: " + flingDirect);
+        return flingDirect * 360 * flingValue / 10000;
+    }
+
+    private float calcFlingValue(float velocityX, float velocityY) {
+        return (float) Math.hypot(Math.abs(velocityX), Math.abs(velocityY));
+    }
+
+    /**
+     * 顺时针
+     */
+    private static final int FLING_DIRECT_CW = -1;
+    /**
+     * 逆时针
+     */
+    private static final int FLING_DIRECT_CCW = 1;
+
+    /**
+     * @param flingX
+     * @param flingY
+     * @param velocityX
+     * @param velocityY
+     * @return 1：逆时针、-1：顺时针。
+     */
+    private int calcFlingDirect(float flingX, float flingY, float velocityX, float velocityY) {
+        //velocity是基于fling的点产生的，也就相当于将在fling点上施加和velocityX，velocityY方向相同的作用力
+        //连接圆心和fling点，再基于fling点建立直角坐标系，进行受力分析，根据velocityX和velocityY的合力的方向，与圆心和fling点的连线进行分析，例如fling点在
+        //第一象限，合力方向也在自身直角坐标系的第一象限，如果合力方向与x轴的夹角大于圆心和fling点的连线与x轴的夹角，那么圆就应该逆时针转动。
+        int flingQuadrant = getQuadrant(mCentrePoint, flingX, flingY);
+        int velocityQuadrant = getQuadrant(velocityX, velocityY);
+        float flingAngle = Math.abs(getAngle(mCentrePoint, flingX, flingY));
+        float velocityAngle = Math.abs(getAngle(velocityX, velocityY));
+        if (flingQuadrant == 1) {
+            if (velocityQuadrant == 1) {
+                return velocityAngle > flingAngle ? FLING_DIRECT_CCW : FLING_DIRECT_CW;
+            } else if (velocityQuadrant == 2) {
+                return FLING_DIRECT_CCW;
+            } else if (velocityQuadrant == 3) {
+                return velocityAngle > flingAngle ? FLING_DIRECT_CW : FLING_DIRECT_CCW;
+            } else {
+                return FLING_DIRECT_CW;
+            }
+        } else if (flingQuadrant == 2) {
+            if (velocityQuadrant == 1) {
+                return FLING_DIRECT_CW;
+            } else if (velocityQuadrant == 2) {
+                return velocityAngle > flingAngle ? FLING_DIRECT_CW : FLING_DIRECT_CCW;
+            } else if (velocityQuadrant == 3) {
+                return FLING_DIRECT_CCW;
+            } else {
+                return velocityAngle > flingAngle ? FLING_DIRECT_CCW : FLING_DIRECT_CW;
+            }
+        } else if (flingQuadrant == 3) {
+            if (velocityQuadrant == 1) {
+                return velocityAngle > flingAngle ? FLING_DIRECT_CW : FLING_DIRECT_CCW;
+            } else if (velocityQuadrant == 2) {
+                return FLING_DIRECT_CW;
+            } else if (velocityQuadrant == 3) {
+                return velocityAngle > flingAngle ? FLING_DIRECT_CCW : FLING_DIRECT_CW;
+            } else {
+                return FLING_DIRECT_CCW;
+            }
+        } else {
+            if (velocityQuadrant == 1) {
+                return FLING_DIRECT_CCW;
+            } else if (velocityQuadrant == 2) {
+                return velocityAngle > flingAngle ? FLING_DIRECT_CCW : FLING_DIRECT_CW;
+            } else if (velocityQuadrant == 3) {
+                return FLING_DIRECT_CW;
+            } else {
+                return velocityAngle > flingAngle ? FLING_DIRECT_CW : FLING_DIRECT_CCW;
+            }
         }
     }
 }

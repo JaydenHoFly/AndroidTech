@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, DataBindingAty.class));
                         break;
                     case DashboardIds.TEST:
-                        startActivity(new Intent(mContext, TestAty2.class));
+                        startActivity(new Intent(mContext, TestAty.class));
                         break;
                     case DashboardIds.ANIM:
                         startActivity(new Intent(mContext, AttrAty.class));
