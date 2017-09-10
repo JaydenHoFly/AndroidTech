@@ -1,7 +1,7 @@
 package com.jaydenho.androidtech.test;
 
 import com.jaydenho.androidtech.algorithm.collections.MyArrayList;
-import com.jaydenho.androidtech.algorithm.collections.tree.MyTreeSet;
+import com.jaydenho.androidtech.algorithm.collections.tree.SimpleTreeSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -127,7 +126,7 @@ public class Test {
     }
 
     private static void testMyTreeSet() {
-        MyTreeSet<Integer> set = new MyTreeSet<>();
+        SimpleTreeSet<Integer> set = new SimpleTreeSet<>();
         set.insert(1);
         set.insert(2);
         set.insert(3);

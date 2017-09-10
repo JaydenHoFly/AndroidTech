@@ -5,9 +5,10 @@ import java.util.Iterator;
 
 /**
  * Created by hedazhao on 2017/9/3.
+ * 二叉查找树实现的TreeSet
  */
 
-public class MyTreeSet<AnyType
+public class SimpleTreeSet<AnyType
         extends Comparable<? super AnyType>> {
     private static class Node<AnyType> {
         private AnyType element;
@@ -216,7 +217,7 @@ public class MyTreeSet<AnyType
         @Override
         public void remove() {
             if (expectModCount != modCount) throw new ConcurrentModificationException();
-            MyTreeSet.this.remove(currentItem.element);
+            SimpleTreeSet.this.remove(currentItem.element);
             expectModCount++;
         }
     }
