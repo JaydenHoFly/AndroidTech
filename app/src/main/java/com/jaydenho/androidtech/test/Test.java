@@ -1,20 +1,17 @@
 package com.jaydenho.androidtech.test;
 
-import android.graphics.Path;
-
 import com.jaydenho.androidtech.algorithm.collections.MyArrayList;
+import com.jaydenho.androidtech.algorithm.collections.tree.MyTreeSet;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,9 +70,11 @@ public class Test {
 
         testTimeUnit();
 
-        testMyArrayList();
+//        testMyArrayList();
 
         printConvertVideoAdTextDuration2Second("00:59");
+
+        testMyTreeSet();
     }
 
     public static void printConvertVideoAdTextDuration2Second(String textDuration) {
@@ -125,6 +124,33 @@ public class Test {
             it.remove();
         }
         System.out.println("testMyArrayList. after remove. list3: " + list3.toString());
+    }
+
+    private static void testMyTreeSet() {
+        MyTreeSet<Integer> set = new MyTreeSet<>();
+        set.insert(1);
+        set.insert(2);
+        set.insert(3);
+        set.insert(4);
+        set.insert(5);
+        set.printTree();
+        Iterator<Integer> iterator = set.iterator();
+        while (iterator.hasNext()) {
+            int element = iterator.next();
+            System.out.println("it1. element: " + element);
+            if(element == 1 || element == 3){
+                iterator.remove();
+            }
+        }
+        iterator = set.iterator();
+        while (iterator.hasNext()) {
+            int element = iterator.next();
+            System.out.println("it2. element: " + element);
+        }
+        set.remove(4);
+        set.printTree();
+        set.insert(4);
+        set.printTree();
     }
 
     private static void testTimeUnit() {

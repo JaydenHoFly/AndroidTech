@@ -1,10 +1,14 @@
 package com.jaydenho.androidtech.algorithm.collections.tree;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+
 /**
- * Created by Administrator on 2017/9/3.
+ * Created by hedazhao on 2017/9/3.
  */
 
-public class TreeSet<AnyType extends Comparable<? super AnyType>> {
+public class MyTreeSet<AnyType
+        extends Comparable<? super AnyType>> {
     private static class Node<AnyType> {
         private AnyType element;
         private Node left;
@@ -17,16 +21,32 @@ public class TreeSet<AnyType extends Comparable<? super AnyType>> {
             this.right = right;
             this.parent = parent;
         }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "element=" + element +
+                    ", left=" + left +
+                    ", right=" + right +
+                    ", parent=" + parent +
+                    '}';
+        }
+
+        public String toShortString() {
+            return "Node.element=" + element;
+        }
     }
 
     private Node<AnyType> root;
 
+    private int modCount = 0;
+
     public void insert(AnyType element) {
-        insert(element, root, null);
+        root = insert(element, root, null);
     }
 
     public void remove(AnyType element) {
-
+        root = remove(element, root);
     }
 
     private Node<AnyType> remove(AnyType element, Node<AnyType> t) {
@@ -52,6 +72,7 @@ public class TreeSet<AnyType extends Comparable<? super AnyType>> {
                     oneChild.parent = t;
                 }
                 t = oneChild;
+                modCount++;
             }
         }
         return t;
@@ -107,6 +128,7 @@ public class TreeSet<AnyType extends Comparable<? super AnyType>> {
      */
     private Node<AnyType> insert(AnyType element, Node<AnyType> t, Node<AnyType> pt) {
         if (t == null) {
+            modCount++;
             t = new Node<AnyType>(element, null, null, pt);
         } else {
             int compare = element.compareTo(t.element);
@@ -120,5 +142,82 @@ public class TreeSet<AnyType extends Comparable<? super AnyType>> {
             }
         }
         return t;
+    }
+
+    public void printTree() {
+        if (isEmpty()) {
+            System.out.println("the tree is empty");
+        }
+        System.out.println("----print tree start----");
+        printTree(root);
+        System.out.println("----print tree end----");
+    }
+
+    public boolean isEmpty() {
+        return root == null;
+    }
+
+    /**
+     * 先序遍历
+     */
+    private void printTree(Node<AnyType> t) {
+        if (t == null) return;
+        System.out.println(t.toShortString());
+        printTree(t.left);
+        printTree(t.right);
+    }
+
+    private Node<AnyType> findMin() {
+        return findMin(root);
+    }
+
+    public Iterator<AnyType> iterator() {
+        return new TreeIterator();
+    }
+
+    private class TreeIterator implements Iterator<AnyType> {
+
+        private Node<AnyType> nextItem = findMin();
+        private Node<AnyType> currentItem;
+        private boolean isEnd = isEmpty();
+        private int expectModCount = modCount;
+
+        @Override
+        public boolean hasNext() {
+            return !isEnd;
+        }
+
+        @Override
+        public AnyType next() {
+            if (expectModCount != modCount) throw new ConcurrentModificationException();
+            if (!hasNext()) throw new UnsupportedOperationException();
+            AnyType element = nextItem.element;
+            currentItem = nextItem;
+
+            //从最小的节点开始，采取中序遍历，左子树->父节点->右子树的最小节点；
+            //如果当前的节点有右子树，那么下一个节点就用右子树的最小节点
+            if (nextItem.right != null) {
+                nextItem = findMin(nextItem.right);
+            } else {
+                //没有右子树，那么遍历父节点，如果父节点的右子树是当前节点，那么该父节点已经被遍历过，所以要找出左子树是当前节点的父节点；
+                Node<AnyType> child = nextItem;
+                nextItem = nextItem.parent;
+                while (nextItem != null && nextItem.left != child) {
+                    child = nextItem;
+                    nextItem = nextItem.parent;
+                }
+                if (nextItem == null) {
+                    isEnd = true;
+                }
+            }
+            return element;
+        }
+
+        @Override
+        public void remove() {
+            if (expectModCount != modCount) throw new ConcurrentModificationException();
+            MyTreeSet.this.remove(currentItem.element);
+            expectModCount++;
+        }
     }
 }
