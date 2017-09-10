@@ -8,8 +8,7 @@ import java.util.Iterator;
  * 二叉查找树实现的TreeSet
  */
 
-public class SimpleTreeSet<AnyType
-        extends Comparable<? super AnyType>> {
+public class SimpleTreeSet<AnyType extends Comparable<? super AnyType>> {
     private static class Node<AnyType> {
         private AnyType element;
         private Node left;
