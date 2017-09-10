@@ -1,6 +1,6 @@
 package com.jaydenho.androidtech.test;
 
-import com.jaydenho.androidtech.algorithm.collections.MyArrayList;
+import com.jaydenho.androidtech.algorithm.collections.list.MyArrayList;
 import com.jaydenho.androidtech.algorithm.collections.tree.SimpleTreeSet;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
-package com.jaydenho.androidtech.algorithm.collections;
+package com.jaydenho.androidtech.algorithm.collections.list;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
@@ -10,10 +10,12 @@ import java.util.Iterator;
  * 所以要有一个值持有真实的容器大小。
  */
 
-public class MyArrayList<T> {
+public class MyArrayList<T>
+        implements Iterable<T> {
 
     private int mSize = 0;
     private T[] mItems = null;
+    private int modCount = 0;
 
     public MyArrayList() {
         mItems = (T[]) new Object[8];
@@ -36,6 +38,7 @@ public class MyArrayList<T> {
         System.arraycopy(mItems, position, mItems, position + 1, mSize - position);
         mItems[position] = t;
         mSize++;
+        modCount++;
     }
 
     public void addAll(MyArrayList<T> list) {
@@ -48,6 +51,7 @@ public class MyArrayList<T> {
         System.arraycopy(mItems, position, mItems, position + list.size(), mSize - position);
         System.arraycopy(list.mItems, 0, mItems, position, list.size());
         mSize += list.size();
+        modCount++;
     }
 
     public T remove(int position) {
@@ -55,6 +59,7 @@ public class MyArrayList<T> {
         T removed = mItems[position];
         System.arraycopy(mItems, position + 1, mItems, position, mSize - (position + 1));
         mItems[--mSize] = null;
+        modCount++;
         return removed;
     }
 
@@ -89,6 +94,7 @@ public class MyArrayList<T> {
         return Arrays.toString(mItems);
     }
 
+    @Override
     public Iterator<T> iterator() {
         return new MyIterator();
     }
@@ -133,6 +139,7 @@ public class MyArrayList<T> {
     private class MyIterator implements Iterator<T> {
         protected final int limit = mSize;
         private int mIndex = -1;
+        private int expectModCount = modCount;
 
         @Override
         public boolean hasNext() {
@@ -141,12 +148,15 @@ public class MyArrayList<T> {
 
         @Override
         public T next() {
+            if(expectModCount != modCount) throw new ConcurrentModificationException();
             return mItems[++mIndex];
         }
 
         @Override
         public void remove() {
+            if(expectModCount != modCount) throw new ConcurrentModificationException();
             MyArrayList.this.remove(mIndex--);
+            expectModCount++;
         }
     }
 }
