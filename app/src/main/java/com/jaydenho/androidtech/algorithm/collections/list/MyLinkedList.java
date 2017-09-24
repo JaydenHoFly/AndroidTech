@@ -134,6 +134,16 @@ public class MyLinkedList<AnyType>
         return size == 0;
     }
 
+    public boolean contains(AnyType element) {
+        Iterator<AnyType> iterator = new LinkIterator<>(this);
+        while (iterator.hasNext()) {
+            if (element.equals(iterator.next())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void offer(AnyType element) {
         addLastImpl(element);
     }
