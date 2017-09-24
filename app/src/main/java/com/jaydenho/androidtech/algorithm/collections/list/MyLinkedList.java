@@ -76,7 +76,7 @@ public class MyLinkedList<AnyType>
     }
 
     public AnyType get(int i) {
-        if (i < 0 || i > size) {
+        if (i < 0 || i >= size) {
             throw new IndexOutOfBoundsException();
         }
         Node<AnyType> node = getNode(i);
@@ -132,6 +132,27 @@ public class MyLinkedList<AnyType>
 
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    public void offer(AnyType element) {
+        addLastImpl(element);
+    }
+
+    public AnyType peek() {
+        return isEmpty() ? null : head.next.element;
+    }
+
+    public AnyType poll() {
+        if (isEmpty()) {
+            return null;
+        } else {
+            Node<AnyType> p = head.next;
+            head.next = p.next;
+            head.next.pre = head;
+            size--;
+            modCount++;
+            return p.element;
+        }
     }
 
     @Override
