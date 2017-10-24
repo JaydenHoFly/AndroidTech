@@ -41,5 +41,23 @@
     <WebView
         android:id="@+id/wv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></WebView>
+        android:layout_height="match_parent"
+        android:visibility="gone"></WebView>
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="#ffffff">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:padding="1px"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/task_list_feed_poster_border"
+            android:src="#ffffff"
+            />
+    </LinearLayout>
+
 </RelativeLayout>

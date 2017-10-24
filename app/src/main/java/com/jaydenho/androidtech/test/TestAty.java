@@ -1,10 +1,12 @@
 package com.jaydenho.androidtech.test;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -29,12 +32,17 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.jaydenho.androidtech.AndroidApplicationLike;
+import com.jaydenho.androidtech.MainActivity;
 import com.jaydenho.androidtech.R;
+import com.jaydenho.androidtech.hotfix.MyTinkerApplication;
 import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.util.FileUtils;
 import com.jaydenho.androidtech.util.LocationProvider;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tencent.tinker.loader.TinkerDexLoader;
+import com.tencent.tinker.loader.app.ApplicationLike;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +50,9 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -56,7 +66,7 @@ import java.util.Set;
 /**
  * Created by hedazhao on 2016/7/26.
  */
-public class TestAty extends AppCompatActivity {
+public class TestAty extends FragmentActivity {
 
     private static final String TAG = TestAty.class.getSimpleName();
     private ImageView mImageLoaderTestIv = null;
@@ -70,6 +80,10 @@ public class TestAty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aty_test);
         mNameTV = (TextView) findViewById(R.id.tv_name);
+        String userAgent = System.getProperty("http.agent");
+        Log.d(TAG, "userAgent: " + userAgent);
+        String userAgent2 = getUserAgent();
+        Log.d(TAG, "userAgent2: " + userAgent2);
        /*
         String name = "一二三四五六七";
         String testStr = "你好，测试。saf,.;1；2：3？4！";
@@ -169,6 +183,43 @@ public class TestAty extends AppCompatActivity {
         testListFormat();*/
 
 //        printThread();
+
+        time();
+    }
+
+    private void time() {
+        Calendar c = Calendar.getInstance();
+        //没有设置的字段会采用当前时间
+        c.set(Calendar.HOUR_OF_DAY, 13);
+        c.set(Calendar.MINUTE, 10);
+        c.set(Calendar.SECOND, 0);
+        Calendar c2 = Calendar.getInstance();
+        c2.setTime(new Date(System.currentTimeMillis()));
+        Log.d(TAG, "c.getTime: " + c.getTimeInMillis() + " c2.getTime: " + c2.getTimeInMillis());
+        Log.d(TAG, "c.after(c2): " + (c.after(c2)));
+    }
+
+    private static String getUserAgent() {
+        String userAgent = "";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            try {
+                userAgent = WebSettings.getDefaultUserAgent(AndroidApplicationLike.getApplicationInstance());
+            } catch (Exception e) {
+                userAgent = System.getProperty("http.agent");
+            }
+        } else {
+            userAgent = System.getProperty("http.agent");
+        }
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0, length = userAgent.length(); i < length; i++) {
+            char c = userAgent.charAt(i);
+            if (c <= '\u001f' || c >= '\u007f') {
+                sb.append(String.format("\\u%04x", (int) c));
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
     }
 
     private void printThread() {
@@ -356,6 +407,31 @@ public class TestAty extends AppCompatActivity {
      */
     private void startLocation() {
         mLocationProvider = new LocationProvider(this);
+        mLocationProvider.setSimpleLocationListener(new LocationProvider.SimpleLocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Log.d(TAG, "onLocationChanged1");
+            }
+
+            @Override
+            public void onLocationFail(int errorCode, String errorMsg) {
+                Log.d(TAG, "onLocationFail1");
+            }
+        });
+        mLocationProvider.start(true);
+
+        mLocationProvider = new LocationProvider(this);
+        mLocationProvider.setSimpleLocationListener(new LocationProvider.SimpleLocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Log.d(TAG, "onLocationChanged2");
+            }
+
+            @Override
+            public void onLocationFail(int errorCode, String errorMsg) {
+                Log.d(TAG, "onLocationFail2");
+            }
+        });
         mLocationProvider.start(true);
     }
 

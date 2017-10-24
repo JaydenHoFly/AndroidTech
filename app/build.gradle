@@ -92,6 +92,8 @@ dependencies {
     provided("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
     //tinker的核心库
     compile("com.tencent.tinker:tinker-android-lib:${TINKER_VERSION}") { changing = true }
+
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 def bakPath = file("${buildDir}/bakApk/")

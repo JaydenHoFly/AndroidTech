@@ -21,11 +21,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
@@ -155,8 +160,51 @@ public class PermissionManager {
 
         if (object instanceof Activity) {
             ActivityCompat.requestPermissions((Activity) object, perms, requestCode);
+        /*    if (object instanceof AppCompatActivity) {
+                ActivityCompat.requestPermissions((Activity) object, perms, requestCode);
+            } else {
+                executePermissionsRequestIfNotAppCompatActivity(object, perms, requestCode);
+            }*/
         } else if (object instanceof Fragment) {
             ((Fragment) object).requestPermissions(perms, requestCode);
+        }
+    }
+
+    private static void executePermissionsRequestIfNotAppCompatActivity(Object object, String[] perms, int requestCode) {
+        checkCallingObjectSuitability(object);
+
+        if (object instanceof Activity) {
+            //手雷的BaseActivity并不是AppCompatActivity，所以不能用ActivityCompat请求权限
+            requestPermissions((Activity) object, perms, requestCode);
+        } else if (object instanceof Fragment) {
+            ((Fragment) object).requestPermissions(perms, requestCode);
+        }
+    }
+
+    public static void requestPermissions(final @NonNull Activity activity,
+                                          final @NonNull String[] permissions, final int requestCode) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            activity.requestPermissions(permissions, requestCode);
+        } else if (activity instanceof ActivityCompat.OnRequestPermissionsResultCallback) {
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    final int[] grantResults = new int[permissions.length];
+
+                    PackageManager packageManager = activity.getPackageManager();
+                    String packageName = activity.getPackageName();
+
+                    final int permissionCount = permissions.length;
+                    for (int i = 0; i < permissionCount; i++) {
+                        grantResults[i] = packageManager.checkPermission(
+                                permissions[i], packageName);
+                    }
+
+                    ((ActivityCompat.OnRequestPermissionsResultCallback) activity).onRequestPermissionsResult(
+                            requestCode, permissions, grantResults);
+                }
+            });
         }
     }
 

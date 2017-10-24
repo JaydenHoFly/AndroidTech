@@ -31,9 +31,9 @@ public class CustomDecoration extends RecyclerView.ItemDecoration {
         //onDraw方法先于drawChildren
         Log.d(TAG, "onDraw");
         int childCount = parent.getChildCount();
-        int left = parent.getPaddingLeft();
-        int right = parent.getMeasuredWidth() - parent.getPaddingRight();
         for (int i = 0; i < childCount; i++) {
+            int left = parent.getPaddingLeft();
+            int right = parent.getMeasuredWidth() - parent.getPaddingRight();
             View child = parent.getChildAt(i);
             ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
             int top = child.getBottom() - lp.bottomMargin;

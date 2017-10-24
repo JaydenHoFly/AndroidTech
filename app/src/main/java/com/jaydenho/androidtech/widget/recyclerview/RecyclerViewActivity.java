@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.View;
 
 import com.jaydenho.androidtech.BaseActivity;
 import com.jaydenho.androidtech.R;
@@ -55,5 +56,13 @@ public class RecyclerViewActivity extends BaseActivity {
             }
         });
 
+        RecyclerView.RecycledViewPool recycledViewPool = new RecyclerView.RecycledViewPool();
+        mRecyclerView.setRecycledViewPool(recycledViewPool);
+        RecyclerView.ViewCacheExtension viewCacheExtension = new RecyclerView.ViewCacheExtension() {
+            @Override
+            public View getViewForPositionAndType(RecyclerView.Recycler recycler, int position, int type) {
+                return null;
+            }
+        };
     }
 }
