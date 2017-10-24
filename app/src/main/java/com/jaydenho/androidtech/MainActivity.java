@@ -35,6 +35,7 @@ import com.jaydenho.androidtech.widget.recyclerview.RecyclerViewActivity;
 import com.jaydenho.androidtech.widget.view.BasicAttrsAty;
 import com.jaydenho.androidtech.widget.view.custom.CustomViewAty;
 import com.jaydenho.androidtech.widget.view.viewpager.InfiniteAutoScrollViewPagerActivity;
+import com.jaydenho.flavors.Flavor;
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.morgoo.helper.compat.PackageManagerCompat;
 

@@ -53,6 +53,36 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
+    // ProductFlavor维度: 渠道(官网渠道|其他渠道), 版本(内测版|正式版),
+    flavorDimensions "channel", "version"
+
+    productFlavors {
+        stable {
+            // 正式版
+            dimension "version"
+            // 外网正式环境的包
+            //
+        }
+        alpha {
+            // 内测版
+            dimension "version"
+            // 预发布环境的包
+            //
+        }
+        bugly {
+            // Bugly测试版
+            dimension "channel"
+            buildConfigField("String", "BUGLY_APPID", '"db6e59582a"') // Bugly升级的测试AppID
+        }
+        base {
+            // 基础渠道包(官网渠道)
+            dimension "channel"
+            resValue "string", "pname", "XLWXguanwang"
+            resValue "string", "pid", "0x10800001"
+            resValue "string", "update", "true"
+        }
+    }
 }
 
 repositories {
