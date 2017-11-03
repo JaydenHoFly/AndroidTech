@@ -2,6 +2,7 @@ package com.jaydenho.androidtech.test;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -16,6 +17,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -48,6 +52,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -62,6 +67,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by hedazhao on 2016/7/26.
@@ -185,6 +192,40 @@ public class TestAty extends FragmentActivity {
 //        printThread();
 
         time();
+
+        testIntent("ctrip://wireless/InlandHotel?checkInDate=20170504&checkOutDate=20170505&hotelId=687592&allianceid=288562&sid=960124&sourceid=2504&ouid=Android_Singapore_687592");
+        testIntent("tbopen://m.taobao.com/tbopen/index.html?action=ali.open.nav&module=h5&bootImage=0&source=alimama&h5Url=http%3A%2F%2Fmo.m.taobao.com%2Fpage_201708301727368&appkey=24570756&visa=f9a9733e34b4e74f&packageName=&backURL=");
+        testIntent("thunder://QUFodHRwOi8vZGwwMS44MHMuaW06OTIwLzE1MDQvW+eBq+W9seW/jeiAheWJp+WcuueJiF3kuInml6XmnIjlspvkuIrnmoTliqjnianpqprkubEvW+eBq+W9seW/jeiAheWJp+WcuueJiF3kuInml6XmnIjlspvkuIrnmoTliqjnianpqprkubFfYmQubXA0Wlo=");
+    }
+
+    private void testIntent(String url) {
+        Intent intent;
+        try {
+            intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+            intent.setComponent(null);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+                intent.setSelector(null);
+            }
+            ComponentName cn = intent.resolveActivity(getPackageManager());
+            Log.d(TAG, "cn: " + (cn == null ? "null" : cn.getShortClassName()));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private SpannableString emoji(String emojiStr) {
+        Log.d(TAG, "emojiStr: " + emojiStr);
+        SpannableString ss = new SpannableString(emojiStr);
+        Pattern pattern = Pattern.compile("\\uD83D\\uDE1A", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(ss);
+        while (matcher.find()) {
+            String key = matcher.group();
+            Log.d(TAG, "key: " + key);
+            ImageSpan imageSpan = new ImageSpan(this, R.drawable.third_qq_circle);
+            ss.setSpan(imageSpan, matcher.start(), matcher.end(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+        return ss;
     }
 
     private void time() {

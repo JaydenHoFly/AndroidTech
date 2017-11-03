@@ -137,7 +137,7 @@ public class Test {
         while (iterator.hasNext()) {
             int element = iterator.next();
             System.out.println("it1. element: " + element);
-            if(element == 1 || element == 3){
+            if (element == 1 || element == 3) {
                 iterator.remove();
             }
         }
