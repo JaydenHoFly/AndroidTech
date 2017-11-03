@@ -1,4 +1,6 @@
-package com.jaydenho.androidtech.test
+package com.jaydenho.androidtech.kotlin.test
+
+import com.jaydenho.androidtech.test.Test
 
 /**
  * Created by hedazhao on 2017/11/2.
@@ -79,7 +81,7 @@ class Test01() {
             }
 
         val b: String
-            get() = "${B.AB} a"
+            get() = "${AB} a"
 
 
         constructor(a: String) : super(a) {

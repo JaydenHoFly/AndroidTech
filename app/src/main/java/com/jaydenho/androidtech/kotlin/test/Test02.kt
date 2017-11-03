@@ -1,4 +1,4 @@
-package com.jaydenho.androidtech.test
+package com.jaydenho.androidtech.kotlin.test
 
 /**
  * Created by hedazhao on 2017/11/2.
