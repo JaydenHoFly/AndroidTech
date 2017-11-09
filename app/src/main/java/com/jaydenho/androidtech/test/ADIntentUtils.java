@@ -2,13 +2,17 @@ package com.jaydenho.androidtech.test;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.webkit.WebView;
 
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +29,7 @@ public class ADIntentUtils {
             + // switch on case insensitive matching
             '('
             + // begin group for scheme
-            "(?:http|https|ftp|file)://" + "|(?:inline|data|about|javascript):" + "|(?:.*:.*@)"
+            "(?:http|https|ftp|file)://" + "|(?:inline|data|about|javascript):"
             + ')' + "(.*)");
 
     private Activity mActivity = null;
@@ -87,7 +91,7 @@ public class ADIntentUtils {
         if (packagename != null) {
             intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="
                     + packagename));
-            try{
+            try {
                 mActivity.startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 Log.e(TAG, "tryHandleByMarket ActivityNotFoundException: " + e.getLocalizedMessage());
@@ -99,11 +103,10 @@ public class ADIntentUtils {
         }
     }
 
-
     /**
      * 该url是否属于浏览器能处理的内部协议
      */
-    private boolean isAcceptedScheme(String url) {
+    public static boolean isAcceptedScheme(String url) {
         //正则中忽略了大小写，保险起见，还是转成小写
         String lowerCaseUrl = url.toLowerCase();
         Matcher acceptedUrlSchemeMatcher = ACCEPTED_URI_SCHEME.matcher(lowerCaseUrl);

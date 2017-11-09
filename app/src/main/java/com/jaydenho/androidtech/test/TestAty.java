@@ -196,6 +196,10 @@ public class TestAty extends FragmentActivity {
         testIntent("ctrip://wireless/InlandHotel?checkInDate=20170504&checkOutDate=20170505&hotelId=687592&allianceid=288562&sid=960124&sourceid=2504&ouid=Android_Singapore_687592");
         testIntent("tbopen://m.taobao.com/tbopen/index.html?action=ali.open.nav&module=h5&bootImage=0&source=alimama&h5Url=http%3A%2F%2Fmo.m.taobao.com%2Fpage_201708301727368&appkey=24570756&visa=f9a9733e34b4e74f&packageName=&backURL=");
         testIntent("thunder://QUFodHRwOi8vZGwwMS44MHMuaW06OTIwLzE1MDQvW+eBq+W9seW/jeiAheWJp+WcuueJiF3kuInml6XmnIjlspvkuIrnmoTliqjnianpqprkubEvW+eBq+W9seW/jeiAheWJp+WcuueJiF3kuInml6XmnIjlspvkuIrnmoTliqjnianpqprkubFfYmQubXA0Wlo=");
+
+        ADIntentUtils.isAcceptedScheme("taobao://item.taobao.com/item.htm?spm=a1z10.3-c.w4002-9705227192.14.6nS5Xy&id=525291527981&c=359c9d34a4c185dfa2338711e8ac3d82&did=ANDROID-09309950e8e545dda88578b6465298ef&taskid=4T5@S-0918100421-RMP-0918-r5J5tvfYJc9NDg11111f16&s=getui");
+
+        MyNotification.notifyTaskNotification(this,"","","",323);
     }
 
     private void testIntent(String url) {

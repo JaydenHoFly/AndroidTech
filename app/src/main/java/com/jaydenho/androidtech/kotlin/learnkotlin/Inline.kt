@@ -6,11 +6,13 @@ import java.util.concurrent.locks.Lock
  * Created by hedazhao on 2017/11/3.
  */
 class Inline {
+    val int : Int
+        inline get() = 1
     fun test() {
         lambda(true, { false })
         inline(true, { false })
         var l: Lock
-//        lock(l, { true })
+//        lock(l, { return })
     }
 
 
