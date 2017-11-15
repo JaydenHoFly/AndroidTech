@@ -152,7 +152,8 @@
 
     <com.jaydenho.androidtech.widget.view.custom.CircleMenuView
         android:layout_width="300dp"
-        android:layout_height="300dp">
+        android:layout_height="300dp"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="match_parent"
@@ -181,4 +182,7 @@
 
     </com.jaydenho.androidtech.widget.view.custom.CircleMenuView>
 
+    <com.jaydenho.androidtech.widget.view.custom.surfaceview.flappybird.FlappyBird
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
