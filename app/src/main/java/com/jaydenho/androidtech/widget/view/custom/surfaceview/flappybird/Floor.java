@@ -18,6 +18,8 @@ public class Floor {
     private int gameWidth = 0;
     private int gameHeight = 0;
 
+    private int mFloorHeight = 0;
+
     public static final float FLOOR_Y_POSITION_RATIO = 4 / 5F;
     private Bitmap brickBitmap = null;
     private BitmapShader bricksBS = null;
@@ -34,10 +36,15 @@ public class Floor {
         this.x = x;
     }
 
+    public int getFloorHeight() {
+        return mFloorHeight;
+    }
+
     public void setGamePanelSize(int width, int height) {
         this.gameWidth = width;
         this.gameHeight = height;
-        y = (int) (gameHeight * FLOOR_Y_POSITION_RATIO);
+
+        mFloorHeight = y = (int) (gameHeight * FLOOR_Y_POSITION_RATIO);
     }
 
     public void setBrickBitmap(Bitmap brickBitmap) {

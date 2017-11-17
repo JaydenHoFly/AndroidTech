@@ -63,8 +63,7 @@ public class IActivityManagerHook extends ProxyHook {
             return super.invoke(proxy, method, args);
         } catch (SecurityException e) {
             String msg = String.format("msg[%s],args[%s]", e.getMessage(), Arrays.toString(args));
-            SecurityException e1 = new SecurityException(msg);
-            e1.initCause(e);
+            SecurityException e1 = new SecurityException(msg, e);
             throw e1;
         }
     }

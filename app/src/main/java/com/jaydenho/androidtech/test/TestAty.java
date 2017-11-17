@@ -401,11 +401,8 @@ public class TestAty extends FragmentActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (!url.startsWith("http")) {
-                return true;
-            }
-            return false;
-//            return adIntentUtils.shouldOverrideUrlLoadingByApp(view, url) || super.shouldOverrideUrlLoading(view, url);
+            return !url.startsWith("http");
+            //            return adIntentUtils.shouldOverrideUrlLoadingByApp(view, url) || super.shouldOverrideUrlLoading(view, url);
         }
 
         @Override

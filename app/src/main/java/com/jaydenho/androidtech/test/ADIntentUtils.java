@@ -110,10 +110,7 @@ public class ADIntentUtils {
         //正则中忽略了大小写，保险起见，还是转成小写
         String lowerCaseUrl = url.toLowerCase();
         Matcher acceptedUrlSchemeMatcher = ACCEPTED_URI_SCHEME.matcher(lowerCaseUrl);
-        if (acceptedUrlSchemeMatcher.matches()) {
-            return true;
-        }
-        return false;
+        return acceptedUrlSchemeMatcher.matches();
     }
 
 }

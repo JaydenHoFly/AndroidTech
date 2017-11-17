@@ -37,12 +37,9 @@ public class Utils {
     static final Class<?>[] EMPTY_CLASS_ARRAY = new Class[0];
 
     static boolean isSameLength(final Object[] array1, final Object[] array2) {
-        if ((array1 == null && array2 != null && array2.length > 0) ||
+        return !((array1 == null && array2 != null && array2.length > 0) ||
                 (array2 == null && array1 != null && array1.length > 0) ||
-                (array1 != null && array2 != null && array1.length != array2.length)) {
-            return false;
-        }
-        return true;
+                (array1 != null && array2 != null && array1.length != array2.length));
     }
 
     static Class<?>[] toClass(final Object... array) {

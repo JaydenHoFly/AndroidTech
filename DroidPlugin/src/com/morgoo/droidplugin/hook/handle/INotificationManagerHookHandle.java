@@ -270,11 +270,8 @@ public class INotificationManagerHookHandle extends BaseHookHandle {
     private boolean shouldBlockByRemoteViews(RemoteViews remoteViews) {
         if (remoteViews == null) {
             return false;
-        } else if (remoteViews != null && sSystemLayoutResIds.containsKey(remoteViews.getLayoutId())) {
-            return false;
-        } else {
-            return true;
-        }
+        } else
+            return !(remoteViews != null && sSystemLayoutResIds.containsKey(remoteViews.getLayoutId()));
     }
 
     private boolean shouldBlock(Notification notification) {

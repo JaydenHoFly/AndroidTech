@@ -10,7 +10,7 @@ fun a() {}
 
 const val a1 = 1
 
-class Test01() {
+class Test01 {
     private val log: Int? = null
     private val log1 = "test $log"
     val log2: String = ""
@@ -38,7 +38,7 @@ class Test01() {
         if (aInt != null) {
             println(a)
         }
-        val c: String? = "";
+        val c: String? = ""
         c?.length
         val listWithNulls: List<String?> = listOf("A", null)
         for (item in listWithNulls) {
@@ -55,9 +55,7 @@ class Test01() {
     }
 
     open class A(a: String) {
-        constructor(a: String, b: String) : this(a) {
-
-        }
+        constructor(a: String, b: String) : this(a)
 
         open var a = ""
 
@@ -85,12 +83,10 @@ class Test01() {
 
 
         constructor(a: String) : super(a) {
-            this.a;
+            this.a
         }
 
-        constructor(a: String, b: String) : super(a) {
-
-        }
+        constructor(a: String, b: String) : super(a)
 
         public override fun a() {
             super.a()
@@ -99,11 +95,6 @@ class Test01() {
 
         fun c(function: (a: String) -> Int) {
 
-        }
-
-        override fun toString(): String {
-
-            return super.toString()
         }
 
         companion object {
@@ -140,7 +131,7 @@ class Test01() {
         }
     }
 
-    class AI() : IA {
+    class AI : IA {
         override var a: Int = 0
         override var b: Int = 0
         override fun a() {
@@ -188,7 +179,7 @@ class Test01() {
 
     interface ICC : IAA, IBB {
         override fun a() {
-            super<IBB>.a()
+            super.a()
         }
 
         override fun b() {

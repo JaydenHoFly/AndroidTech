@@ -16,7 +16,7 @@ public interface ISign extends android.os.IInterface {
     /**
      * Local-side IPC implementation stub class.
      */
-    public static abstract class Stub extends android.os.Binder implements ISign {
+    abstract class Stub extends android.os.Binder implements ISign {
         private static final String DESCRIPTOR = "com.jaydenho.learnbinder.learnaidl.ISign";
 
         /**
@@ -110,7 +110,7 @@ public interface ISign extends android.os.IInterface {
         static final int TRANSACTION_sign_2 = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
     }
 
-    public String sign(String params) throws android.os.RemoteException;
+    String sign(String params) throws android.os.RemoteException;
 
-    public String sign(int num, List<Param> params) throws android.os.RemoteException;
+    String sign(int num, List<Param> params) throws android.os.RemoteException;
 }

@@ -84,5 +84,5 @@ public abstract class BaseHookHandle {
         } catch (ClassNotFoundException e) {
             Log.w(getClass().getSimpleName(),"init addAllMethodFromHookedClass error",e);
         }
-    };
+    }
 }

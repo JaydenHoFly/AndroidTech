@@ -201,7 +201,7 @@ public class PermissionManager {
                                 permissions[i], packageName);
                     }
 
-                    ((ActivityCompat.OnRequestPermissionsResultCallback) activity).onRequestPermissionsResult(
+                    activity.onRequestPermissionsResult(
                             requestCode, permissions, grantResults);
                 }
             });
