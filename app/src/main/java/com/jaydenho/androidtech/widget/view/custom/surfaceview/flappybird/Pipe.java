@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 
 import com.jaydenho.androidtech.util.MathUtils;
 
@@ -13,22 +14,14 @@ import java.util.Random;
  * Created by hedazhao on 2017/11/13.
  */
 
-public class Pipe {
+public class Pipe implements IGameComponent {
 
+    private static final String TAG = "flappy.pipe";
     private static final int DIRECTION_UP = 1;
     private static final int DIRECTION_DOWN = 2;
 
     private static final float UP_PIPE_HEIGHT_MAX_RATIO = 4 / 5F;
     private static final float UP_PIPE_HEIGHT_MIN_RATIO = 2 / 5F;
-
-    private int mGamePanelWidth = 0;
-    private int mGamePanelHeight = 0;
-
-    /**
-     * 管道的活动区域
-     */
-    private int mActivityWidth = 0;
-    private int mActivityHeight = 0;
 
     private int mUpPipeMaxHeight = 0;
     private int mUpPipeMinHeight = 0;
@@ -49,35 +42,30 @@ public class Pipe {
 
     private Pipe mLastPipe = null;
 
-    private int mFloorHeight = 0;
-
-    private boolean mIsActive = false;
-
-    public Pipe(int gamePanelWidth, int gamePanelHeight, Bitmap upBitmap, Bitmap downBitmap, Pipe lastPipe) {
-        this.mGamePanelWidth = gamePanelWidth;
-        this.mGamePanelHeight = gamePanelHeight;
-        this.mUpBitmap = upBitmap;
-        this.mDownBitmap = downBitmap;
-        this.mLastPipe = lastPipe;
-        mFloorHeight = (int) ((1 - Floor.FLOOR_Y_POSITION_RATIO) * mGamePanelHeight);
-        mActivityWidth = mGamePanelWidth;
-        mActivityHeight = mGamePanelHeight - mFloorHeight;
-
-        mUpPipeMaxHeight = (int) (mActivityWidth * UP_PIPE_HEIGHT_MAX_RATIO);
-        mUpPipeMinHeight = (int) (mActivityHeight * UP_PIPE_HEIGHT_MIN_RATIO);
-        mGap = (int) (mActivityHeight * GAP_RATIO);
-        mPipeWidth = (int) (WIDTH_RATIO * mActivityWidth);
-        mMaxDeltaGapBetweenNeighborPipe = (int) (DELTA_GAP_BETWEEN_NEIGHBOR_PIPE_MAX_RATIO * mActivityHeight);
-        generateAttrs();
-    }
+    private FlappyBird mFlappyBird = null;
 
     private static final float DELTA_GAP_BETWEEN_NEIGHBOR_PIPE_MAX_RATIO = 1 / 5F;
     private int mMaxDeltaGapBetweenNeighborPipe = 0;
 
+    public Pipe(FlappyBird flappyBird, Bitmap upBitmap, Bitmap downBitmap, Pipe lastPipe) {
+        this.mFlappyBird = flappyBird;
+        this.mUpBitmap = upBitmap;
+        this.mDownBitmap = downBitmap;
+        this.mLastPipe = lastPipe;
+
+        mUpPipeMaxHeight = (int) (flappyBird.getGameActivityRect().height() * UP_PIPE_HEIGHT_MAX_RATIO);
+        mUpPipeMinHeight = (int) (flappyBird.getGameActivityRect().height() * UP_PIPE_HEIGHT_MIN_RATIO);
+        mGap = (int) (flappyBird.getGameActivityRect().height() * GAP_RATIO);
+        mPipeWidth = (int) (WIDTH_RATIO * flappyBird.getGameActivityRect().width());
+        mMaxDeltaGapBetweenNeighborPipe = (int) (DELTA_GAP_BETWEEN_NEIGHBOR_PIPE_MAX_RATIO * flappyBird.getGameActivityRect().height());
+        generateAttrs();
+    }
+
     private void generateAttrs() {
-        x = mGamePanelWidth;
+        x = mFlappyBird.getGameActivityRect().width();
         int upHeight = calcUpHeight();
-        int downHeight = mActivityHeight - upHeight - mGap;
+        int downHeight = mFlappyBird.getGameActivityRect().height() - upHeight - mGap;
+        Log.d(TAG, "upHeight: " + upHeight + " downHeight: " + downHeight);
         mUpPipe = new HalfPipe(DIRECTION_UP, upHeight, mUpBitmap);
         mDownPipe = new HalfPipe(DIRECTION_DOWN, downHeight, mDownBitmap);
     }
@@ -89,6 +77,7 @@ public class Pipe {
             int deltaGap = new Random().nextInt(mMaxDeltaGapBetweenNeighborPipe);
             upHeight = MathUtils.plusOrMinus(isGapHigherThanLastPipe, mLastPipe.getUpPipe().getHeight(), deltaGap);
             if (!isUpPipeHeightValid(upHeight)) {
+                Log.d(TAG,"!isUpPipeHeightValid. upHeight: " + upHeight);
                 upHeight = MathUtils.plusOrMinus(!isGapHigherThanLastPipe, mLastPipe.getUpPipe().getHeight(), deltaGap);
             }
         } else {
@@ -102,9 +91,7 @@ public class Pipe {
     }
 
     private int generateUpPipeInitHeight() {
-        int upHeight;
-        upHeight = new Random().nextInt(mUpPipeMaxHeight);
-        return upHeight;
+       return new Random().nextInt(mUpPipeMaxHeight);
     }
 
     public void draw(Canvas canvas, Paint paint) {
@@ -126,6 +113,21 @@ public class Pipe {
 
     public boolean isFinished() {
         return getX() + mPipeWidth < 0;
+    }
+
+    @Override
+    public void onGameCreate() {
+
+    }
+
+    @Override
+    public void onGameDestroy() {
+
+    }
+
+    @Override
+    public void onStatusChanged(@FlappyBird.Status int status) {
+
     }
 
     private class HalfPipe {
@@ -165,7 +167,7 @@ public class Pipe {
                 canvas.translate(x, 0);
                 canvas.drawBitmap(mBitmap, null, new Rect(0, 0, mPipeWidth, mHeight), paint);
             } else {
-                canvas.translate(x, mActivityHeight - mHeight);
+                canvas.translate(x, mFlappyBird.getGameActivityRect().height() - mHeight);
                 canvas.drawBitmap(mBitmap, null, new Rect(0, 0, mPipeWidth, mHeight), paint);
             }
             canvas.restore();
@@ -173,22 +175,21 @@ public class Pipe {
     }
 
     public static class PipeFactory {
-        private int mGamePanelWidth = 0;
-        private int mGamePanelHeight = 0;
         private Bitmap mUpBitmap = null;
         private Bitmap mDownBitmap = null;
 
         private Pipe mLastPipe = null;
 
-        public PipeFactory(int gamePanelWidth, int gamePanelHeight, Bitmap upBitmap, Bitmap downBitmap) {
-            mGamePanelWidth = gamePanelWidth;
-            mGamePanelHeight = gamePanelHeight;
+        private FlappyBird mFlappyBird = null;
+
+        public PipeFactory(FlappyBird flappyBird, Bitmap upBitmap, Bitmap downBitmap) {
+            mFlappyBird = flappyBird;
             mUpBitmap = upBitmap;
             mDownBitmap = downBitmap;
         }
 
         public Pipe generatePipe() {
-            Pipe pipe = new Pipe(mGamePanelWidth, mGamePanelHeight, mUpBitmap, mDownBitmap, mLastPipe);
+            Pipe pipe = new Pipe(mFlappyBird, mUpBitmap, mDownBitmap, mLastPipe);
             mLastPipe = pipe;
             return pipe;
         }

@@ -1,6 +1,5 @@
 package com.jaydenho.androidtech.widget.view.custom.surfaceview.flappybird;
 
-import android.animation.AnimatorListenerAdapter;
 import android.animation.IntEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -8,9 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.util.Log;
 import android.view.animation.LinearInterpolator;
 
 /**
@@ -18,9 +15,9 @@ import android.view.animation.LinearInterpolator;
  */
 
 public class Bird implements IGameComponent {
+    private static final String TAG = "flappy.bird";
     private static final int WIDTH = 34;
     private static final int HEIGHT = 24;
-    private static final int DROP_Y = -5;
     private Point mPositionPoint = null;
     private Bitmap mBitmap = null;
 
@@ -49,21 +46,26 @@ public class Bird implements IGameComponent {
     }
 
     private void initDrop() {
-        mDropAnimator = ObjectAnimator.ofObject(this, "moveY", new IntEvaluator(), DROP_Y);
+        mDropAnimator = ObjectAnimator.ofObject(this, "moveY", new IntEvaluator(), -10, -10);
         mDropAnimator.setInterpolator(new LinearInterpolator());
         mDropAnimator.setDuration(1000);
         mDropAnimator.setRepeatCount(ValueAnimator.INFINITE);
     }
 
+    /**
+     * @param moveY positive will let bird move up. negative is opposite
+     */
     public void setMoveY(int moveY) {
-        setY(getY() + moveY);
+        setY(getY() - moveY);
     }
 
     public void setX(int x) {
+        Log.d(TAG,"x: " + x);
         mPositionPoint.x = x;
     }
 
     public void setY(int y) {
+        Log.d(TAG,"y: " + y);
         mPositionPoint.y = y;
     }
 
@@ -91,11 +93,11 @@ public class Bird implements IGameComponent {
     private ObjectAnimator mDropAnimator = null;
 
     public void startDrop() {
-        mDropAnimator.start();
+//        mDropAnimator.start();
     }
 
     public void stopDrop() {
-        mDropAnimator.end();
+//        mDropAnimator.end();
     }
 
     @Override

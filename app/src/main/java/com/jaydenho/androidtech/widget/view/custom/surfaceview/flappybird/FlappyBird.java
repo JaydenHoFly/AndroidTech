@@ -22,6 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by hedazhao on 2017/11/9.
@@ -48,6 +49,8 @@ public class FlappyBird extends SurfaceView
         init();
     }
 
+    private static final int BIRD_DROP_Y = -5;
+    private static final int BIRD_JUMP_Y = 100;
     private SurfaceHolder mSurfaceHolder = null;
     private Canvas mCanvas = null;
     private Paint mPaint = null;
@@ -55,6 +58,7 @@ public class FlappyBird extends SurfaceView
     private Bitmap mUpPipeBitmap = null;
     private Bitmap mDownPipeBitmap = null;
     private Rect mGamePanelRect = null;
+    private Rect mGameActivityRect = null;
 
     //bird
     private Bird mBird = null;
@@ -63,8 +67,14 @@ public class FlappyBird extends SurfaceView
     private Floor mFloor = null;
 
     //pipe
+
+    /**
+     * count/s
+     */
+    private static final long PIPE_GENERATE_SPEED = 30;
     private List<Pipe> mPipes = null;
     private Pipe.PipeFactory mPipeFactory = null;
+    private long mLastPipeGenerateTmtp = 0L;
 
     private int mSpeed = 5;
 
@@ -97,6 +107,7 @@ public class FlappyBird extends SurfaceView
     private void initData() {
         mGameComponents = new ArrayList<>();
         mGamePanelRect = new Rect();
+        mGameActivityRect = new Rect();
     }
 
     private Bitmap loadBitmapFromResource(int b1) {
@@ -105,6 +116,7 @@ public class FlappyBird extends SurfaceView
 
     private void setStatus(int status) {
         if (mStatus == status) return;
+        Log.d(TAG, "setStatus. oldStatus: " + mStatus + " newStatus: " + status);
         mStatus = status;
         dispatchGameStatusChanged(mStatus);
     }
@@ -114,11 +126,19 @@ public class FlappyBird extends SurfaceView
         return mStatus;
     }
 
+    public Rect getGamePanelRect() {
+        return mGamePanelRect;
+    }
+
+    public Rect getGameActivityRect() {
+        return mGameActivityRect;
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         mIsDrawing = true;
-        new Thread(this).start();
         onGameCreate();
+        new Thread(this).start();
     }
 
     private void onGameCreate() {
@@ -142,37 +162,23 @@ public class FlappyBird extends SurfaceView
 
     private void generateBird() {
         mBird = new Bird(this, mGamePanelRect.height());
-        mBird.set(mGamePanelRect.width()/ 2, mGamePanelRect.hashCode() * 2 / 3);
+        mBird.set(mGameActivityRect.width() / 2, mGameActivityRect.height() / 2);
         mBird.setBitmap(loadBitmapFromResource(R.mipmap.b1));
         mGameComponents.add(mBird);
     }
 
     private boolean isGameOver() {
-        if(mBird.getY() >= mGamePanelRect.height() - mFloor.getFloorHeight()
+        if (isBirdDrop2Floor()) return true;
+        return false;
+    }
+
+    private boolean isBirdDrop2Floor() {
+        return mBird.getY() >= mGameActivityRect.height();
     }
 
     private void generatePipes() {
         mPipes = new ArrayList<>();
-        mPipeFactory = new Pipe.PipeFactory(mGamePanelRect.width(), mGamePanelRect.height(), mUpPipeBitmap, mDownPipeBitmap);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (mIsDrawing) {
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Pipe pipe = mPipeFactory.generatePipe();
-                            mPipes.add(pipe);
-                        }
-                    });
-                    try {
-                        Thread.sleep(1500);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
+        mPipeFactory = new Pipe.PipeFactory(this, mUpPipeBitmap, mDownPipeBitmap);
     }
 
     private void dispatchGameCreate() {
@@ -224,38 +230,84 @@ public class FlappyBird extends SurfaceView
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         mGamePanelRect.set(0, 0, w, h);
+        mGameActivityRect.set(0, 0, w, (int) (Floor.FLOOR_Y_POSITION_RATIO * h));
+        Log.d(TAG, "mGamePanelRect: " + mGamePanelRect.toShortString());
+        Log.d(TAG, "mGameActivityRect: " + mGameActivityRect.toShortString());
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+                jumpBird();
+                break;
+        }
         return super.onTouchEvent(event);
     }
 
     private void draw() {
-        Log.d(TAG, "draw");
         drawBackground();
         drawBird();
         drawFloor();
         drawPipes();
+        handleBird();
         handleFloor();
         handlePipes();
+        if (isGameOver()) {
+            setStatus(STATUS_STOP);
+        }
     }
 
     private void handleFloor() {
-        mFloor.setX(mFloor.getX() - mSpeed);
+        if (isGameRunning())
+            mFloor.setX(mFloor.getX() - mSpeed);
+    }
+
+    private void tryGeneratePipe() {
+        if(shouldGeneratePipe()) {
+            mLastPipeGenerateTmtp = System.currentTimeMillis();
+            Pipe pipe = mPipeFactory.generatePipe();
+            mPipes.add(pipe);
+        }
+    }
+
+    private boolean shouldGeneratePipe() {
+        return System.currentTimeMillis() - mLastPipeGenerateTmtp >= TimeUnit.MINUTES.toMillis(1) / PIPE_GENERATE_SPEED;
     }
 
     private void handlePipes() {
-        Iterator<Pipe> it = mPipes.iterator();
-        while (it.hasNext()) {
-            Pipe p = it.next();
-            int pX = p.getX() - mSpeed;
-            p.setX(pX);
-            if (p.isFinished()) {
-                it.remove();
+        if (isGameRunning()) {
+            tryGeneratePipe();
+            Iterator<Pipe> it = mPipes.iterator();
+            while (it.hasNext()) {
+                Pipe p = it.next();
+                int pX = p.getX() - mSpeed;
+                p.setX(pX);
+                if (p.isFinished()) {
+                    it.remove();
+                }
             }
         }
+    }
+
+    private void jumpBird() {
+        if (!isGameRunning()) return;
+        mBird.setMoveY(BIRD_JUMP_Y);
+    }
+
+    private void dropBird() {
+        if (!isGameRunning()) return;
+        mBird.setMoveY(BIRD_DROP_Y);
+    }
+
+    private void handleBird() {
+        if (isGameRunning()) {
+            dropBird();
+        }
+    }
+
+    private boolean isGameRunning() {
+        return getStatus() == STATUS_RUNNING;
     }
 
     private void drawPipes() {
