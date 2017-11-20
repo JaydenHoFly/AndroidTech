@@ -1,14 +1,11 @@
 package com.jaydenho.androidtech.widget.view.custom.surfaceview.flappybird;
 
-import android.animation.IntEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.Log;
-import android.view.animation.LinearInterpolator;
 
 /**
  * Created by hedazhao on 2017/11/13.
@@ -16,40 +13,23 @@ import android.view.animation.LinearInterpolator;
 
 public class Bird implements IGameComponent {
     private static final String TAG = "flappy.bird";
-    private static final int WIDTH = 34;
-    private static final int HEIGHT = 24;
-    private Point mPositionPoint = null;
+    private int mBirdWidth = 0;
+    private int mBirdHeight = 0;
+    private Point mCenterPoint = null;
     private Bitmap mBitmap = null;
 
-    private int mGamePanelHeight = 0;
-    private int mActivityHeight = 0;
+    private Rect mBody = null;
 
     public static final float DROP_Y_RATIO = 1 / 20F;
-    private int mDropY = 0;
-    private boolean mIsGameAlive = false;
     private FlappyBird mFlappyBird = null;
 
-    public Bird(FlappyBird flappyBird, int gamePanelHeight) {
-        this.mFlappyBird = flappyBird;
-        mGamePanelHeight = gamePanelHeight;
-        mPositionPoint = new Point();
-
-        initAttrs();
-        initDrop();
-    }
-
-    private void initAttrs() {
-        int floorHeight = (int) ((1 - Floor.FLOOR_Y_POSITION_RATIO) * mGamePanelHeight);
-        mActivityHeight = mGamePanelHeight - floorHeight;
-        mDropY = (int) (DROP_Y_RATIO * mActivityHeight);
-        ;
-    }
-
-    private void initDrop() {
-        mDropAnimator = ObjectAnimator.ofObject(this, "moveY", new IntEvaluator(), -10, -10);
-        mDropAnimator.setInterpolator(new LinearInterpolator());
-        mDropAnimator.setDuration(1000);
-        mDropAnimator.setRepeatCount(ValueAnimator.INFINITE);
+    public Bird(FlappyBird flappyBird, Bitmap birdBitmap) {
+        mFlappyBird = flappyBird;
+        mBitmap = birdBitmap;
+        mBirdWidth = mBitmap.getWidth();
+        mBirdHeight = mBitmap.getHeight();
+        mCenterPoint = new Point();
+        mBody = new Rect();
     }
 
     /**
@@ -60,21 +40,31 @@ public class Bird implements IGameComponent {
     }
 
     public void setX(int x) {
-        Log.d(TAG,"x: " + x);
-        mPositionPoint.x = x;
+        Log.d(TAG, "x: " + x);
+        mCenterPoint.x = x;
+        calcBody();
     }
 
     public void setY(int y) {
-        Log.d(TAG,"y: " + y);
-        mPositionPoint.y = y;
+        Log.d(TAG, "y: " + y);
+        mCenterPoint.y = y;
+        calcBody();
+    }
+
+    private void calcBody() {
+        mBody.set(mCenterPoint.x - mBirdWidth / 2, mCenterPoint.y - mBirdHeight / 2, mCenterPoint.x + mBirdWidth / 2, mCenterPoint.y + mBirdHeight / 2);
     }
 
     public int getX() {
-        return mPositionPoint.x;
+        return mCenterPoint.x;
     }
 
     public int getY() {
-        return mPositionPoint.y;
+        return mCenterPoint.y;
+    }
+
+    public Rect getBody() {
+        return mBody;
     }
 
     public void set(int x, int y) {
@@ -82,32 +72,18 @@ public class Bird implements IGameComponent {
         setY(y);
     }
 
-    public void setBitmap(Bitmap bitmap) {
-        mBitmap = bitmap;
-    }
-
     public void draw(Canvas canvas, Paint paint) {
-        canvas.drawBitmap(mBitmap, mPositionPoint.x, mPositionPoint.y, paint);
-    }
-
-    private ObjectAnimator mDropAnimator = null;
-
-    public void startDrop() {
-//        mDropAnimator.start();
-    }
-
-    public void stopDrop() {
-//        mDropAnimator.end();
+        canvas.drawBitmap(mBitmap, null, new Rect(mCenterPoint.x, mCenterPoint.y, mCenterPoint.x + mBirdWidth, mCenterPoint.y + mBirdHeight), paint);
     }
 
     @Override
     public void onGameCreate() {
-        mIsGameAlive = true;
+
     }
 
     @Override
     public void onGameDestroy() {
-        mIsGameAlive = false;
+
     }
 
     @Override
@@ -116,10 +92,8 @@ public class Bird implements IGameComponent {
             case FlappyBird.STATUS_PREPARE:
                 break;
             case FlappyBird.STATUS_RUNNING:
-                startDrop();
                 break;
             case FlappyBird.STATUS_STOP:
-                stopDrop();
                 break;
         }
     }

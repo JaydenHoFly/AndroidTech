@@ -11,21 +11,19 @@ import android.graphics.Shader;
  * Created by hedazhao on 2017/11/13.
  */
 
-public class Floor {
+public class Floor implements IGameComponent {
     private int x = 0;
     private int y = 0;
 
-    private int gameWidth = 0;
-    private int gameHeight = 0;
-
-    private int mFloorHeight = 0;
-
     public static final float FLOOR_Y_POSITION_RATIO = 4 / 5F;
-    private Bitmap brickBitmap = null;
     private BitmapShader bricksBS = null;
+    private FlappyBird mFlappyBird = null;
 
-    public Floor() {
-
+    public Floor(FlappyBird flappyBird, Bitmap brickBitmap) {
+        mFlappyBird = flappyBird;
+        //x方向上无限重复，y方向上将最后一个像素拉伸
+        bricksBS = new BitmapShader(brickBitmap, Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
+        setY(mFlappyBird.getGamePanelRect().height() - mFlappyBird.getFloorHeight());
     }
 
     public int getX() {
@@ -36,21 +34,8 @@ public class Floor {
         this.x = x;
     }
 
-    public int getFloorHeight() {
-        return mFloorHeight;
-    }
-
-    public void setGamePanelSize(int width, int height) {
-        this.gameWidth = width;
-        this.gameHeight = height;
-
-        mFloorHeight = y = (int) (gameHeight * FLOOR_Y_POSITION_RATIO);
-    }
-
-    public void setBrickBitmap(Bitmap brickBitmap) {
-        this.brickBitmap = brickBitmap;
-        //x方向上无限重复，y方向上将最后一个像素拉伸
-        bricksBS = new BitmapShader(brickBitmap, Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
+    private void setY(int y) {
+        this.y = y;
     }
 
     public void draw(Canvas canvas, Paint paint) {
@@ -58,8 +43,23 @@ public class Floor {
         paint.setShader(bricksBS);
         canvas.translate(x, y);
         //x是负值，canvas向左平移后，坐标系也会向左平移，-x位置就是屏幕左边缘，-x+gameWidth就是屏幕右边缘。相当于将一块超大的画往左拉动，就产生了背景向右移动的效果。
-        canvas.drawRect(-x, 0, -x + gameWidth, gameHeight - y, paint);
+        canvas.drawRect(-x, 0, -x + mFlappyBird.getGamePanelRect().width(), mFlappyBird.getGamePanelRect().height() - y, paint);
         canvas.restore();
         paint.setShader(null);
+    }
+
+    @Override
+    public void onGameCreate() {
+
+    }
+
+    @Override
+    public void onGameDestroy() {
+
+    }
+
+    @Override
+    public void onStatusChanged(int status) {
+
     }
 }
