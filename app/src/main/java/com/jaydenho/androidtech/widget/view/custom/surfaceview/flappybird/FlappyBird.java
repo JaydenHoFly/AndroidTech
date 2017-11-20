@@ -49,8 +49,8 @@ public class FlappyBird extends SurfaceView
         init();
     }
 
-    private static final int BIRD_DROP_Y = -5;
-    private static final int BIRD_JUMP_Y = 100;
+    private static final float BIRD_DROP_Y = - 0.2f;
+    private static final int BIRD_JUMP_Y = 80;
     private SurfaceHolder mSurfaceHolder = null;
     private Canvas mCanvas = null;
     private Paint mPaint = null;
@@ -65,6 +65,7 @@ public class FlappyBird extends SurfaceView
 
     //bird
     private Bird mBird = null;
+    private float mBirdTmpDropY = 0f;
 
     //floor
     private Floor mFloor = null;
@@ -79,7 +80,7 @@ public class FlappyBird extends SurfaceView
     private Pipe.PipeFactory mPipeFactory = null;
     private long mLastPipeGenerateTmtp = 0L;
 
-    private int mSpeed = 5;
+    private int mFloorSpeed = 5;
 
     private boolean mIsDrawing;
 
@@ -246,8 +247,10 @@ public class FlappyBird extends SurfaceView
         while (mIsDrawing) {
             try {
                 mCanvas = mSurfaceHolder.lockCanvas();
-                if (mCanvas != null)
+                if (mCanvas != null) {
+                    logic();
                     draw();
+                }
             } catch (Exception ignored) {
                 ignored.printStackTrace();
             } finally {
@@ -277,11 +280,7 @@ public class FlappyBird extends SurfaceView
         return super.onTouchEvent(event);
     }
 
-    private void draw() {
-        drawBackground();
-        drawBird();
-        drawFloor();
-        drawPipes();
+    private void logic() {
         if (isGameRunning() && isGameOver()) {
             setStatus(STATUS_STOP);
         }
@@ -290,9 +289,16 @@ public class FlappyBird extends SurfaceView
         handlePipes();
     }
 
+    private void draw() {
+        drawBackground();
+        drawBird();
+        drawFloor();
+        drawPipes();
+    }
+
     private void handleFloor() {
         if (isGameRunning())
-            mFloor.setX(mFloor.getX() - mSpeed);
+            mFloor.setX(mFloor.getX() - mFloorSpeed);
     }
 
     private void tryGeneratePipe() {
@@ -315,7 +321,7 @@ public class FlappyBird extends SurfaceView
             Iterator<Pipe> it = mPipes.iterator();
             while (it.hasNext()) {
                 Pipe p = it.next();
-                int pX = p.getX() - mSpeed;
+                int pX = p.getX() - mFloorSpeed;
                 p.setX(pX);
                 if (p.isFinished()) {
                     it.remove();
@@ -328,11 +334,13 @@ public class FlappyBird extends SurfaceView
     private void jumpBird() {
         if (!isGameRunning()) return;
         mBird.setMoveY(BIRD_JUMP_Y);
+        mBirdTmpDropY = 0;
     }
 
     private void dropBird() {
         if (!isGameRunning()) return;
-        mBird.setMoveY(BIRD_DROP_Y);
+        mBirdTmpDropY += BIRD_DROP_Y;
+        mBird.setMoveY((int) mBirdTmpDropY);
     }
 
     private void handleBird() {
