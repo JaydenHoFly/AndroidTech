@@ -27,6 +27,7 @@ public class Pipe implements IGameComponent {
     private int mUpPipeMinHeight = 0;
 
     private int x = 0;
+    private int y = 0;
 
     private Bitmap mUpBitmap = null;
     private Bitmap mDownBitmap = null;
@@ -38,7 +39,7 @@ public class Pipe implements IGameComponent {
     public static final float WIDTH_RATIO = 1 / 7F;
 
     private static final float GAP_RATIO = 1 / 5F;
-    private int mGap = 100;
+    private int mGap = 0;
 
     private Pipe mLastPipe = null;
 
@@ -46,6 +47,8 @@ public class Pipe implements IGameComponent {
 
     private static final float DELTA_GAP_BETWEEN_NEIGHBOR_PIPE_MAX_RATIO = 1 / 5F;
     private int mMaxDeltaGapBetweenNeighborPipe = 0;
+
+    private final Rect[] mBodies = new Rect[]{new Rect(), new Rect()};
 
     public Pipe(FlappyBird flappyBird, Bitmap upBitmap, Bitmap downBitmap, Pipe lastPipe) {
         this.mFlappyBird = flappyBird;
@@ -77,7 +80,7 @@ public class Pipe implements IGameComponent {
             int deltaGap = new Random().nextInt(mMaxDeltaGapBetweenNeighborPipe);
             upHeight = MathUtils.plusOrMinus(isGapHigherThanLastPipe, mLastPipe.getUpPipe().getHeight(), deltaGap);
             if (!isUpPipeHeightValid(upHeight)) {
-                Log.d(TAG,"!isUpPipeHeightValid. upHeight: " + upHeight);
+                Log.d(TAG, "!isUpPipeHeightValid. upHeight: " + upHeight);
                 upHeight = MathUtils.plusOrMinus(!isGapHigherThanLastPipe, mLastPipe.getUpPipe().getHeight(), deltaGap);
             }
         } else {
@@ -91,7 +94,7 @@ public class Pipe implements IGameComponent {
     }
 
     private int generateUpPipeInitHeight() {
-       return new Random().nextInt(mUpPipeMaxHeight);
+        return new Random().nextInt(mUpPipeMaxHeight);
     }
 
     public void draw(Canvas canvas, Paint paint) {
@@ -103,12 +106,31 @@ public class Pipe implements IGameComponent {
         return mUpPipe;
     }
 
+    public HalfPipe getDownPipe() {
+        return mDownPipe;
+    }
+
     public void setX(int x) {
         this.x = x;
+        calcBodies();
     }
 
     public int getX() {
         return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+        calcBodies();
+    }
+
+    private void calcBodies() {
+        mBodies[0].set(x, y, x + mPipeWidth, y + getUpPipe().getHeight());
+        mBodies[1].set(x, y + getUpPipe().getHeight() + mGap, x + mPipeWidth, y + getUpPipe().getHeight() + mGap + getDownPipe().getHeight());
     }
 
     public boolean isFinished() {
@@ -128,6 +150,11 @@ public class Pipe implements IGameComponent {
     @Override
     public void onStatusChanged(@FlappyBird.Status int status) {
 
+    }
+
+    @Override
+    public Rect[] getBodies() {
+        return mBodies;
     }
 
     private class HalfPipe {

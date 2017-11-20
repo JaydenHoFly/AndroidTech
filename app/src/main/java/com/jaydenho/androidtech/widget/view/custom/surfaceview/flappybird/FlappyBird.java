@@ -167,23 +167,44 @@ public class FlappyBird extends SurfaceView
     }
 
     private void generateFloor() {
-        mFloor = new Floor(this, loadBitmapFromResource(R.mipmap.floor_bg2));
+        mFloor = new Floor(this, loadBitmapFromResource(R.mipmap.floor_bg2), getGamePanelRect().width(), mFloorHeight);
         mGameComponents.add(mFloor);
     }
 
     private void generateBird() {
-        mBird = new Bird(this, loadBitmapFromResource(R.mipmap.b1));
+        Bitmap birdBitmap = loadBitmapFromResource(R.mipmap.b1);
+        mBird = new Bird(this, birdBitmap, birdBitmap.getWidth(), birdBitmap.getHeight());
         mBird.set(mGameActivityRect.width() / 2, mGameActivityRect.height() / 2);
         mGameComponents.add(mBird);
     }
 
     private boolean isGameOver() {
         if (isBirdDrop2Floor()) return true;
+        if (isBirdCrash2Pipes()) return true;
         return false;
     }
 
     private boolean isBirdDrop2Floor() {
-        return mBird.getBody().bottom >= mGameActivityRect.bottom;
+        return isGameComponentsIntersects(mBird, mFloor);
+    }
+
+    private boolean isBirdCrash2Pipes() {
+        for (Pipe p : mPipes) {
+            if (isGameComponentsIntersects(p, mBird)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isGameComponentsIntersects(IGameComponent c1, IGameComponent c2) {
+        for (Rect c1b : c1.getBodies()) {
+            for (Rect c2b : c2.getBodies()) {
+                if (Rect.intersects(c1b, c2b))
+                    return true;
+            }
+        }
+        return false;
     }
 
     private void generatePipes() {
@@ -261,12 +282,12 @@ public class FlappyBird extends SurfaceView
         drawBird();
         drawFloor();
         drawPipes();
+        if (isGameRunning() && isGameOver()) {
+            setStatus(STATUS_STOP);
+        }
         handleBird();
         handleFloor();
         handlePipes();
-        if (isGameOver()) {
-            setStatus(STATUS_STOP);
-        }
     }
 
     private void handleFloor() {
@@ -278,6 +299,7 @@ public class FlappyBird extends SurfaceView
         if (shouldGeneratePipe()) {
             mLastPipeGenerateTmtp = System.currentTimeMillis();
             Pipe pipe = mPipeFactory.generatePipe();
+            pipe.setY(mGameActivityRect.top);
             mGameComponents.add(pipe);
             mPipes.add(pipe);
         }

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Shader;
 
 /**
@@ -19,11 +20,17 @@ public class Floor implements IGameComponent {
     private BitmapShader bricksBS = null;
     private FlappyBird mFlappyBird = null;
 
-    public Floor(FlappyBird flappyBird, Bitmap brickBitmap) {
+    private final Rect[] mBodies = new Rect[]{new Rect()};
+    private int mWidth = 0;
+    private int mHeight = 0;
+
+    public Floor(FlappyBird flappyBird, Bitmap brickBitmap, int width, int height) {
         mFlappyBird = flappyBird;
+        mWidth = width;
+        mHeight = height;
         //x方向上无限重复，y方向上将最后一个像素拉伸
         bricksBS = new BitmapShader(brickBitmap, Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
-        setY(mFlappyBird.getGamePanelRect().height() - mFlappyBird.getFloorHeight());
+        setY(mFlappyBird.getGamePanelRect().bottom - mHeight);
     }
 
     public int getX() {
@@ -36,6 +43,11 @@ public class Floor implements IGameComponent {
 
     private void setY(int y) {
         this.y = y;
+        calcBodies();
+    }
+
+    private void calcBodies() {
+        mBodies[0].set(mFlappyBird.getGamePanelRect().left, y, mFlappyBird.getGamePanelRect().left + mWidth, y + mHeight);
     }
 
     public void draw(Canvas canvas, Paint paint) {
@@ -43,7 +55,7 @@ public class Floor implements IGameComponent {
         paint.setShader(bricksBS);
         canvas.translate(x, y);
         //x是负值，canvas向左平移后，坐标系也会向左平移，-x位置就是屏幕左边缘，-x+gameWidth就是屏幕右边缘。相当于将一块超大的画往左拉动，就产生了背景向右移动的效果。
-        canvas.drawRect(-x, 0, -x + mFlappyBird.getGamePanelRect().width(), mFlappyBird.getGamePanelRect().height() - y, paint);
+        canvas.drawRect(-x, 0, -x + mWidth, mHeight, paint);
         canvas.restore();
         paint.setShader(null);
     }
@@ -61,5 +73,10 @@ public class Floor implements IGameComponent {
     @Override
     public void onStatusChanged(int status) {
 
+    }
+
+    @Override
+    public Rect[] getBodies() {
+        return mBodies;
     }
 }

@@ -18,18 +18,17 @@ public class Bird implements IGameComponent {
     private Point mCenterPoint = null;
     private Bitmap mBitmap = null;
 
-    private Rect mBody = null;
+    private final Rect[] mBodies = new Rect[]{new Rect()};
 
     public static final float DROP_Y_RATIO = 1 / 20F;
     private FlappyBird mFlappyBird = null;
 
-    public Bird(FlappyBird flappyBird, Bitmap birdBitmap) {
+    public Bird(FlappyBird flappyBird, Bitmap birdBitmap, int width, int height) {
         mFlappyBird = flappyBird;
         mBitmap = birdBitmap;
-        mBirdWidth = mBitmap.getWidth();
-        mBirdHeight = mBitmap.getHeight();
+        mBirdWidth = width;
+        mBirdHeight = height;
         mCenterPoint = new Point();
-        mBody = new Rect();
     }
 
     /**
@@ -42,17 +41,17 @@ public class Bird implements IGameComponent {
     public void setX(int x) {
         Log.d(TAG, "x: " + x);
         mCenterPoint.x = x;
-        calcBody();
+        calcBodies();
     }
 
     public void setY(int y) {
         Log.d(TAG, "y: " + y);
         mCenterPoint.y = y;
-        calcBody();
+        calcBodies();
     }
 
-    private void calcBody() {
-        mBody.set(mCenterPoint.x - mBirdWidth / 2, mCenterPoint.y - mBirdHeight / 2, mCenterPoint.x + mBirdWidth / 2, mCenterPoint.y + mBirdHeight / 2);
+    private void calcBodies() {
+        mBodies[0].set(mCenterPoint.x - mBirdWidth / 2, mCenterPoint.y - mBirdHeight / 2, mCenterPoint.x + mBirdWidth / 2, mCenterPoint.y + mBirdHeight / 2);
     }
 
     public int getX() {
@@ -63,8 +62,9 @@ public class Bird implements IGameComponent {
         return mCenterPoint.y;
     }
 
-    public Rect getBody() {
-        return mBody;
+    @Override
+    public Rect[] getBodies() {
+        return mBodies;
     }
 
     public void set(int x, int y) {
