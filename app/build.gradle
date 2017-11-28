@@ -7,8 +7,8 @@ android {
 
     defaultConfig {
         applicationId "com.jaydenho.androidtech"
-        minSdkVersion 15
-        targetSdkVersion 23
+        minSdkVersion rootProject.ext.MIN_SDK_VERSION
+        targetSdkVersion rootProject.ext.TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -29,6 +29,12 @@ android {
          */
         buildConfigField "String", "TINKER_ID", "\"${getTinkerIdValue()}\""
         buildConfigField "String", "PLATFORM",  "\"all\""
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
     }
     dataBinding {
         enabled = true
@@ -71,11 +77,6 @@ android {
             // 预发布环境的包
             //
         }
-        bugly {
-            // Bugly测试版
-            dimension "channel"
-            buildConfigField("String", "BUGLY_APPID", '"db6e59582a"') // Bugly升级的测试AppID
-        }
         base {
             // 基础渠道包(官网渠道)
             dimension "channel"
@@ -95,8 +96,8 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
     //local unit test
     // Required -- JUnit 4 framework
     testCompile 'junit:junit:4.12'
@@ -119,6 +120,7 @@ dependencies {
     compile 'com.github.Cutta:GifView:1.1'
     compile project(':extensionalviewpager')
     compile project(':DroidPlugin')
+    compile project(':androidarchitecture')
     //Tinker
     //可选，用于生成application类
     provided("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
@@ -129,6 +131,8 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.3-2"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    implementation "android.arch.lifecycle:extensions:1.0.0"
 }
 
 def bakPath = file("${buildDir}/bakApk/")

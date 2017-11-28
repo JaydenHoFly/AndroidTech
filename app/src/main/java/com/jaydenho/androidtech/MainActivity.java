@@ -3,10 +3,8 @@ package com.jaydenho.androidtech;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,20 +20,16 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jaydenho.androidtech.androidarchitecture.lifecycle.LearnLifeCycleActivity;
+import com.jaydenho.androidtech.androidarchitecture.livedata.LearnLiveDataActivity;
+import com.jaydenho.androidtech.androidarchitecture.viewmodel.LearnViewModelActivity;
 import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.hotfix.HotFixActivity;
 import com.jaydenho.androidtech.ipc.binder.AIDLActivity;
 import com.jaydenho.androidtech.plugin.droidplugin.Utils;
-import com.jaydenho.androidtech.plugin.droidplugin.hookactivity.HookHelper;
 import com.jaydenho.androidtech.test.TestAty;
-import com.jaydenho.androidtech.test.TestAty2;
-import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
-import com.jaydenho.androidtech.widget.recyclerview.RecyclerViewActivity;
-import com.jaydenho.androidtech.widget.view.BasicAttrsAty;
 import com.jaydenho.androidtech.widget.view.custom.CustomViewAty;
-import com.jaydenho.androidtech.widget.view.viewpager.InfiniteAutoScrollViewPagerActivity;
-import com.jaydenho.flavors.Flavor;
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.morgoo.helper.compat.PackageManagerCompat;
 
@@ -61,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int PLUGIN = 6;
         int BINDER = 7;
         int START_PLUGIN_1 = 8;
+        int ANDROID_ARCHITECTURE = 9;
     }
 
     @Override
@@ -112,6 +107,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DashboardInfo startPlugin1 = new DashboardInfo(DashboardIds.START_PLUGIN_1, "StartPlugin1");
         mDashboardInfos.add(startPlugin1);
 
+        DashboardInfo androidArchitecture = new DashboardInfo(DashboardIds.ANDROID_ARCHITECTURE, "Android Architecture");
+        mDashboardInfos.add(androidArchitecture);
+
         mDashboardAdapter = new DashboardAdapter();
     }
 
@@ -158,6 +156,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             e.printStackTrace();
                         }
                         startActivity(new Intent("com.jayden.plugin1.launchactivity"));
+                        break;
+                    case DashboardIds.ANDROID_ARCHITECTURE:
+                        startActivity(new Intent(mContext, LearnViewModelActivity.class));
                         break;
                 }
             }
