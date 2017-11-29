@@ -45,7 +45,7 @@ public class LearnViewModelActivity extends AppCompatActivity {
         mUserChangeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                learnViewModel.getUsersName().setValue("userName: " + new Random().nextInt(100));
+                learnViewModel.saveUserName("userName: " + new Random().nextInt(100));
             }
         });
     }
