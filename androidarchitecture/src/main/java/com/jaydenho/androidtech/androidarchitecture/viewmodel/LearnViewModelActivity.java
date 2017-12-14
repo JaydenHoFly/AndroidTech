@@ -1,10 +1,6 @@
 package com.jaydenho.androidtech.androidarchitecture.viewmodel;
 
-import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.Transformations;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jaydenho.androidtech.R;
-import com.jaydenho.androidtech.androidarchitecture.livedata.LearnLiveData;
 
 import java.util.Random;
 

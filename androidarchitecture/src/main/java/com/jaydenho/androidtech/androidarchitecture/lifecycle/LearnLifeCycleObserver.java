@@ -20,12 +20,10 @@ public class LearnLifeCycleObserver implements LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     public void onCreate() {
-        Log.d(TAG, "onCreate");
 
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     public void onStop() {
-        Log.d(TAG, "onStop. state: " + mLifecycle.getCurrentState());
     }
 }
