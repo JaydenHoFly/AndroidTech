@@ -22,7 +22,7 @@
 
         <import type="com.jaydenho.androidtech.databinding.DataBindingAty"/>
 
-        <import type="com.jaydenho.androidtech.databinding.DataBindingViewModel"/>
+        <import type="com.jaydenho.androidtech.databinding.DataBindingInfo"/>
 
         <variable
             name="user"
@@ -53,8 +53,8 @@
             type="DataBindingAty"/>
 
         <variable
-            name="viewModel"
-            type="DataBindingViewModel"/>
+            name="infos"
+            type="android.databinding.ObservableList&lt;DataBindingInfo&gt;"/>
     </data>
 
     <LinearLayout
@@ -160,8 +160,9 @@
         </ScrollView>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_list"
+            android:id="@+id/list_RV"
+            app:infos="@{infos}"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </layout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.jaydenho.androidtech.databinding.DataBindingInfo"/>
+
+        <variable
+            name="viewModel"
+            type="com.jaydenho.androidtech.databinding.DataBindingInfo"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_gravity="center_vertical"
+            android:focusable="false"
+            android:padding="@dimen/btn_padding"
+            android:text="@{viewModel.text}"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@{viewModel.imageResId}"/>
+    </LinearLayout>
+</layout>

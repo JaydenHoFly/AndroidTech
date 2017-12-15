@@ -4,8 +4,14 @@ import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.databinding.BindingMethod;
 import android.databinding.BindingMethods;
+import android.databinding.ObservableList;
+import android.support.annotation.DrawableRes;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.List;
 
 /**
  * Created by hedazhao on 2016/8/4.
@@ -39,6 +45,19 @@ public class CustomSetter {
         v.setText("j_text1: " + t1 + "&" + t2);
     }
 
+    @BindingAdapter("infos")
+    public static void setInfos(RecyclerView rv, ObservableList<DataBindingInfo> infos) {
+        DataBindingListAdapter adapter = (DataBindingListAdapter) rv.getAdapter();
+        if (adapter != null) {
+            adapter.setData(infos);
+        }
+    }
+
+    @BindingAdapter("android:src")
+    public void setImageResource(ImageView iv, @DrawableRes int resId) {
+        iv.setImageResource(resId);
+    }
+
     @BindingConversion
     public static String convertResIdToString(int stringId) {
         return "convert to string: " + stringId;
@@ -49,5 +68,4 @@ public class CustomSetter {
     public static String convertResIdToString2(int stringId) {
         return "convert to string2: " + stringId;
     }
-
 }

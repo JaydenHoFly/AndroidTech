@@ -1,32 +1,23 @@
 package com.jaydenho.androidtech.databinding;
 
-import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.databinding.ObservableArrayList;
-import android.databinding.ObservableField;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jaydenho.androidtech.R;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DataBindingAty extends AppCompatActivity {
@@ -43,11 +34,15 @@ public class DataBindingAty extends AppCompatActivity {
 
         }
     };
+    private Handler mThreadHandler = null;
+    private DataBindingListAdapter mListAdapter = null;
+    private DataBindingViewModel mViewModel = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.aty_data_binding, new CustomSetterComponent());
+        DataBindingUtil.setDefaultComponent(new CustomSetterComponent());
+        mBinding = DataBindingUtil.setContentView(this, R.layout.aty_data_binding);
         initData();
     }
 
@@ -76,26 +71,26 @@ public class DataBindingAty extends AppCompatActivity {
                 mUser.score.set(80f);
                 mUser.setName("candice");
                 mNames.set(0, 3);
-                mNames.add(0,4);
+                mNames.add(0, 4);
             }
         }, 2000);
 
         HandlerThread ht = new HandlerThread("thread");
         ht.start();
-        Handler handler = new Handler(ht.getLooper()){
+        mThreadHandler = new Handler(ht.getLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
 
             }
         };
-        handler.postDelayed(new Runnable() {
+        mThreadHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mUser.setName("leo");
-                mNames.set(0,5);
+                mNames.set(0, 5);
             }
-        },3000);
+        }, 3000);
 
         Map<String, Integer> map = new HashMap<>();
         map.put("jayden", 22);
@@ -118,6 +113,27 @@ public class DataBindingAty extends AppCompatActivity {
 
         mUser.score.set(90f);
 
+        initRecyclerView();
+    }
+
+    /**
+     * 如何用DataBinding实现RecyclerView
+     */
+    private void initRecyclerView() {
+        mViewModel = new DataBindingViewModel();
+        mListAdapter = new DataBindingListAdapter();
+        //layout中的id是list_rv, 自动生成名为listRV的控件
+        RecyclerView listRV = mBinding.listRV;
+        //CustomSetter#setInfos绑定了属性infos
+        mBinding.setInfos(mViewModel.getDataBindingInfos());
+        listRV.setLayoutManager(new LinearLayoutManager(this));
+        listRV.setAdapter(mListAdapter);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mViewModel.fetchData();
+            }
+        }, 5000);
     }
 
     public void onClickMethod(UserInfo user) {
