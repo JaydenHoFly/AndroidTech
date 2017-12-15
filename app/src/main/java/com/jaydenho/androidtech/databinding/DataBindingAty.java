@@ -70,6 +70,7 @@ public class DataBindingAty extends AppCompatActivity {
                 mBinding.setNamesIndex(namesIndex);
                 mUser.score.set(80f);
                 mUser.setName("candice");
+                mUser.updateNoFieldName();
                 mNames.set(0, 3);
                 mNames.add(0, 4);
             }
