@@ -20,8 +20,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jaydenho.androidtech.androidarchitecture.lifecycle.LearnLifeCycleActivity;
-import com.jaydenho.androidtech.androidarchitecture.livedata.LearnLiveDataActivity;
 import com.jaydenho.androidtech.androidarchitecture.viewmodel.LearnViewModelActivity;
 import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.hotfix.HotFixActivity;

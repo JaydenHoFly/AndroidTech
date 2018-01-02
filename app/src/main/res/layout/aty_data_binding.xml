@@ -156,6 +156,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:j_text="@{12}"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:minWidth="100dp"
+                    android:minHeight="50dp"
+                    android:text="@{user.name}"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </ScrollView>
 

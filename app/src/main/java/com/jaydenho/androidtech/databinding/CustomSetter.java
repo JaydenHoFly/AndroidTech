@@ -4,12 +4,21 @@ import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.databinding.BindingMethod;
 import android.databinding.BindingMethods;
+import android.databinding.InverseBindingAdapter;
+import android.databinding.InverseBindingListener;
 import android.databinding.ObservableList;
+import android.databinding.adapters.ListenerUtil;
+import android.databinding.adapters.TextViewBindingAdapter;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.jaydenho.androidtech.R;
 
 import java.util.List;
 
@@ -57,6 +66,47 @@ public class CustomSetter {
     public void setImageResource(ImageView iv, @DrawableRes int resId) {
         iv.setImageResource(resId);
     }
+
+    //反向绑定：https://medium.com/@henglim/diving-into-android-data-binding-inverse-data-binding-783e5e5a83d3
+    /*@InverseBindingAdapter(attribute = "j_text_inverse", event = "j_text_inverseAttrChanged")
+    public static String observerText(EditText v, CharSequence text) {
+        Log.d(TAG, "observerText. text: " + text);
+        return v.getText().toString();
+    }
+
+    @BindingAdapter(value = {"android:beforeTextChanged", "android:onTextChanged",
+            "android:afterTextChanged", "j_text_inverseAttrChanged"},
+            requireAll = false)
+    public static void setTextWatcher(final TextView v, TextViewBindingAdapter.BeforeTextChanged before,
+                                      final TextViewBindingAdapter.OnTextChanged on, TextViewBindingAdapter.AfterTextChanged after,
+                                      final InverseBindingListener textAttrChanged) {
+        TextWatcher newValue = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (on != null) {
+                    on.onTextChanged(s, start, before, count);
+                }
+                if (textAttrChanged != null) {
+                    textAttrChanged.onChange();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+        TextWatcher oldValue = ListenerUtil.trackListener(v, newValue, R.id.textWatcher);
+        if (oldValue != null) {
+            v.removeTextChangedListener(oldValue);
+        }
+        v.addTextChangedListener(newValue);
+    }*/
 
     @BindingConversion
     public static String convertResIdToString(int stringId) {

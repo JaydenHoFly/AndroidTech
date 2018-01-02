@@ -16,13 +16,18 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.os.LocaleListCompat;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
@@ -32,9 +37,11 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jaydenho.androidtech.AndroidApplicationLike;
 import com.jaydenho.androidtech.MainActivity;
@@ -43,6 +50,7 @@ import com.jaydenho.androidtech.hotfix.MyTinkerApplication;
 import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.util.FileUtils;
 import com.jaydenho.androidtech.util.LocationProvider;
+import com.jaydenho.androidtech.widget.view.dialog.LoadingDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tencent.tinker.loader.TinkerDexLoader;
@@ -53,6 +61,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -86,6 +96,7 @@ public class TestAty extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aty_test);
+        Toast.makeText(this,"toast", Toast.LENGTH_SHORT).show();
         mNameTV = (TextView) findViewById(R.id.tv_name);
         String userAgent = System.getProperty("http.agent");
         Log.d(TAG, "userAgent: " + userAgent);
@@ -199,7 +210,42 @@ public class TestAty extends FragmentActivity {
 
         ADIntentUtils.isAcceptedScheme("taobao://item.taobao.com/item.htm?spm=a1z10.3-c.w4002-9705227192.14.6nS5Xy&id=525291527981&c=359c9d34a4c185dfa2338711e8ac3d82&did=ANDROID-09309950e8e545dda88578b6465298ef&taskid=4T5@S-0918100421-RMP-0918-r5J5tvfYJc9NDg11111f16&s=getui");
 
-        MyNotification.notifyTaskNotification(this,"","","",323);
+        MyNotification.notifyTaskNotification(this, "", "", "", 323);
+
+        TextView dateTV = findViewById(R.id.tv_date);
+        long time = 1513670339000L;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        dateTV.setText(sdf.format(new Date(time)));
+        testEditTextCount();
+        testProgressBar();
+    }
+
+    private LoadingDialog d;
+
+    private void testProgressBar() {
+         d = new LoadingDialog(this);
+        d.setCancelable(false);
+    }
+
+    private void testEditTextCount() {
+        final int count = getResources().getInteger(R.integer.feedback_content_count);
+        final EditText et = findViewById(R.id.et_count);
+        et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.d(TAG, "text.length: " + s.toString().length() + "/" + count);
+            }
+        });
     }
 
     private void testIntent(String url) {

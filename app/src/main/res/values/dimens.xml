@@ -8,5 +8,7 @@
     <dimen name="test_height">284dp</dimen>
     <dimen name="test_height1">284dp</dimen>
 
-    <item format="float" name="choiceness_ad_width_height_radio" type="dimen">1.778</item>
+    <item name="choiceness_ad_width_height_radio" format="float" type="dimen">1.778</item>
+
+    <item name="feedback_content_count" type="integer">200</item>
 </resources>
