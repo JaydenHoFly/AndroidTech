@@ -30,7 +30,7 @@ public class LearnLiveDataActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aty_learn_live_data);
-        mUserNameTV = findViewById(R.id.tv_user_name);
+        mUserNameTV = findViewById(R.id.et_user_name);
         mUserChangeBtn = findViewById(R.id.btn_user_change);
         final LearnLiveData learnLiveData = new LearnLiveData();
         learnLiveData.getUsersName().observe(this, new Observer<String>() {

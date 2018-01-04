@@ -1,35 +1,38 @@
 package com.jaydenho.androidtech.androidarchitecture.viewmodel;
 
-import android.arch.lifecycle.MediatorLiveData;
+import android.arch.core.util.Function;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
-import android.support.annotation.Nullable;
 
 /**
  * Created by hedazhao on 2017/11/28.
  */
 
 public class LearnViewModel extends ViewModel {
-    private MediatorLiveData<String> mUserNameLiveData = null;
+    private MutableLiveData<Long> mUserId = null;
+    private LiveData<UserInfo> mUserInfo = null;
+
     private UserRepository mUserRepository = null;
 
     public LearnViewModel() {
         mUserRepository = new UserRepository();
-        mUserNameLiveData = new MediatorLiveData<>();
-        mUserNameLiveData.addSource(mUserRepository.getUserName(), new Observer<String>() {
+        mUserId = new MutableLiveData<>();
+        mUserInfo = Transformations.switchMap(mUserId, new Function<Long, LiveData<UserInfo>>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                mUserNameLiveData.setValue(s);
+            public LiveData<UserInfo> apply(Long userId) {
+                return mUserRepository.refreshUserInfo(userId);
             }
         });
     }
 
-    public MutableLiveData<String> getUsersName() {
-        return mUserNameLiveData;
+    public MutableLiveData<Long> getUserId() {
+        return mUserId;
     }
 
-    public void saveUserName(String userName) {
-        mUserRepository.saveUserName(userName);
+    public LiveData<UserInfo> getUserInfo() {
+        return mUserInfo;
     }
+
 }

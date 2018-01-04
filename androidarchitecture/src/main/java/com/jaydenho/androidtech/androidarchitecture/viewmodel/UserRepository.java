@@ -8,27 +8,28 @@ import android.arch.lifecycle.MutableLiveData;
  */
 
 public class UserRepository {
-    private MutableLiveData<String> mUserNameLiveData = null;
 
     public UserRepository() {
-        mUserNameLiveData = new MutableLiveData<>();
     }
 
-    public LiveData<String> getUserName() {
-        return mUserNameLiveData;
-    }
-
-    public void refresh() {
+    public MutableLiveData<UserInfo> refreshUserInfo(final long userId) {
+        final MutableLiveData<UserInfo> userInfo = new MutableLiveData<>();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mUserNameLiveData.setValue("zhangsan");
+                //load basic info
+                userInfo.postValue(new UserInfo(userId));
             }
         }).start();
-    }
 
-    public void saveUserName(String userName) {
-        mUserNameLiveData.setValue(userName);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //load other info
+                userInfo.postValue(new UserInfo(userId));
+            }
+        }).start();
+        return userInfo;
     }
 
 }

@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.jaydenho.androidtech.R;
 
-import java.util.Random;
-
 /**
  * Created by hedazhao on 2017/11/27.
  */
@@ -21,28 +19,44 @@ import java.util.Random;
 public class LearnViewModelActivity extends AppCompatActivity {
 
     private static final String TAG = "LearnViewModelActivity";
-    private TextView mUserNameTV = null;
+    private TextView mUserIdTV = null;
     private Button mUserChangeBtn = null;
+    private Button mAutoLogin = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aty_learn_live_data);
-        mUserNameTV = findViewById(R.id.tv_user_name);
+        mUserIdTV = findViewById(R.id.et_user_name);
         mUserChangeBtn = findViewById(R.id.btn_user_change);
+        mAutoLogin = findViewById(R.id.btn_auto_login);
+
         final LearnViewModel learnViewModel = ViewModelProviders.of(this).get(LearnViewModel.class);
-        learnViewModel.getUsersName().observe(this, new Observer<String>() {
+
+        mAutoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                mUserNameTV.setText(s);
+            public void onClick(View v) {
+                learnViewModel.getUserId().postValue(1000L);
             }
         });
+
         mUserChangeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                learnViewModel.saveUserName("userName: " + new Random().nextInt(100));
+                learnViewModel.getUserId().postValue(Long.parseLong(mUserIdTV.getText().toString()));
             }
         });
+
+        learnViewModel.getUserInfo().observe(this, new Observer<UserInfo>() {
+            @Override
+            public void onChanged(@Nullable UserInfo userInfo) {
+                showUserInfo(userInfo);
+            }
+        });
+    }
+
+    private void showUserInfo(UserInfo userInfo) {
+        //show userInfo
     }
 
     @Override
