@@ -27,7 +27,7 @@ import com.jaydenho.androidtech.ipc.binder.AIDLActivity;
 import com.jaydenho.androidtech.plugin.droidplugin.Utils;
 import com.jaydenho.androidtech.test.TestAty;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
-import com.jaydenho.androidtech.widget.view.custom.CustomViewAty;
+import com.jaydenho.androidtech.widget.view.window.WindowActivity;
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.morgoo.helper.compat.PackageManagerCompat;
 
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, AttrAty.class));
                         break;
                     case DashboardIds.VIEW:
-                        startActivity(new Intent(mContext, CustomViewAty.class));
+                        startActivity(new Intent(mContext, WindowActivity.class));
                         break;
                     case DashboardIds.HOT_FIX:
                         startActivity(new Intent(mContext, HotFixActivity.class));
