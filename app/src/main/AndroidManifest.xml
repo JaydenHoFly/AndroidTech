@@ -56,6 +56,12 @@
         <activity android:name=".widget.recyclerview.RecyclerViewActivity"/>
         <activity android:name=".widget.view.custom.CustomViewAty"/>
         <activity android:name=".widget.view.window.WindowActivity"/>
+
+        <service android:name=".widget.view.window.ToastIntentService">
+            <intent-filter>
+                <action android:name="com.jaydenho.androidtech.toastservice"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
