@@ -21,7 +21,7 @@ public class QuadraticProbingHashTable<AnyType> {
     /**
      * f(i) = i^2;
      */
-    private int findPos(AnyType x) {
+    /*private int findPos(AnyType x) {
         int offset = 1;
         int currentPos = myHash(x);
         while (entrys[currentPos] != null &&
@@ -30,7 +30,7 @@ public class QuadraticProbingHashTable<AnyType> {
             currentPos += offset;
 //            offset +=
         }
-    }
+    }*/
 
     private int myHash(AnyType x) {
         return 0;

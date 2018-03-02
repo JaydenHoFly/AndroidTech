@@ -1,5 +1,7 @@
 package com.jaydenho.androidtech.test;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,5 +38,10 @@ public class TestAty2 extends AppCompatActivity {
         }
         setContentView(R.layout.aty_test_2);
         mHandler.sendEmptyMessageDelayed(1, 5000);
+        Intent intent = getIntent();
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
     }
 }

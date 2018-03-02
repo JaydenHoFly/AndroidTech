@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ import com.jaydenho.androidtech.AndroidApplicationLike;
 import com.jaydenho.androidtech.MainActivity;
 import com.jaydenho.androidtech.R;
 import com.jaydenho.androidtech.hotfix.MyTinkerApplication;
+import com.jaydenho.androidtech.intent.LearnIntent;
 import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.util.FileUtils;
 import com.jaydenho.androidtech.util.LocationProvider;
@@ -96,7 +98,7 @@ public class TestAty extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aty_test);
-        Toast.makeText(this,"toast", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "toast", Toast.LENGTH_SHORT).show();
         mNameTV = (TextView) findViewById(R.id.tv_name);
         String userAgent = System.getProperty("http.agent");
         Log.d(TAG, "userAgent: " + userAgent);
@@ -218,12 +220,18 @@ public class TestAty extends FragmentActivity {
         dateTV.setText(sdf.format(new Date(time)));
         testEditTextCount();
         testProgressBar();
+
+        startService(new Intent(this, OppoNotiService.class));
+
+        LearnIntent.testDeeplink(this);
+
+        LearnIntent.testIntentAndUri();
     }
 
     private LoadingDialog d;
 
     private void testProgressBar() {
-         d = new LoadingDialog(this);
+        d = new LoadingDialog(this);
         d.setCancelable(false);
     }
 
@@ -549,6 +557,7 @@ public class TestAty extends FragmentActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
         destroyLocation();
+        stopService(new Intent(this, OppoNotiService.class));
     }
 
     public void testThreadException() {
