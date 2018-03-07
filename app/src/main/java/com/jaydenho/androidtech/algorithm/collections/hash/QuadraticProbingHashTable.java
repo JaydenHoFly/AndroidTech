@@ -2,6 +2,7 @@ package com.jaydenho.androidtech.algorithm.collections.hash;
 
 /**
  * Created by hedazhao on 2018/2/12.
+ * 平方探测法实现散列表，不需要使用链表。
  */
 
 public class QuadraticProbingHashTable<AnyType> {
@@ -26,13 +27,33 @@ public class QuadraticProbingHashTable<AnyType> {
         }
     }
 
+    /**
+     * 需要惰性删除，因为不能改变findPos的结果，如果直接删除了，那么findPos返回的结果就不同，contains就失效了。
+     */
+    public void remove(AnyType x) {
+        int pos = findPos(x);
+        if(isActive(pos))
+            entrys[pos].isActive = false;
+    }
+
     public boolean contains(AnyType x) {
         int pos = findPos(x);
         return isActive(pos);
     }
 
     private void rehash() {
+        HashEntry<AnyType>[] oldEntrys = entrys;
+        //重新创建一个2倍原大小的数组
+        entrys = new HashEntry[oldEntrys.length * 2];
+        allocArray();
+        currentSize = 0;
 
+        //将原有元素重新插入到新表中
+        for(HashEntry<AnyType> entry:oldEntrys) {
+            if(entry != null && entry.isActive) {
+                insert(entry.element);
+            }
+        }
     }
 
     /**
