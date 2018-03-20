@@ -36,7 +36,7 @@ public class WindowActivity extends Activity {
                 0, 0, PixelFormat.TRANSLUCENT);
         layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
-        layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION;
+        layoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         final Button btn = new Button(getContext());
         btn.setText("btn");
         btn.setOnTouchListener(new View.OnTouchListener() {

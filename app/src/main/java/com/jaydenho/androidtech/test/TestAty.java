@@ -226,6 +226,8 @@ public class TestAty extends FragmentActivity {
         LearnIntent.testDeeplink(this);
 
         LearnIntent.testIntentAndUri();
+
+        Log.d(TAG,"getExternalFilesDir(null) == null: " + (getExternalFilesDir(null) == null));
     }
 
     private LoadingDialog d;
