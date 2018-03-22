@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Created by hedazhao on 2018/2/12.
+ * 分离链接散列表，标准库通常使用该方法
  */
 
 public class SeparateChainingHashTable<AnyType> {
@@ -51,7 +52,19 @@ public class SeparateChainingHashTable<AnyType> {
     }
 
     private void reHash() {
+        List<AnyType>[] oldLists = lists;
 
+        lists = new List[oldLists.length * 2];
+        for (List<AnyType> list : lists) {
+            list = new LinkedList<>();
+        }
+        currentSize = 0;
+
+        for (List<AnyType> list : oldLists) {
+            for (AnyType x : list) {
+                insert(x);
+            }
+        }
     }
 
     private int myHash(AnyType x) {
