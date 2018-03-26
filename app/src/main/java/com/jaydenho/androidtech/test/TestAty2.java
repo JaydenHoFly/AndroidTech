@@ -14,6 +14,8 @@ import android.view.WindowManager;
 
 import com.jaydenho.androidtech.R;
 
+import java.lang.annotation.Annotation;
+
 /**
  * Created by hedazhao on 2016/7/26.
  */
@@ -43,5 +45,8 @@ public class TestAty2 extends AppCompatActivity {
         Intent appLinkIntent = getIntent();
         String appLinkAction = appLinkIntent.getAction();
         Uri appLinkData = appLinkIntent.getData();
+
+//        Class cl = null;
+//        Annotation a = cl.getAnnotation(cl);
     }
 }

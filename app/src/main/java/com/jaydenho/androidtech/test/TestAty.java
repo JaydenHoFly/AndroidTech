@@ -47,6 +47,8 @@ import android.widget.Toast;
 import com.jaydenho.androidtech.AndroidApplicationLike;
 import com.jaydenho.androidtech.MainActivity;
 import com.jaydenho.androidtech.R;
+import com.jaydenho.androidtech.annotation.AnnotationInfo;
+import com.jaydenho.androidtech.annotation.DBInterpreter;
 import com.jaydenho.androidtech.hotfix.MyTinkerApplication;
 import com.jaydenho.androidtech.intent.LearnIntent;
 import com.jaydenho.androidtech.util.CommonUtil;
@@ -215,19 +217,24 @@ public class TestAty extends FragmentActivity {
         MyNotification.notifyTaskNotification(this, "", "", "", 323);
 
         TextView dateTV = findViewById(R.id.tv_date);
-        long time = 1513670339000L;
+    /*    long time = 1513670339000L;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        dateTV.setText(sdf.format(new Date(time)));
+        dateTV.setText(sdf.format(new Date(time)));*/
+        dateTV.setText(getString(R.string.test_translate,23));
         testEditTextCount();
         testProgressBar();
 
         startService(new Intent(this, OppoNotiService.class));
 
-        LearnIntent.testDeeplink(this);
+//        LearnIntent.testDeeplink(this);
 
         LearnIntent.testIntentAndUri();
 
         Log.d(TAG,"getExternalFilesDir(null) == null: " + (getExternalFilesDir(null) == null));
+
+        AnnotationInfo info = new AnnotationInfo();
+        String createTableSql = new DBInterpreter().createTableSql(info.getClass());
+        Log.d(TAG,"createTableSql: " + createTableSql);
     }
 
     private LoadingDialog d;
