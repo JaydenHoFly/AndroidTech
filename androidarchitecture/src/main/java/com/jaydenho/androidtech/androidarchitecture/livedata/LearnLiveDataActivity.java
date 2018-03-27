@@ -13,7 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.jaydenho.androidtech.R;
+
+import com.jaydenho.androidtech.androidarchitecture.R;
 
 import java.util.Random;
 

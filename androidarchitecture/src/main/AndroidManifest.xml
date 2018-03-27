@@ -1,14 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.jaydenho.androidtech">
+          package="com.jaydenho.androidtech.androidarchitecture">
 
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true">
 
-        <activity android:name=".androidarchitecture.lifecycle.LearnLifeCycleActivity"/>
-        <activity android:name=".androidarchitecture.livedata.LearnLiveDataActivity"/>
-        <activity android:name=".androidarchitecture.viewmodel.LearnViewModelActivity"/>
+        <activity android:name=".lifecycle.LearnLifeCycleActivity"/>
+        <activity android:name=".livedata.LearnLiveDataActivity"/>
+        <activity android:name=".viewmodel.LearnViewModelActivity"/>
     </application>
 
 </manifest>

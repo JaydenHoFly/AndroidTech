@@ -10,7 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.jaydenho.androidtech.R;
+import com.jaydenho.androidtech.androidarchitecture.R;
+
 
 /**
  * Created by hedazhao on 2017/11/27.
