@@ -48,5 +48,8 @@ public class TestAty2 extends AppCompatActivity {
 
 //        Class cl = null;
 //        Annotation a = cl.getAnnotation(cl);
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        }*/
     }
 }

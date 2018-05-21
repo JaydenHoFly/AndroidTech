@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 
 import com.jaydenho.androidtech.BaseActivity;
@@ -16,6 +17,7 @@ import com.jaydenho.androidtech.R;
 
 public class RecyclerViewActivity extends BaseActivity {
 
+    private static final String TAG = "RecyclerViewActivity";
     private RecyclerView mRecyclerView = null;
     private CustomAdapter mCustomAdapter = null;
 
@@ -52,7 +54,15 @@ public class RecyclerViewActivity extends BaseActivity {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                Log.d(TAG,"newState: " + newState);
+            }
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.d(TAG,"onScrolled: state" + mRecyclerView.getScrollState());
+                Log.d(TAG,"onScrolled: state-----1" + mRecyclerView.getScrollState());
+                Log.d(TAG,"onScrolled: state-----------------------2" + mRecyclerView.getScrollState());
             }
         });
 

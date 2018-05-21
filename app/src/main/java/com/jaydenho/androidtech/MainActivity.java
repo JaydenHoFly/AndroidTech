@@ -25,8 +25,11 @@ import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.hotfix.HotFixActivity;
 import com.jaydenho.androidtech.ipc.binder.AIDLActivity;
 import com.jaydenho.androidtech.plugin.droidplugin.Utils;
+import com.jaydenho.androidtech.profile.ProfileAty;
 import com.jaydenho.androidtech.test.TestAty;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
+import com.jaydenho.androidtech.widget.recyclerview.RecyclerViewActivity;
+import com.jaydenho.androidtech.widget.view.ConstraintLayoutActivity;
 import com.jaydenho.androidtech.widget.view.window.WindowActivity;
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.morgoo.helper.compat.PackageManagerCompat;
@@ -54,11 +57,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int BINDER = 7;
         int START_PLUGIN_1 = 8;
         int ANDROID_ARCHITECTURE = 9;
+        int PROFILE = 10;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-      /*  setTheme(R.style.AppTheme);*/
+        /*  setTheme(R.style.AppTheme);*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
@@ -101,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDashboardInfos.add(plugin);
         DashboardInfo binder = new DashboardInfo(DashboardIds.BINDER, "Binder");
         mDashboardInfos.add(binder);
+        DashboardInfo profile = new DashboardInfo(DashboardIds.PROFILE, "Profile");
+        mDashboardInfos.add(profile);
 
         DashboardInfo startPlugin1 = new DashboardInfo(DashboardIds.START_PLUGIN_1, "StartPlugin1");
         mDashboardInfos.add(startPlugin1);
@@ -127,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, AttrAty.class));
                         break;
                     case DashboardIds.VIEW:
-                        startActivity(new Intent(mContext, WindowActivity.class));
+                        startActivity(new Intent(mContext, RecyclerViewActivity.class));
                         break;
                     case DashboardIds.HOT_FIX:
                         startActivity(new Intent(mContext, HotFixActivity.class));
@@ -158,10 +164,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case DashboardIds.ANDROID_ARCHITECTURE:
                         startActivity(new Intent(mContext, LearnViewModelActivity.class));
                         break;
+                    case DashboardIds.PROFILE:
+                        startActivity(new Intent(mContext, ProfileAty.class));
+                        break;
                 }
             }
         });
-        mDashboardsLv.startLayoutAnimation();
+//        mDashboardsLv.startLayoutAnimation();
     }
 
     @Override

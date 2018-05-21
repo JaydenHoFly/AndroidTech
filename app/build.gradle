@@ -42,6 +42,7 @@ android {
     //tinker recommend
     dexOptions {
         jumboMode = true
+        preDexLibraries = false
     }
     buildTypes {
         release {

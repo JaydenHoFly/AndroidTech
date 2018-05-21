@@ -70,6 +70,8 @@
         <activity android:name=".widget.recyclerview.RecyclerViewActivity"/>
         <activity android:name=".widget.view.custom.CustomViewAty"/>
         <activity android:name=".widget.view.window.WindowActivity"/>
+        <activity android:name=".widget.view.ConstraintLayoutActivity"/>
+        <activity android:name=".profile.ProfileAty"/>
 
         <service android:name=".widget.view.window.ToastIntentService">
             <intent-filter>

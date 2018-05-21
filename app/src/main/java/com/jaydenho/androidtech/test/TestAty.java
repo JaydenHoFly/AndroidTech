@@ -3,7 +3,11 @@ package com.jaydenho.androidtech.test;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -23,8 +27,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
+import android.text.style.URLSpan;
+import android.text.style.UnderlineSpan;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -74,6 +86,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -95,6 +108,8 @@ public class TestAty extends FragmentActivity {
     private TextView mNameTV = null;
 
     private boolean mRestore = false;
+
+    private TextView dateTV;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -216,11 +231,12 @@ public class TestAty extends FragmentActivity {
 
         MyNotification.notifyTaskNotification(this, "", "", "", 323);
 
-        TextView dateTV = findViewById(R.id.tv_date);
+        dateTV = findViewById(R.id.tv_date);
     /*    long time = 1513670339000L;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         dateTV.setText(sdf.format(new Date(time)));*/
-        dateTV.setText(getString(R.string.test_translate,23));
+        dateTV.setText(getString(R.string.test_translate, 23));
+        dateTV.setText(getString(R.string.test_multi,1,2));
         testEditTextCount();
         testProgressBar();
 
@@ -230,11 +246,182 @@ public class TestAty extends FragmentActivity {
 
         LearnIntent.testIntentAndUri();
 
-        Log.d(TAG,"getExternalFilesDir(null) == null: " + (getExternalFilesDir(null) == null));
+        Log.d(TAG, "getExternalFilesDir(null) == null: " + (getExternalFilesDir(null) == null));
 
         AnnotationInfo info = new AnnotationInfo();
         String createTableSql = new DBInterpreter().createTableSql(info.getClass());
-        Log.d(TAG,"createTableSql: " + createTableSql);
+        Log.d(TAG, "createTableSql: " + createTableSql);
+
+        testSamsung();
+
+    }
+
+    /**
+     * 拦截超链接
+     *
+     * @param tv
+     */
+    private void interceptHyperLink(TextView tv) {
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
+        CharSequence text = tv.getText();
+        if (text instanceof Spannable) {
+            int end = text.length();
+            Spannable spannable = (Spannable) tv.getText();
+            URLSpan[] urlSpans = spannable.getSpans(0, end, URLSpan.class);
+            if (urlSpans.length == 0) {
+                return;
+            }
+
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
+            // 循环遍历并拦截 所有https://开头的链接
+            for (URLSpan uri : urlSpans) {
+                String url = uri.getURL();
+                CustomUrlSpan customUrlSpan = new CustomUrlSpan(this, url);
+                spannableStringBuilder.setSpan(customUrlSpan, spannable.getSpanStart(uri),
+                        spannable.getSpanEnd(uri), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+            tv.setText(spannableStringBuilder);
+        }
+    }
+
+    public class CustomUrlSpan extends ClickableSpan {
+
+        private Context context;
+        private String url;
+
+        public CustomUrlSpan(Context context, String url) {
+            this.context = context;
+            this.url = url;
+        }
+
+        @Override
+        public void onClick(View widget) {
+            // 在这里可以做任何自己想要的处理
+            Log.d(TAG, "jump url: " + url);
+        }
+    }
+
+    public class NoUnderlineSpan extends UnderlineSpan {
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            ds.setUnderlineText(false);
+        }
+    }
+
+    private void removeHyperLinkUnderline(TextView tv) {
+        CharSequence text = tv.getText();
+        if(text instanceof Spannable){
+            Log.i("test","true");
+            Spannable spannable = (Spannable) tv.getText();
+            NoUnderlineSpan noUnderlineSpan = new NoUnderlineSpan();
+            spannable.setSpan(noUnderlineSpan,0,text.length(), Spanned.SPAN_MARK_MARK);
+        }
+    }
+
+    public interface IFilter {
+        boolean filter(ApplicationInfo ai, PackageInfo info);
+    }
+
+    public void testSamsung() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ReportAPPPackageInfo[] installedAPPsPackageInfo = getPreInstalledAPPsPackageInfo(3, TestAty.this);
+            }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ReportAPPPackageInfo[] installedAPPsPackageInfo = getSelfInstalledAPPsPackageInfo(4, TestAty.this);
+                try {
+                    Thread.sleep(1000);
+                    getSelfInstalledAPPsPackageInfo(5, TestAty.this);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        getPreInstalledAPPsPackageInfo(1, this);
+        getSelfInstalledAPPsPackageInfo(2, this);
+    }
+
+    public static ReportAPPPackageInfo[] getSelfInstalledAPPsPackageInfo(int i, Context context) {
+        return getInstalledAPPsPackageInfo(i, context, new IFilter() {
+            @Override
+            public boolean filter(ApplicationInfo ai, PackageInfo info) {
+                return !isSystemApp(ai) && !isAndroidSystemApp(info);
+            }
+        });
+    }
+
+    public static ReportAPPPackageInfo[] getPreInstalledAPPsPackageInfo(int i, Context context) {
+        return getInstalledAPPsPackageInfo(i, context, new IFilter() {
+            @Override
+            public boolean filter(ApplicationInfo ai, PackageInfo info) {
+                return isSystemApp(ai) && !isAndroidSystemApp(info);
+            }
+        });
+    }
+
+    public static boolean isAndroidSystemApp(PackageInfo info) {
+        String regex = "^\\bcom.android.*$";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(info.packageName);
+        return matcher.matches();
+    }
+
+    public static boolean isSystemApp(@NonNull ApplicationInfo ai) {
+        return (ai.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM
+                || (ai.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
+    }
+
+    public static ReportAPPPackageInfo[] getInstalledAPPsPackageInfo(int i, Context context, IFilter filter) {
+        PackageManager pm = context.getPackageManager();
+        List<PackageInfo> originalList = pm.getInstalledPackages(0);
+        Log.d(TAG, "getInstalledAPPsPackageInfo list: " + originalList.hashCode() + " i: " + i);
+        //https://bugly.qq.com/v2/crash-reporting/crashes/900015673/18689023?pid=1
+        //三星手机上，遍历已安装列表的时候，会报java.util.ConcurrentModificationException异常，应该是三星手机上的pm.getInstalledPackages()方法返回的List是同一个对象，然后系统还会往这个List中增删元素，所以将originalList拷贝一份，再遍历。
+        List<PackageInfo> list;
+        if (CommonUtil.changeTypeByDays(true, new Boolean[]{true, false}))
+            list = new ArrayList<>(originalList);
+        else
+            list = originalList;
+        ReportAPPPackageInfo spiTmp[] = new ReportAPPPackageInfo[list.size()];
+        Iterator<PackageInfo> it = list.iterator();
+        int idx = 0;
+        while (it.hasNext()) {
+            PackageInfo info = it.next();
+            try {
+                ApplicationInfo ai = pm.getApplicationInfo(info.packageName, 0);
+                if (filter.filter(ai, info)) {
+                    spiTmp[idx] = new ReportAPPPackageInfo();
+                    spiTmp[idx].packageName = info.packageName;
+                    spiTmp[idx].displayName = pm
+                            .getApplicationLabel(info.applicationInfo).toString();
+                    spiTmp[idx].installer = pm.getInstallerPackageName(info.packageName);
+                    spiTmp[idx].appInfo = ai;
+                    spiTmp[idx].versionCode = info.versionCode;
+                    spiTmp[idx].version = info.versionName;
+                    spiTmp[idx].firstInstalled = info.firstInstallTime;
+                    spiTmp[idx].lastUpdated = info.lastUpdateTime;
+                    spiTmp[idx].uid = info.applicationInfo.uid;
+                    spiTmp[idx].dataDir = info.applicationInfo.dataDir;
+                    spiTmp[idx].targetsdk = ai.targetSdkVersion;
+                    spiTmp[idx].systemAPP = (ai.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM;
+                    spiTmp[idx].updateSystemAPP = (ai.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
+                    spiTmp[idx].flags = ai.flags;
+                    idx++;
+                }
+            } catch (PackageManager.NameNotFoundException exp) {
+                Log.d(TAG, "exception: " + exp.getLocalizedMessage());
+            }
+        }
+        // Reminder: the copying is necessary because we are filtering away the
+        // system apps.
+        ReportAPPPackageInfo spi[] = new ReportAPPPackageInfo[idx];
+        System.arraycopy(spiTmp, 0, spi, 0, idx);
+        return spi;
     }
 
     private LoadingDialog d;
@@ -261,6 +448,11 @@ public class TestAty extends FragmentActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 Log.d(TAG, "text.length: " + s.toString().length() + "/" + count);
+                dateTV.setText(s.toString());
+                Pattern p = Pattern.compile("abc://\\S*");
+                Linkify.addLinks(dateTV, p, "abc");
+                interceptHyperLink(dateTV);
+                removeHyperLinkUnderline(dateTV);
             }
         });
     }
