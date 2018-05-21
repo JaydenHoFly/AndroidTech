@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.jaydenho.androidtech.androidarchitecture.viewmodel.LearnViewModelActivity;
 import com.jaydenho.androidtech.databinding.DataBindingAty;
+import com.jaydenho.androidtech.hack.vpn.VpnActivity;
 import com.jaydenho.androidtech.hotfix.HotFixActivity;
 import com.jaydenho.androidtech.ipc.binder.AIDLActivity;
 import com.jaydenho.androidtech.plugin.droidplugin.Utils;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int START_PLUGIN_1 = 8;
         int ANDROID_ARCHITECTURE = 9;
         int PROFILE = 10;
+        int VPN = 11;
     }
 
     @Override
@@ -107,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDashboardInfos.add(binder);
         DashboardInfo profile = new DashboardInfo(DashboardIds.PROFILE, "Profile");
         mDashboardInfos.add(profile);
+        DashboardInfo vpn = new DashboardInfo(DashboardIds.VPN, "Vpn");
+        mDashboardInfos.add(vpn);
 
         DashboardInfo startPlugin1 = new DashboardInfo(DashboardIds.START_PLUGIN_1, "StartPlugin1");
         mDashboardInfos.add(startPlugin1);
@@ -166,6 +170,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case DashboardIds.PROFILE:
                         startActivity(new Intent(mContext, ProfileAty.class));
+                        break;
+                    case DashboardIds.VPN:
+                        startActivity(new Intent(mContext, VpnActivity.class));
                         break;
                 }
             }

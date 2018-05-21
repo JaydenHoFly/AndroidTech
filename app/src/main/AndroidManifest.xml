@@ -72,6 +72,7 @@
         <activity android:name=".widget.view.window.WindowActivity"/>
         <activity android:name=".widget.view.ConstraintLayoutActivity"/>
         <activity android:name=".profile.ProfileAty"/>
+        <activity android:name=".hack.vpn.VpnActivity"/>
 
         <service android:name=".widget.view.window.ToastIntentService">
             <intent-filter>
@@ -80,6 +81,13 @@
         </service>
         <service android:name=".test.OppoNotiService"/>
 
+        <service android:name=".hack.vpn.ExampleVpnService"
+                 android:exported="true"
+                 android:permission="android.permission.BIND_VPN_SERVICE">
+            <intent-filter>
+                <action android:name="jayden.example.VpnService"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
