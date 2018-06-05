@@ -81,13 +81,31 @@
         </service>
         <service android:name=".test.OppoNotiService"/>
 
-        <service android:name=".hack.vpn.ExampleVpnService"
-                 android:exported="true"
-                 android:permission="android.permission.BIND_VPN_SERVICE">
+        <service
+            android:name=".hack.vpn.ExampleVpnService"
+            android:exported="true"
+            android:permission="android.permission.BIND_VPN_SERVICE">
             <intent-filter>
                 <action android:name="jayden.example.VpnService"/>
             </intent-filter>
         </service>
+
+        <receiver
+            android:name=".test.systemreveiver.SystemReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_CHANGED"/>
+                <action android:name="android.intent.action.PACKAGE_DATA_CLEARED"/>
+                <action android:name="android.intent.action.PACKAGE_RESTARTED"/>
+
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

@@ -254,6 +254,7 @@ public class TestAty extends FragmentActivity {
 
         testSamsung();
 
+        jump();
     }
 
     /**
@@ -621,12 +622,14 @@ public class TestAty extends FragmentActivity {
 
     private void jump() {
         WebView webview = (WebView) findViewById(R.id.wv);
-//        String url = "https://m.maila88.com/mailaIndex?mailaAppKey=MDLwQB58MLrXyAWXiRzzH&mailaOs=android";
+        webview.setVisibility(View.VISIBLE);
+        //        String url = "https://m.maila88.com/mailaIndex?mailaAppKey=MDLwQB58MLrXyAWXiRzzH&mailaOs=android";
 //        String url = "https://cas.sh.cn.criteo.com/delivery/r/afr.php?did=59097ccea1ee61ec88f5c69594ef1f00&z=123&u=%7CswkfdbcQtkvui12846RboqJLwRhNPVl34PioXE6yyZw%3D%7C&c1=64huUomFIxsbbfC6BUo1bAIUwNPLnARfF4Ndf6RWTRNKshGo9uOJFa4y7YpWro_E7A97gold_uS11r4nF0bccBvIrKjJhZ4AqRzgtbI5nEF55zoPt8_RpxWuuhJSjLsERRFRmY0_PuZSHbtQSTS4J_tvOsae3ab_VV3HbU0hEjZZY07sx_ywh_fNb9fS9n-XBA2TvhvMY52La7qe1grEZPiwNN1jxaYPQDIGqyNrWVHG5gCAiivf4X65dP7YoGLCxxJZ47IzAuavjHD_yOtuvHYg52IgvrElK_iuQ7pInlVdwka_OU9OM7MFVumvlkeh";
 //        String url = "http://dl.xunlei.com/";
 //        String url = "http://cat.sh.cn.criteo.com/delivery/ckn.php?cppv=1&cpp=7dHKgHx5TEp6eHVYMVR1U3E2ZlpFMlZWTnpiWDROTml5UmpqWmYwYmZXOFFqektDM3FJb2hZZ2EwMVd6d1lGN1A2dDlzWTNYTmZSV0VObGNUbytjdkJ3dm41U1pZa2FXY2tzazFNZ1lLNzFKVnlwTnJYeWtmWkZhRitJUUFQelhMSy9YWlpHc3pwek5paEp3M05HMGJ3TFhXemlYemRtWEpLN0FHZUcrTDNYZzNmdjFXUTAwU3FINTJrc1B5dTZxWGx5a1J2WGplM3B3eit6OGZlSGhEQnZkWk1SQnBTU1loaWk4UFI0d0R4eWpqdjVrVHhTejRLT2EzSUxWdU1Ia1BGUk9kTVAxTGpJZGpPYXVYRlZrS2h1WkVPdC81YkUzRFRGU2xUWlNUMUxkRndnVU03ODljZGlRZ20vU2dQbE00VGJpZFlMVGNHeFl3MG4xdkk5cGdNa2NMOFRtdDNhZS9qWTFNTFJ0c2Q2dk1lVGNINGNsYTlwam1tWDhvM0VQOHZjK0svNkZ1TlRpRTZ5Ui9FREMra05LVWUwMjhjcUhod0FDZ0RFanpRajdSaDF3dDhuclhCMnVaSlc2YWphanp0TUxvOEN5bE10TURnV3lLK2xkWWNUTHF2MXNob1V6TnJZQ0FETlNObGkyVXc0ND18&maxdest=ctrip%3A%2F%2Fwireless%2FInlandHotel%3FcheckInDate%3D20170504%26checkOutDate%3D20170505%26hotelId%3D687592%26allianceid%3D288562%26sid%3D960124%26sourceid%3D2504%26ouid%3DAndroid_Singapore_687592";
-        String url = "https://m.ctrip.com/webapp/hotel/hoteldetail/687592/checkin-1-7.html?allianceid=288562&sid=964106&sourceid=2504&sepopup=12";
+//        String url = "https://m.ctrip.com/webapp/hotel/hoteldetail/687592/checkin-1-7.html?allianceid=288562&sid=964106&sourceid=2504&sepopup=12";
 //        String url = "http://blog.csdn.net/jiangwei0910410003/article/details/16859039";
+         String url = "m.sjzhushou.com/h5/movie/detail/index.html?id=106519&peerid=70cd2d0429ad464d8d753c07b9edf51c&portrait=http%3A%2F%2Fimg2.user.kanimg.com%2Fusrimg%2F105820418%2Fdefault%2F1420041600%2F300x300&seekcomment=false";
 
         adIntentUtils = new ADIntentUtils(this);
         webview.setWebViewClient(new MyWebViewClient());
@@ -636,8 +639,29 @@ public class TestAty extends FragmentActivity {
                 Log.d(TAG, "downloadUrl: " + url);
             }
         });
-        WebSettings wSet = webview.getSettings();
-        wSet.setJavaScriptEnabled(true);
+        WebSettings ws = webview.getSettings();
+        ws.setJavaScriptEnabled(true);
+        ws.setDomStorageEnabled(true);
+        ws.setDatabaseEnabled(true);
+        String databasePath = getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
+        ws.setDatabasePath(databasePath);
+        ws.setLoadWithOverviewMode(true);
+        // 提高渲染的优先级
+        ws.setRenderPriority(WebSettings.RenderPriority.HIGH);// 把图片加载放在最后来加载渲染
+        ws.setBlockNetworkImage(false); // 对 网络图片 加载的设置
+        ws.setAppCacheEnabled(true);
+        String cachePath = getApplicationContext().getCacheDir().getPath();
+        ws.setAppCachePath(cachePath);
+        ws.setDefaultTextEncodingName("GBK");// 不设置系统默认“latin”，给个gbk
+        // 不支持页面缩放
+        ws.setSupportZoom(false);
+        ws.setBuiltInZoomControls(false);
+        ws.setDisplayZoomControls(false);
+        //这配置不能删，主要是为了解决手机设置超大字体后，页面显示会错乱，所以强制webview在展示页面时别使用大字体
+        ws.setTextSize(WebSettings.TextSize.NORMAL);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {//设置H5视频可以自动播放
+            ws.setMediaPlaybackRequiresUserGesture(false);
+        }
         webview.loadUrl(url);
     }
 
@@ -656,7 +680,7 @@ public class TestAty extends FragmentActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            return !url.startsWith("http");
+            return false;
             //            return adIntentUtils.shouldOverrideUrlLoadingByApp(view, url) || super.shouldOverrideUrlLoading(view, url);
         }
 
