@@ -66,13 +66,13 @@ public class LearnLiveDataActivity extends AppCompatActivity {
                 stringMediatorLiveData.setValue(s);
             }
         });
-        Transformations.map(liveData, new Function<String, String>() {
+        LiveData<String> l1 = Transformations.map(liveData, new Function<String, String>() {
             @Override
             public String apply(String input) {
                 return input + "";
             }
         });
-        Transformations.switchMap(liveData, new Function<String, LiveData<String>>() {
+        LiveData<String> l2 = Transformations.switchMap(liveData, new Function<String, LiveData<String>>() {
             @Override
             public LiveData<String> apply(String input) {
                 return new MutableLiveData<>();

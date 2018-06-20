@@ -254,7 +254,7 @@ public class TestAty extends FragmentActivity {
 
         testSamsung();
 
-        jump();
+//        jump();
     }
 
     /**
