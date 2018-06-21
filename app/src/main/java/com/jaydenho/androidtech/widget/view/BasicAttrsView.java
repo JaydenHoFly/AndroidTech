@@ -84,7 +84,29 @@ public class BasicAttrsView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         initPaint();
-        learnPathMeasure(canvas);
+//        drawTopRoundRect(canvas, mPaint, 25, 100, 50);
+        int xRadius = 100;
+        int yRadius = 50;
+        RectF rectF = new RectF(0, 0, 600, 400);
+        learnRoundRect(canvas, rectF, xRadius, yRadius);
+    }
+
+    private void learnRoundRect(Canvas canvas, RectF rectF, int xRadius, int yRadius) {
+        canvas.translate(50, 50);
+        canvas.drawRect(rectF, mPaint);
+        mPaint.setColor(getResources().getColor(R.color.colorPrimary));
+        canvas.drawOval(new RectF(rectF.left, rectF.top, rectF.left + (xRadius * 2), rectF.top + (yRadius * 2)), mPaint);
+        mPaint.setColor(getResources().getColor(R.color.colorAccent));
+        canvas.translate(0, rectF.bottom + 50);
+        canvas.drawRoundRect(rectF, xRadius, yRadius, mPaint);
+    }
+
+    private void drawTopRoundRect(Canvas canvas, Paint paint, int radius, float right, float bottom) {
+        int margin = 0;
+        int diameter = radius * 2;
+        canvas.drawRoundRect(new RectF(margin, margin, right, margin + diameter), radius, radius,
+                paint);
+        canvas.drawRect(new RectF(margin, margin + radius, right, bottom), paint);
     }
 
     private void learnPathMeasure(Canvas canvas) {
