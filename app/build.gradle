@@ -125,6 +125,7 @@ dependencies {
     compile project(':extensionalviewpager')
     compile project(':DroidPlugin')
     compile project(':androidarchitecture')
+    compile project(':testcompile2')
     //Tinker
     //可选，用于生成application类
     provided("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }

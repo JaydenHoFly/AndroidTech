@@ -69,6 +69,7 @@ public class ValueAnimatorAty extends Activity implements View.OnClickListener {
         });
     }
 
+
     private void initLetterAnimator() {
         mLetterAnimator = ValueAnimator.ofPropertyValuesHolder(PropertyValuesHolder.ofKeyframe("", Keyframe.ofObject(0.2f, 'A'), Keyframe.ofObject(0.5f, 'Z'), Keyframe.ofObject(1, '3')));
         mLetterAnimator = ValueAnimator.ofObject(new LetterEvaluator(), 'A', '3', 'Z');

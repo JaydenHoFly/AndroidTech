@@ -1,7 +1,6 @@
 package com.jaydenho.androidtech.test;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.location.Location;
-import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,9 +19,6 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.os.LocaleListCompat;
-import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -40,7 +35,6 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
@@ -56,12 +50,11 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jayden.testcompile2.Calling;
 import com.jaydenho.androidtech.AndroidApplicationLike;
-import com.jaydenho.androidtech.MainActivity;
 import com.jaydenho.androidtech.R;
 import com.jaydenho.androidtech.annotation.AnnotationInfo;
 import com.jaydenho.androidtech.annotation.DBInterpreter;
-import com.jaydenho.androidtech.hotfix.MyTinkerApplication;
 import com.jaydenho.androidtech.intent.LearnIntent;
 import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.util.FileUtils;
@@ -69,16 +62,12 @@ import com.jaydenho.androidtech.util.LocationProvider;
 import com.jaydenho.androidtech.widget.view.dialog.LoadingDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tencent.tinker.loader.TinkerDexLoader;
-import com.tencent.tinker.loader.app.ApplicationLike;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -255,6 +244,9 @@ public class TestAty extends FragmentActivity {
         testSamsung();
 
 //        jump();
+
+        Calling call = new Calling();
+        call.call();
     }
 
     /**
