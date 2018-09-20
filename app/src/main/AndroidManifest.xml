@@ -73,6 +73,19 @@
         <activity android:name=".widget.view.ConstraintLayoutActivity"/>
         <activity android:name=".profile.ProfileAty"/>
         <activity android:name=".hack.vpn.VpnActivity"/>
+        <activity android:name=".intent.IntentActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <data android:mimeType="application/vnd.android.package-archive"
+                    android:scheme="file"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <data android:mimeType="application/vnd.android.package-archive"
+                      android:scheme="content"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".hack.vpn.SgToolVpnClient"/>
 
         <service android:name=".widget.view.window.ToastIntentService">
             <intent-filter>
@@ -82,7 +95,7 @@
         <service android:name=".test.OppoNotiService"/>
 
         <service
-            android:name=".hack.vpn.ExampleVpnService"
+            android:name=".hack.vpn.SgToolVpnService"
             android:exported="true"
             android:permission="android.permission.BIND_VPN_SERVICE">
             <intent-filter>
@@ -105,6 +118,16 @@
                 <data android:scheme="package"/>
             </intent-filter>
         </receiver>
+
+        <provider
+            android:name=".test.XLFileProvider"
+            android:authorities="com.jayden.androidtech.XLFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
     </application>
 

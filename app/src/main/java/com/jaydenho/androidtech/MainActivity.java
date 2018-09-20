@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.jaydenho.androidtech.androidarchitecture.viewmodel.LearnViewModelActivity;
 import com.jaydenho.androidtech.databinding.DataBindingAty;
+import com.jaydenho.androidtech.hack.vpn.SgToolVpnClient;
 import com.jaydenho.androidtech.hack.vpn.VpnActivity;
 import com.jaydenho.androidtech.hotfix.HotFixActivity;
 import com.jaydenho.androidtech.ipc.binder.AIDLActivity;
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, ProfileAty.class));
                         break;
                     case DashboardIds.VPN:
-                        startActivity(new Intent(mContext, VpnActivity.class));
+                        startActivity(new Intent(mContext, SgToolVpnClient.class));
                         break;
                 }
             }

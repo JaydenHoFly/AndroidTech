@@ -59,7 +59,7 @@ public class ViewPagerAty extends Activity {
         initViews();
         mAdapter = new MyViewPagerAdapter();
 
-        mVP.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mVP.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 Log.d(TAG, "onPageScrolled: position: " + position);

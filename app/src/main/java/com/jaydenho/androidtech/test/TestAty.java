@@ -225,7 +225,7 @@ public class TestAty extends FragmentActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         dateTV.setText(sdf.format(new Date(time)));*/
         dateTV.setText(getString(R.string.test_translate, 23));
-        dateTV.setText(getString(R.string.test_multi,1,2));
+        dateTV.setText(getString(R.string.test_multi, 1, 2));
         testEditTextCount();
         testProgressBar();
 
@@ -247,6 +247,14 @@ public class TestAty extends FragmentActivity {
 
         Calling call = new Calling();
         call.call();
+    }
+
+    private void testApkInstall() {
+        File apkFile = new File("/storage/emulated/0/Android/obb/com.xunlei.downloadprovider/bf43547e9199a54951624fdb78517894.apk");
+        if (apkFile.exists()) {
+            Log.d(TAG, "testApkInstall. start install.");
+            ApkHelper.installApk(this, apkFile);
+        }
     }
 
     /**
@@ -304,11 +312,11 @@ public class TestAty extends FragmentActivity {
 
     private void removeHyperLinkUnderline(TextView tv) {
         CharSequence text = tv.getText();
-        if(text instanceof Spannable){
-            Log.i("test","true");
+        if (text instanceof Spannable) {
+            Log.i("test", "true");
             Spannable spannable = (Spannable) tv.getText();
             NoUnderlineSpan noUnderlineSpan = new NoUnderlineSpan();
-            spannable.setSpan(noUnderlineSpan,0,text.length(), Spanned.SPAN_MARK_MARK);
+            spannable.setSpan(noUnderlineSpan, 0, text.length(), Spanned.SPAN_MARK_MARK);
         }
     }
 
@@ -621,7 +629,7 @@ public class TestAty extends FragmentActivity {
 //        String url = "http://cat.sh.cn.criteo.com/delivery/ckn.php?cppv=1&cpp=7dHKgHx5TEp6eHVYMVR1U3E2ZlpFMlZWTnpiWDROTml5UmpqWmYwYmZXOFFqektDM3FJb2hZZ2EwMVd6d1lGN1A2dDlzWTNYTmZSV0VObGNUbytjdkJ3dm41U1pZa2FXY2tzazFNZ1lLNzFKVnlwTnJYeWtmWkZhRitJUUFQelhMSy9YWlpHc3pwek5paEp3M05HMGJ3TFhXemlYemRtWEpLN0FHZUcrTDNYZzNmdjFXUTAwU3FINTJrc1B5dTZxWGx5a1J2WGplM3B3eit6OGZlSGhEQnZkWk1SQnBTU1loaWk4UFI0d0R4eWpqdjVrVHhTejRLT2EzSUxWdU1Ia1BGUk9kTVAxTGpJZGpPYXVYRlZrS2h1WkVPdC81YkUzRFRGU2xUWlNUMUxkRndnVU03ODljZGlRZ20vU2dQbE00VGJpZFlMVGNHeFl3MG4xdkk5cGdNa2NMOFRtdDNhZS9qWTFNTFJ0c2Q2dk1lVGNINGNsYTlwam1tWDhvM0VQOHZjK0svNkZ1TlRpRTZ5Ui9FREMra05LVWUwMjhjcUhod0FDZ0RFanpRajdSaDF3dDhuclhCMnVaSlc2YWphanp0TUxvOEN5bE10TURnV3lLK2xkWWNUTHF2MXNob1V6TnJZQ0FETlNObGkyVXc0ND18&maxdest=ctrip%3A%2F%2Fwireless%2FInlandHotel%3FcheckInDate%3D20170504%26checkOutDate%3D20170505%26hotelId%3D687592%26allianceid%3D288562%26sid%3D960124%26sourceid%3D2504%26ouid%3DAndroid_Singapore_687592";
 //        String url = "https://m.ctrip.com/webapp/hotel/hoteldetail/687592/checkin-1-7.html?allianceid=288562&sid=964106&sourceid=2504&sepopup=12";
 //        String url = "http://blog.csdn.net/jiangwei0910410003/article/details/16859039";
-         String url = "m.sjzhushou.com/h5/movie/detail/index.html?id=106519&peerid=70cd2d0429ad464d8d753c07b9edf51c&portrait=http%3A%2F%2Fimg2.user.kanimg.com%2Fusrimg%2F105820418%2Fdefault%2F1420041600%2F300x300&seekcomment=false";
+        String url = "m.sjzhushou.com/h5/movie/detail/index.html?id=106519&peerid=70cd2d0429ad464d8d753c07b9edf51c&portrait=http%3A%2F%2Fimg2.user.kanimg.com%2Fusrimg%2F105820418%2Fdefault%2F1420041600%2F300x300&seekcomment=false";
 
         adIntentUtils = new ADIntentUtils(this);
         webview.setWebViewClient(new MyWebViewClient());
@@ -886,7 +894,8 @@ public class TestAty extends FragmentActivity {
         mImageLoaderTestIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPPW(mNameTV);
+//                showPPW(mNameTV);
+                testApkInstall();
             }
         });
         mPPW = new BrowserExchangeDialogPPW(this);
