@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, AttrAty.class));
                         break;
                     case DashboardIds.VIEW:
-                        startActivity(new Intent(mContext, BasicAttrsAty.class));
+                        startActivity(new Intent(mContext, RecyclerViewActivity.class));
                         break;
                     case DashboardIds.HOT_FIX:
                         startActivity(new Intent(mContext, HotFixActivity.class));

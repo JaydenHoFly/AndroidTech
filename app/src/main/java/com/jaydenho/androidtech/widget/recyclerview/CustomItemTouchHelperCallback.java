@@ -26,6 +26,7 @@ public class CustomItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         int dragFlag = ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT | ItemTouchHelper.UP | ItemTouchHelper.DOWN;
         int swipeFlag = ItemTouchHelper.RIGHT;
+        // 如果不想当前viewHolder被拖动，dragFlag赋值0.
         return makeMovementFlags(dragFlag, swipeFlag);
     }
 
