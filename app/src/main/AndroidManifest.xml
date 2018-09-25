@@ -76,13 +76,15 @@
         <activity android:name=".intent.IntentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
-                <data android:mimeType="application/vnd.android.package-archive"
+                <data
+                    android:mimeType="application/vnd.android.package-archive"
                     android:scheme="file"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
-                <data android:mimeType="application/vnd.android.package-archive"
-                      android:scheme="content"/>
+                <data
+                    android:mimeType="application/vnd.android.package-archive"
+                    android:scheme="content"/>
             </intent-filter>
         </activity>
         <activity android:name=".hack.vpn.SgToolVpnClient"/>
@@ -102,6 +104,15 @@
                 <action android:name="jayden.example.VpnService"/>
             </intent-filter>
         </service>
+
+        <receiver
+            android:name=".others.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.jaydenho.androidtech.learmalarmreceiver"/>
+            </intent-filter>
+        </receiver>
 
         <receiver
             android:name=".test.systemreveiver.SystemReceiver"
@@ -126,7 +137,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"/>
         </provider>
 
     </application>

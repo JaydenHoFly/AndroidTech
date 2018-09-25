@@ -56,6 +56,7 @@ import com.jaydenho.androidtech.R;
 import com.jaydenho.androidtech.annotation.AnnotationInfo;
 import com.jaydenho.androidtech.annotation.DBInterpreter;
 import com.jaydenho.androidtech.intent.LearnIntent;
+import com.jaydenho.androidtech.others.LearnAlarmManager;
 import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.util.FileUtils;
 import com.jaydenho.androidtech.util.LocationProvider;
@@ -247,6 +248,9 @@ public class TestAty extends FragmentActivity {
 
         Calling call = new Calling();
         call.call();
+
+        Log.d(TAG, "startAlarm1.");
+        new LearnAlarmManager().startAlarm(this);
     }
 
     private void testApkInstall() {
