@@ -1,6 +1,5 @@
 package com.jaydenho.androidtech.androidarchitecture.paging;
 
-import android.arch.paging.ContiguousPagedList;
 import android.arch.paging.PageKeyedDataSource;
 import android.arch.paging.PagedList;
 import android.os.Handler;
@@ -13,13 +12,15 @@ import java.util.concurrent.Executor;
  * Created by hedazhao on 2018/10/9.
  */
 public class PagingRepository {
+    private PageKeyedDataSource<String, Concert> mPageKeyedDataSource;
+
     public PagingRepository() {
 
 
     }
 
     public PagedList<Concert> create() {
-        PageKeyedDataSource<String, Concert> pageKeyedDataSource = new PageKeyedDataSource<String, Concert>() {
+        mPageKeyedDataSource = new PageKeyedDataSource<String, Concert>() {
             @Override
             public void loadInitial(@NonNull final LoadInitialParams<String> params, @NonNull final LoadInitialCallback<String, Concert> callback) {
                 callback.onResult(PagingNetwork.request(params.requestedLoadSize), null, "2");
@@ -54,7 +55,7 @@ public class PagingRepository {
                 .setPageSize(30)
                 .setPrefetchDistance(10)// 用户滑到列表的倒数第N个时，开始加载下一页的数据。
                 .build();
-        PagedList<Concert> pagedList = new PagedList.Builder<>(pageKeyedDataSource, config)
+        PagedList<Concert> pagedList = new PagedList.Builder<>(mPageKeyedDataSource, config)
                 .setBoundaryCallback(new PagedList.BoundaryCallback() {
                     @Override
                     public void onZeroItemsLoaded() {
@@ -86,5 +87,9 @@ public class PagingRepository {
                 })
                 .build();
         return pagedList;
+    }
+
+    public void invalid() {
+        mPageKeyedDataSource.invalidate();
     }
 }

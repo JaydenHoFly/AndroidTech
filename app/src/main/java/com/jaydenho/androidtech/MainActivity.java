@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, TestAty.class));
                         break;
                     case DashboardIds.ANIM:
-                        startActivity(new Intent(mContext, AttrAty.class));
+                        startActivityForResult(new Intent(mContext, AttrAty.class),100);
                         break;
                     case DashboardIds.VIEW:
                         startActivity(new Intent(mContext, RecyclerViewActivity.class));
