@@ -35,6 +35,7 @@
         <activity android:name=".databinding.DataBindingAty"/>
         <activity
             android:name=".test.TestAty"
+            android:configChanges="keyboard|keyboardHidden|layoutDirection|orientation|uiMode|screenLayout|screenSize"
             android:hardwareAccelerated="false"
             android:launchMode="singleTop"/>
         <activity android:name=".test.TestAty2">

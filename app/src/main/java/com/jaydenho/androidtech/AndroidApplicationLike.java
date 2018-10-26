@@ -43,6 +43,7 @@ public class AndroidApplicationLike extends DefaultApplicationLike {
         super.onCreate();
         initImageLoader(getApplicationInstance());
         initTinker();
+        sApplicationInstance.registerActivityLifecycleCallbacks(AppStatusChgObserver.getInstance().getActivityLifecycleCallbacks());
 //        CrashHandler.getInstance().init(getApplication());
     }
 

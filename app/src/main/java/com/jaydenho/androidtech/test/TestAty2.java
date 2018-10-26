@@ -33,7 +33,7 @@ public class TestAty2 extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+  /*      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -44,7 +44,7 @@ public class TestAty2 extends AppCompatActivity {
         // ATTENTION: This was auto-generated to handle app links.
         Intent appLinkIntent = getIntent();
         String appLinkAction = appLinkIntent.getAction();
-        Uri appLinkData = appLinkIntent.getData();
+        Uri appLinkData = appLinkIntent.getData();*/
 
 //        Class cl = null;
 //        Annotation a = cl.getAnnotation(cl);
