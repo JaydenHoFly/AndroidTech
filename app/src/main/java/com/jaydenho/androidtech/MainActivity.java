@@ -21,10 +21,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jaydenho.androidtech.androidarchitecture.paging.PagingActivity;
-import com.jaydenho.androidtech.androidarchitecture.viewmodel.LearnViewModelActivity;
 import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.hack.vpn.SgToolVpnClient;
-import com.jaydenho.androidtech.hack.vpn.VpnActivity;
 import com.jaydenho.androidtech.hotfix.HotFixActivity;
 import com.jaydenho.androidtech.ipc.binder.AIDLActivity;
 import com.jaydenho.androidtech.plugin.droidplugin.Utils;
@@ -32,9 +30,6 @@ import com.jaydenho.androidtech.profile.ProfileAty;
 import com.jaydenho.androidtech.test.TestAty;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
 import com.jaydenho.androidtech.widget.recyclerview.RecyclerViewActivity;
-import com.jaydenho.androidtech.widget.view.BasicAttrsAty;
-import com.jaydenho.androidtech.widget.view.ConstraintLayoutActivity;
-import com.jaydenho.androidtech.widget.view.window.WindowActivity;
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.morgoo.helper.compat.PackageManagerCompat;
 
@@ -134,10 +129,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, DataBindingAty.class));
                         break;
                     case DashboardIds.TEST:
-                        startActivity(new Intent(mContext, TestAty.class));
+                        Intent testIntent = new Intent(mContext, TestAty.class);
+                        testIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(testIntent);
                         break;
                     case DashboardIds.ANIM:
-                        startActivityForResult(new Intent(mContext, AttrAty.class),100);
+                        startActivityForResult(new Intent(mContext, AttrAty.class), 100);
                         break;
                     case DashboardIds.VIEW:
                         startActivity(new Intent(mContext, RecyclerViewActivity.class));

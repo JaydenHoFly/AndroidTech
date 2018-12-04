@@ -34,6 +34,7 @@ import android.text.style.UnderlineSpan;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
@@ -68,6 +69,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -250,7 +252,30 @@ public class TestAty extends FragmentActivity {
         call.call();
 
         Log.d(TAG, "startAlarm1.");
-        new LearnAlarmManager().startAlarm(this);
+//        new LearnAlarmManager().startAlarm(this);
+
+//        jump();
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode){
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if (webview != null) {
+                    webview.onPause();
+                }
+                break;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (webview != null) {
+                    webview.onResume();
+                }
+                Intent intent = new Intent(this,TestAty2.class);
+                startActivityForResult(intent,100);
+                break;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     private void testApkInstall() {
@@ -624,8 +649,10 @@ public class TestAty extends FragmentActivity {
 
     private ADIntentUtils adIntentUtils = null;
 
+    private WebView webview;
+
     private void jump() {
-        WebView webview = (WebView) findViewById(R.id.wv);
+        webview = (WebView) findViewById(R.id.wv);
         webview.setVisibility(View.VISIBLE);
         //        String url = "https://m.maila88.com/mailaIndex?mailaAppKey=MDLwQB58MLrXyAWXiRzzH&mailaOs=android";
 //        String url = "https://cas.sh.cn.criteo.com/delivery/r/afr.php?did=59097ccea1ee61ec88f5c69594ef1f00&z=123&u=%7CswkfdbcQtkvui12846RboqJLwRhNPVl34PioXE6yyZw%3D%7C&c1=64huUomFIxsbbfC6BUo1bAIUwNPLnARfF4Ndf6RWTRNKshGo9uOJFa4y7YpWro_E7A97gold_uS11r4nF0bccBvIrKjJhZ4AqRzgtbI5nEF55zoPt8_RpxWuuhJSjLsERRFRmY0_PuZSHbtQSTS4J_tvOsae3ab_VV3HbU0hEjZZY07sx_ywh_fNb9fS9n-XBA2TvhvMY52La7qe1grEZPiwNN1jxaYPQDIGqyNrWVHG5gCAiivf4X65dP7YoGLCxxJZ47IzAuavjHD_yOtuvHYg52IgvrElK_iuQ7pInlVdwka_OU9OM7MFVumvlkeh";
@@ -633,7 +660,7 @@ public class TestAty extends FragmentActivity {
 //        String url = "http://cat.sh.cn.criteo.com/delivery/ckn.php?cppv=1&cpp=7dHKgHx5TEp6eHVYMVR1U3E2ZlpFMlZWTnpiWDROTml5UmpqWmYwYmZXOFFqektDM3FJb2hZZ2EwMVd6d1lGN1A2dDlzWTNYTmZSV0VObGNUbytjdkJ3dm41U1pZa2FXY2tzazFNZ1lLNzFKVnlwTnJYeWtmWkZhRitJUUFQelhMSy9YWlpHc3pwek5paEp3M05HMGJ3TFhXemlYemRtWEpLN0FHZUcrTDNYZzNmdjFXUTAwU3FINTJrc1B5dTZxWGx5a1J2WGplM3B3eit6OGZlSGhEQnZkWk1SQnBTU1loaWk4UFI0d0R4eWpqdjVrVHhTejRLT2EzSUxWdU1Ia1BGUk9kTVAxTGpJZGpPYXVYRlZrS2h1WkVPdC81YkUzRFRGU2xUWlNUMUxkRndnVU03ODljZGlRZ20vU2dQbE00VGJpZFlMVGNHeFl3MG4xdkk5cGdNa2NMOFRtdDNhZS9qWTFNTFJ0c2Q2dk1lVGNINGNsYTlwam1tWDhvM0VQOHZjK0svNkZ1TlRpRTZ5Ui9FREMra05LVWUwMjhjcUhod0FDZ0RFanpRajdSaDF3dDhuclhCMnVaSlc2YWphanp0TUxvOEN5bE10TURnV3lLK2xkWWNUTHF2MXNob1V6TnJZQ0FETlNObGkyVXc0ND18&maxdest=ctrip%3A%2F%2Fwireless%2FInlandHotel%3FcheckInDate%3D20170504%26checkOutDate%3D20170505%26hotelId%3D687592%26allianceid%3D288562%26sid%3D960124%26sourceid%3D2504%26ouid%3DAndroid_Singapore_687592";
 //        String url = "https://m.ctrip.com/webapp/hotel/hoteldetail/687592/checkin-1-7.html?allianceid=288562&sid=964106&sourceid=2504&sepopup=12";
 //        String url = "http://blog.csdn.net/jiangwei0910410003/article/details/16859039";
-        String url = "m.sjzhushou.com/h5/movie/detail/index.html?id=106519&peerid=70cd2d0429ad464d8d753c07b9edf51c&portrait=http%3A%2F%2Fimg2.user.kanimg.com%2Fusrimg%2F105820418%2Fdefault%2F1420041600%2F300x300&seekcomment=false";
+        String url = "http://m.toutiaoimg.cn/i6602523869741842948/";
 
         adIntentUtils = new ADIntentUtils(this);
         webview.setWebViewClient(new MyWebViewClient());
@@ -874,6 +901,9 @@ public class TestAty extends FragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult resultCode: " + resultCode);
+        if(requestCode == 100 && resultCode == 1){
+            finish();
+        }
     }
 
     public static String cutTextEllipseEnd(String text, int maxLength) {

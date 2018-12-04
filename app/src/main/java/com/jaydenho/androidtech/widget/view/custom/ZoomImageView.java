@@ -23,6 +23,7 @@ import android.view.ViewTreeObserver;
 import com.jaydenho.androidtech.R;
 
 /**
+ * 通过手势操作图片。
  * Created by hedazhao on 2017/7/5.
  */
 

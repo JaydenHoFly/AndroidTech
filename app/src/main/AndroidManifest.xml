@@ -36,9 +36,9 @@
         <activity
             android:name=".test.TestAty"
             android:configChanges="keyboard|keyboardHidden|layoutDirection|orientation|uiMode|screenLayout|screenSize"
-            android:hardwareAccelerated="false"
-            android:launchMode="singleTop"/>
-        <activity android:name=".test.TestAty2">
+            android:hardwareAccelerated="false"/>
+        <activity
+            android:name=".test.TestAty2">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -49,7 +49,10 @@
                     android:scheme="vipshop"/>
             </intent-filter>
         </activity>
-        <activity android:name=".widget.anim.AttrAty"
+        <activity android:name=".test.TestAty3"
+                  android:launchMode="singleTop"/>
+        <activity
+            android:name=".widget.anim.AttrAty"
             android:launchMode="singleTop"/>
         <activity android:name=".widget.anim.ValueAnimatorAty"/>
         <activity android:name=".widget.anim.ShootIconAty"/>
@@ -72,7 +75,6 @@
         <activity android:name=".widget.recyclerview.RecyclerViewActivity"/>
         <activity android:name=".widget.view.custom.CustomViewAty"/>
         <activity android:name=".widget.view.window.WindowActivity"/>
-        <activity android:name=".widget.view.ConstraintLayoutActivity"/>
         <activity android:name=".profile.ProfileAty"/>
         <activity android:name=".hack.vpn.VpnActivity"/>
         <activity android:name=".intent.IntentActivity">
