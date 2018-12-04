@@ -144,6 +144,13 @@
                 android:resource="@xml/file_paths"/>
         </provider>
 
+        <service
+            android:name=".alive.BlackAliveService"
+            android:process=":test">
+            <intent-filter>
+                <action android:name="blackalive" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
