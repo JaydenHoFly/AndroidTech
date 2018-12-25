@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <application
         android:name=".hotfix.MyTinkerApplication"
@@ -146,7 +147,9 @@
 
         <service
             android:name=".alive.BlackAliveService"
-            android:process=":test">
+            android:process=":test"
+            android:isolatedProcess="true"
+            tools:targetApi="jelly_bean">
             <intent-filter>
                 <action android:name="blackalive" />
             </intent-filter>

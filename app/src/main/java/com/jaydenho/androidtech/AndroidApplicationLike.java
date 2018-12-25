@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.StrictMode;
+import android.util.Log;
 
 import com.jaydenho.androidtech.util.CrashHandler;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -41,6 +42,7 @@ public class AndroidApplicationLike extends DefaultApplicationLike {
                 .build();
         StrictMode.setThreadPolicy(tp);
         super.onCreate();
+        Log.d("application","onCreate");
         initImageLoader(getApplicationInstance());
         initTinker();
         sApplicationInstance.registerActivityLifecycleCallbacks(AppStatusChgObserver.getInstance().getActivityLifecycleCallbacks());

@@ -1,6 +1,7 @@
 package com.jayden.alive;
 
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,13 @@ public class MainActivity extends AppCompatActivity {
                 sendService();
             }
         });
+
+        findViewById(R.id.btn_jump_to_permission).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MobileInfoUtils.jumpStartInterface(MainActivity.this);
+            }
+        });
     }
 
     /**
@@ -33,17 +41,35 @@ public class MainActivity extends AppCompatActivity {
         ActivityManager mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         Intent serviceIntent = new Intent();
 
-        for (ActivityManager.RunningServiceInfo runningServiceInfo : mActivityManager.getRunningServices(100)) {
-            if (runningServiceInfo.process.contains(":test")) {//判断service是否在运行
-                Log.e("zhang", "process:" + runningServiceInfo.process);
-                find = true;
-            }
+        for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : mActivityManager.getRunningAppProcesses()) {
+//            if(runningAppProcessInfo.processName)
         }
         //判断服务是否起来，如果服务没起来，就唤醒
         if (!find) {
 //            serviceIntent.setPackage("com.jaydenho.androidtech");
+//            serviceIntent.setAction("blackalive");
+
+//            serviceIntent.setPackage("com.xunlei.downloadprovider");
+//            serviceIntent.setAction("com.xunlei.downloadprovider.assist");
+
+//            serviceIntent.setComponent(new ComponentName("com.xunlei.downloadprovider","com.xunlei.downloadprovider.pushmessage.umeng.UmengPushHandleService"));
+
+//            serviceIntent.setComponent(new ComponentName("com.xunlei.downloadprovider","com.xunlei.downloadprovider.pushmessage.getui.GetuiPushService"));
+
+//            serviceIntent.setComponent(new ComponentName("com.xunlei.downloadprovider","com.xunlei.downloadprovider.app.alive.assist.AssistService"));
+
+//            serviceIntent.setComponent(new ComponentName("com.xunlei.downloadprovider","com.xunlei.downloadprovider.pushmessage.getui.GetuiPush1Service"));
+
+//            serviceIntent.setPackage("com.xunlei.downloadprovider");
+//            serviceIntent.setAction("com.igexin.sdk.action.service.message");
+
             serviceIntent.setPackage("com.xunlei.downloadprovider");
-            serviceIntent.setAction("blackalive");
+//            serviceIntent.setAction("com.taobao.accs.intent.action.SERVICE");
+//            serviceIntent.setAction("org.agoo.android.intent.action.RECEIVE");
+//            serviceIntent.setAction("org.android.agoo.client.MessageReceiverService");
+            serviceIntent.setAction("com.xunlei.downloadprovider.service.DownloadServiceAction");
+
+            serviceIntent.putExtra("source","android_tech");
             startService(serviceIntent);
             Toast.makeText(this, "开始唤醒 B", Toast.LENGTH_SHORT).show();
         } else {

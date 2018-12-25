@@ -57,7 +57,6 @@ import com.jaydenho.androidtech.R;
 import com.jaydenho.androidtech.annotation.AnnotationInfo;
 import com.jaydenho.androidtech.annotation.DBInterpreter;
 import com.jaydenho.androidtech.intent.LearnIntent;
-import com.jaydenho.androidtech.others.LearnAlarmManager;
 import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.util.FileUtils;
 import com.jaydenho.androidtech.util.LocationProvider;
@@ -69,7 +68,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
