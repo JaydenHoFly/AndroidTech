@@ -1,6 +1,7 @@
 package com.jaydenho.androidtech.test;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -260,16 +261,18 @@ public class TestAty extends FragmentActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode){
             case KeyEvent.KEYCODE_VOLUME_DOWN:
-                if (webview != null) {
-                    webview.onPause();
-                }
+                startTestAty();
+//                if (webview != null) {
+//                    webview.onPause();
+//                }
                 break;
             case KeyEvent.KEYCODE_VOLUME_UP:
-                if (webview != null) {
-                    webview.onResume();
-                }
-                Intent intent = new Intent(this,TestAty2.class);
-                startActivityForResult(intent,100);
+                startTestAtyClearTop();
+//                if (webview != null) {
+//                    webview.onResume();
+//                }
+//                Intent intent = new Intent(this,TestAty2.class);
+//                startActivityForResult(intent,100);
                 break;
         }
 
@@ -457,6 +460,19 @@ public class TestAty extends FragmentActivity {
     private void testProgressBar() {
         d = new LoadingDialog(this);
         d.setCancelable(false);
+    }
+
+    private void startTestAty(){
+        Intent intent = new Intent(this,TestAty.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+        startActivity(intent);
+    }
+
+    private void startTestAtyClearTop(){
+        Intent intent = new Intent(this,TestAty.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void testEditTextCount() {

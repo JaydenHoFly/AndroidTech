@@ -1,0 +1,3 @@
+- [add-native-code](https://developer.android.com/studio/projects/add-native-code)
+- [android-ndk](https://developer.android.com/ndk/)
+- [google-samples](https://github.com/googlesamples/android-ndk)
