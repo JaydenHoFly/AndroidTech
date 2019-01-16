@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/extensionalviewpager/extensionalviewpager.iml" filepath="$PROJECT_DIR$/extensionalviewpager/extensionalviewpager.iml" />
       <module fileurl="file://$PROJECT_DIR$/learnbinder/learnbinder.iml" filepath="$PROJECT_DIR$/learnbinder/learnbinder.iml" />
       <module fileurl="file://$PROJECT_DIR$/learnndk/learnndk.iml" filepath="$PROJECT_DIR$/learnndk/learnndk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/learnokhttp/learnokhttp.iml" filepath="$PROJECT_DIR$/learnokhttp/learnokhttp.iml" />
       <module fileurl="file://$PROJECT_DIR$/learnproguard3/learnproguard3.iml" filepath="$PROJECT_DIR$/learnproguard3/learnproguard3.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugin1/plugin1.iml" filepath="$PROJECT_DIR$/plugin1/plugin1.iml" />
       <module fileurl="file://$PROJECT_DIR$/testcompile/testcompile.iml" filepath="$PROJECT_DIR$/testcompile/testcompile.iml" />
