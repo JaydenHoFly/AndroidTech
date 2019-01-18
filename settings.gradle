@@ -1,1 +1,1 @@
-include ':app', ':extensionalviewpager', ':learnbinder', ':DroidPlugin', ':plugin1', ':androidarchitecture', ':testcompile', ':testcompile2', ':alive', ':learnproguard3', ':learnndk', ':learnokhttp'
+include ':app', ':extensionalviewpager', ':learnbinder', ':DroidPlugin', ':plugin1', ':androidarchitecture', ':testcompile', ':testcompile2', ':alive', ':learnproguard3', ':learnndk', ':learnokhttp', ':learnretrofit'

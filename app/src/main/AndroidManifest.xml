@@ -50,8 +50,9 @@
                     android:scheme="vipshop"/>
             </intent-filter>
         </activity>
-        <activity android:name=".test.TestAty3"
-                  android:launchMode="singleTop"/>
+        <activity
+            android:name=".test.TestAty3"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".widget.anim.AttrAty"
             android:launchMode="singleTop"/>
@@ -93,6 +94,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".hack.vpn.SgToolVpnClient"/>
+        <activity
+            android:name=".process.ProcessActivity"
+            android:process=":child"/>
 
         <service android:name=".widget.view.window.ToastIntentService">
             <intent-filter>
@@ -147,11 +151,11 @@
 
         <service
             android:name=".alive.BlackAliveService"
-            android:process=":test"
             android:isolatedProcess="true"
+            android:process=":test"
             tools:targetApi="jelly_bean">
             <intent-filter>
-                <action android:name="blackalive" />
+                <action android:name="blackalive"/>
             </intent-filter>
         </service>
     </application>

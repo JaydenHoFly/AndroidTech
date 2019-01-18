@@ -26,6 +26,7 @@ import com.jaydenho.androidtech.hack.vpn.SgToolVpnClient;
 import com.jaydenho.androidtech.hotfix.HotFixActivity;
 import com.jaydenho.androidtech.ipc.binder.AIDLActivity;
 import com.jaydenho.androidtech.plugin.droidplugin.Utils;
+import com.jaydenho.androidtech.process.ProcessActivity;
 import com.jaydenho.androidtech.profile.ProfileAty;
 import com.jaydenho.androidtech.test.TestAty;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int ANDROID_ARCHITECTURE = 9;
         int PROFILE = 10;
         int VPN = 11;
+        int PROCESS = 12;
     }
 
     @Override
@@ -109,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDashboardInfos.add(profile);
         DashboardInfo vpn = new DashboardInfo(DashboardIds.VPN, "Vpn");
         mDashboardInfos.add(vpn);
+
+        DashboardInfo process = new DashboardInfo(DashboardIds.PROCESS, "Process");
+        mDashboardInfos.add(process);
 
         DashboardInfo startPlugin1 = new DashboardInfo(DashboardIds.START_PLUGIN_1, "StartPlugin1");
         mDashboardInfos.add(startPlugin1);
@@ -173,6 +178,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case DashboardIds.VPN:
                         startActivity(new Intent(mContext, SgToolVpnClient.class));
+                        break;
+                    case DashboardIds.PROCESS:
+                        startActivity(new Intent(mContext, ProcessActivity.class));
                         break;
                 }
             }
