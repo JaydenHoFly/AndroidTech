@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
 dependencies {
-    provided fileTree(dir: 'lib', include: '*.jar')
-    compile fileTree(dir: 'libs', include: '*.jar')
+    compileOnly fileTree(dir: 'lib', include: '*.jar')
+    api fileTree(dir: 'libs', include: '*.jar')
 }
 
 android {
@@ -20,7 +20,7 @@ android {
             jniLibs.srcDirs = ['libs']
         }
 
-        instrumentTest.setRoot('tests')
+        androidTest.setRoot('tests')
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
