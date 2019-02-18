@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
+import com.jaydenho.androidtech.util.FileUtils;
+
+import java.io.File;
 import java.util.Arrays;
 
 /**
@@ -22,6 +25,7 @@ public class LearnFileStorage {
         Log.d(TAG, "filesDir=" + context.getFilesDir().getAbsolutePath());
         //com.jaydenho.androidtech D/LearnFileStorage: dir-custom-private=/data/user/0/com.jaydenho.androidtech/app_custom
         Log.d(TAG, "dir-custom-private=" + context.getDir("custom", Context.MODE_PRIVATE).getAbsolutePath());
+        context.getCacheDir().getParentFile();
         // 输出应用的私有文件列表。
         //com.jaydenho.androidtech D/LearnFileStorage: fileList=[ams-pms-hook.apk]
         Log.d(TAG, "fileList=" + Arrays.toString(context.fileList()));
@@ -40,5 +44,9 @@ public class LearnFileStorage {
         //com.jaydenho.androidtech D/LearnFileStorage: externalCacheDir=/storage/emulated/0/Android/data/com.jaydenho.androidtech/cache
         Log.d(TAG, "externalCacheDir=" + context.getExternalCacheDir());
         // 外部存储-end
+    }
+
+    public static void traverse(File dir) {
+        FileUtils.printFileWithTraverse(0, dir);
     }
 }

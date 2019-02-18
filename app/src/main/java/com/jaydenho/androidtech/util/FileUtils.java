@@ -1,6 +1,7 @@
 package com.jaydenho.androidtech.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -52,6 +53,7 @@ import java.util.List;
 public class FileUtils {
 
     public final static String FILE_EXTENSION_SEPARATOR = ".";
+    private static final String TAG = "FileUtils";
 
     private FileUtils() {
         throw new AssertionError();
@@ -626,5 +628,33 @@ public class FileUtils {
 
         File file = new File(path);
         return (file.exists() && file.isFile() ? file.length() : -1);
+    }
+
+    /**
+     * 通过遍历的方式打印{@code #dir}中文件的信息。
+     *
+     * @param lastModified 文件夹中文件的最后修改时间。
+     * @param dir 目标文件夹。
+     */
+    public static void printFileWithTraverse(long lastModified, File dir) {
+        Log.d(TAG, "last-modify=" + lastModified);
+        if (dir.exists()) {
+            File[] files = dir.listFiles();
+            for (int i = 0; i < files.length; ++i) {
+                File file = files[i];
+                if (file.isDirectory()) {
+                    printFileWithTraverse(lastModified, file);
+                } else {
+                    // do something here with the file
+                    if (file.length() / 1024 > 10) {
+                        if (file.lastModified() > lastModified) {
+                            Log.d(TAG, "new--large--file.size=" + file.length() / 1024 + "kb" + "|file.name=" + file.getName() + "|file.absPath=" + file.getAbsolutePath());
+                        }
+                        Log.d(TAG, "large--file.size=" + file.length() / 1024 + "kb" + "|file.name=" + file.getName() + "|file.absPath=" + file.getAbsolutePath());
+                    }
+                    Log.d(TAG, "file.size=" + file.length() / 1024 + "kb" + "|file.name=" + file.getName() + "|file.absPath=" + file.getAbsolutePath());
+                }
+            }
+        }
     }
 }

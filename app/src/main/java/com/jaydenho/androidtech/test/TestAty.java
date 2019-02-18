@@ -259,6 +259,7 @@ public class TestAty extends FragmentActivity {
         testMkdirs();
 
         LearnFileStorage.printPath(this);
+        LearnFileStorage.traverse(getCacheDir().getParentFile());
     }
 
     private void testMkdirs() {
