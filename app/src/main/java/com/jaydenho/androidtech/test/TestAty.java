@@ -15,6 +15,7 @@ import android.location.Location;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -58,6 +59,7 @@ import com.jaydenho.androidtech.R;
 import com.jaydenho.androidtech.annotation.AnnotationInfo;
 import com.jaydenho.androidtech.annotation.DBInterpreter;
 import com.jaydenho.androidtech.intent.LearnIntent;
+import com.jaydenho.androidtech.storage.LearnFileStorage;
 import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.util.FileUtils;
 import com.jaydenho.androidtech.util.LocationProvider;
@@ -254,12 +256,26 @@ public class TestAty extends FragmentActivity {
 //        new LearnAlarmManager().startAlarm(this);
 
 //        jump();
+        testMkdirs();
 
+        LearnFileStorage.printPath(this);
+    }
+
+    private void testMkdirs() {
+//        File file = new File(Environment.getExternalStorageDirectory(), "xiaoyusan");
+        File file = new File(getCacheDir(), "xiaoyusan");
+        boolean result;
+        if (!file.exists()) {
+            result = file.mkdirs();
+        } else {
+            result = true;
+        }
+        Log.d(TAG, "testMkdirs--result=" + result + "|path=" + file.getAbsolutePath());
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode){
+        switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_DOWN:
                 startTestAty();
 //                if (webview != null) {
@@ -462,14 +478,14 @@ public class TestAty extends FragmentActivity {
         d.setCancelable(false);
     }
 
-    private void startTestAty(){
-        Intent intent = new Intent(this,TestAty.class);
+    private void startTestAty() {
+        Intent intent = new Intent(this, TestAty.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
         startActivity(intent);
     }
 
-    private void startTestAtyClearTop(){
-        Intent intent = new Intent(this,TestAty.class);
+    private void startTestAtyClearTop() {
+        Intent intent = new Intent(this, TestAty.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -915,7 +931,7 @@ public class TestAty extends FragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult resultCode: " + resultCode);
-        if(requestCode == 100 && resultCode == 1){
+        if (requestCode == 100 && resultCode == 1) {
             finish();
         }
     }
