@@ -47,6 +47,6 @@ public class LearnFileStorage {
     }
 
     public static void traverse(File dir) {
-        FileUtils.printFileWithTraverse(0, dir);
+        FileUtils.getFileSizeAndPrintChild(0, 100, dir);
     }
 }

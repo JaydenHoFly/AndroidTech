@@ -631,30 +631,33 @@ public class FileUtils {
     }
 
     /**
-     * 通过遍历的方式打印{@code #dir}中文件的信息。
+     * 打印{@code #targetFile}中文件的信息，并返回文件大小。
      *
-     * @param lastModified 文件夹中文件的最后修改时间。
-     * @param dir 目标文件夹。
+     * @param lastModified  文件夹中文件的最后修改时间。
+     * @param largeFileSize 大文件的大小，单位byte.
+     * @param targetFile    目标文件。
      */
-    public static void printFileWithTraverse(long lastModified, File dir) {
+    public static long getFileSizeAndPrintChild(long lastModified, long largeFileSize, File targetFile) {
         Log.d(TAG, "last-modify=" + lastModified);
-        if (dir.exists()) {
-            File[] files = dir.listFiles();
-            for (int i = 0; i < files.length; ++i) {
-                File file = files[i];
-                if (file.isDirectory()) {
-                    printFileWithTraverse(lastModified, file);
-                } else {
-                    // do something here with the file
-                    if (file.length() / 1024 > 10) {
-                        if (file.lastModified() > lastModified) {
-                            Log.d(TAG, "new--large--file.size=" + file.length() / 1024 + "kb" + "|file.name=" + file.getName() + "|file.absPath=" + file.getAbsolutePath());
-                        }
-                        Log.d(TAG, "large--file.size=" + file.length() / 1024 + "kb" + "|file.name=" + file.getName() + "|file.absPath=" + file.getAbsolutePath());
-                    }
-                    Log.d(TAG, "file.size=" + file.length() / 1024 + "kb" + "|file.name=" + file.getName() + "|file.absPath=" + file.getAbsolutePath());
+        long size = 0;
+        if (targetFile.exists()) {
+            if (targetFile.isDirectory()) {
+                File[] files = targetFile.listFiles();
+                for (File file : files) {
+                    size += getFileSizeAndPrintChild(lastModified, largeFileSize, file);
                 }
+            } else {
+                // do something here with the file
+                if (targetFile.length() / 1024 > largeFileSize) {
+                    if (targetFile.lastModified() > lastModified) {
+                        Log.d(TAG, "new--large--file.size=" + targetFile.length() / 1024 + "kb" + "|file.name=" + targetFile.getName() + "|file.absPath=" + targetFile.getAbsolutePath());
+                    }
+                    Log.d(TAG, "large--file.size=" + targetFile.length() / 1024 + "kb" + "|file.name=" + targetFile.getName() + "|file.absPath=" + targetFile.getAbsolutePath());
+                }
+                Log.d(TAG, "file.size=" + targetFile.length() / 1024 + "kb" + "|file.name=" + targetFile.getName() + "|file.absPath=" + targetFile.getAbsolutePath());
+                size += targetFile.length();
             }
         }
+        return size;
     }
 }
