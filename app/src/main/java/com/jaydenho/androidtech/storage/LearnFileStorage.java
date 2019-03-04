@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class LearnFileStorage {
     private static final String TAG = "LearnFileStorage";
 
-    public static void printPath(Context context) {
+    public static void printPath(Context context){
         // 内部存储-start
         // 保存缓存文件。
         //com.jaydenho.androidtech D/LearnFileStorage: cacheDir=/data/user/0/com.jaydenho.androidtech/cache
