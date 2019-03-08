@@ -30,6 +30,7 @@ import com.jaydenho.androidtech.process.ProcessActivity;
 import com.jaydenho.androidtech.profile.ProfileAty;
 import com.jaydenho.androidtech.test.TestAty;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
+import com.jaydenho.androidtech.widget.anim.transitions.TransitionsOutAty;
 import com.jaydenho.androidtech.widget.recyclerview.RecyclerViewActivity;
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.morgoo.helper.compat.PackageManagerCompat;
@@ -139,7 +140,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(testIntent);
                         break;
                     case DashboardIds.ANIM:
-                        startActivityForResult(new Intent(mContext, AttrAty.class), 100);
+//                        startActivityForResult(new Intent(mContext, AttrAty.class), 100);
+                        startActivity(new Intent(mContext, TransitionsOutAty.class));
                         break;
                     case DashboardIds.VIEW:
                         startActivity(new Intent(mContext, RecyclerViewActivity.class));

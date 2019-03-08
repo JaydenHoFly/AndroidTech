@@ -97,6 +97,12 @@
         <activity
             android:name=".process.ProcessActivity"
             android:process=":child"/>
+        <activity
+            android:name=".widget.anim.transitions.TransitionsInAty"
+            android:theme="@style/AppTheme.TransitionsTheme"/>
+        <activity
+            android:name=".widget.anim.transitions.TransitionsOutAty"
+            android:theme="@style/AppTheme.TransitionsTheme"/>
 
         <service android:name=".widget.view.window.ToastIntentService">
             <intent-filter>
