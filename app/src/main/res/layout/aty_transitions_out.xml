@@ -19,11 +19,11 @@
         tools:targetApi="lollipop"/>
 
     <ImageView
-        android:id="@+id/iv_shared"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/iv_avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:scaleType="fitXY"
-        android:src="@mipmap/blue_pool"
+        android:src="@mipmap/ic_launcher"
         android:transitionName="scene"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

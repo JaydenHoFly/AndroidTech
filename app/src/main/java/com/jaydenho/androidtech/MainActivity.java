@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -141,7 +143,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case DashboardIds.ANIM:
 //                        startActivityForResult(new Intent(mContext, AttrAty.class), 100);
-                        startActivity(new Intent(mContext, TransitionsOutAty.class));
+                        Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, view.findViewById(R.id.iv_avatar), "detail:avatar").toBundle();
+                        startActivity(new Intent(mContext, TransitionsOutAty.class), bundle);
                         break;
                     case DashboardIds.VIEW:
                         startActivity(new Intent(mContext, RecyclerViewActivity.class));

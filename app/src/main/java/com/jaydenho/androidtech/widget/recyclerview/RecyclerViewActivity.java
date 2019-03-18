@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.jaydenho.androidtech.BaseActivity;
 import com.jaydenho.androidtech.R;
+import com.jaydenho.androidtech.widget.view.AdInfo;
 
 /**
  * Created by hedazhao on 2017/5/9.
@@ -74,5 +75,11 @@ public class RecyclerViewActivity extends BaseActivity {
                 return null;
             }
         };
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AdInfo.clearAdInfos();
     }
 }

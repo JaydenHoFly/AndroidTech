@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jaydenho.androidtech.R;
+import com.jaydenho.androidtech.widget.view.AdInfo;
+import com.jaydenho.androidtech.widget.view.ViewVisibleHelper;
 
 /**
  * Created by hedazhao on 2017/5/9.
@@ -22,5 +24,6 @@ public class TextViewHolder extends BaseViewHolder<String> {
         itemView.setBackgroundColor(Color.RED);
         TextView tv = (TextView) itemView.findViewById(R.id.tv);
         tv.setText("TextViewHolder: " + s);
+        AdInfo.obtainAdInfo(s).trackPMPAdShow(itemView);
     }
 }
