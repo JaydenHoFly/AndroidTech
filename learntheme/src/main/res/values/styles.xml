@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <!--完全无效，不知道为什么-->
+        <!--华为9.0真机上会出现失效的情况-->
         <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
     </style>
 
