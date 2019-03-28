@@ -20,4 +20,16 @@
 
     <style name="AppTheme.TransitionsTheme" parent="AppTheme">
     </style>
+
+    <style name="AppTheme.OldTransitionTheme" parent="AppTheme">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    </style>
+
+    <!-- Activity通用跳转动画 -->
+    <style name="AnimationActivity" mce_bogus="1" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/translate_between_interface_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/translate_between_interface_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/translate_between_interface_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/translate_between_interface_right_out</item>
+    </style>
 </resources>

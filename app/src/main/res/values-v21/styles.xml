@@ -6,13 +6,25 @@
         <item name="android:windowActivityTransitions">true</item>
 
         <!-- specify enter and exit transitions -->
-       <!-- <item name="android:windowEnterTransition">@android:transition/move</item>
-        <item name="android:windowExitTransition">@android:transition/move</item>-->
+        <item name="android:windowEnterTransition">@android:transition/move</item>
+        <item name="android:windowExitTransition">@android:transition/move</item>
 
         <!-- specify shared element transitions -->
         <item name="android:windowSharedElementEnterTransition">
             @transition/change_image_transform</item>
         <item name="android:windowSharedElementExitTransition">
             @transition/change_image_transform</item>
+    </style>
+
+    <style name="AppTheme.OldTransitionTheme" parent="AppTheme">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    </style>
+
+    <!-- Activity通用跳转动画 -->
+    <style name="AnimationActivity" mce_bogus="1" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/translate_between_interface_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/translate_between_interface_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/translate_between_interface_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/translate_between_interface_right_out</item>
     </style>
 </resources>

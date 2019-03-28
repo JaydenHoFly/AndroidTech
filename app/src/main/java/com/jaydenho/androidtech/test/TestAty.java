@@ -313,7 +313,12 @@ public class TestAty extends FragmentActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_DOWN:
-                startTestAty();
+                Intent intent = new Intent(this,TestAty2.class);
+                startActivity(intent);
+
+                Intent intent1 = new Intent(this,TestAty3.class);
+                startActivity(intent1);
+//                startTestAty();
 //                if (webview != null) {
 //                    webview.onPause();
 //                }

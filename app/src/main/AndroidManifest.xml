@@ -34,7 +34,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.TransitionsTheme"/>
+            android:theme="@style/AppTheme.OldTransitionTheme"/>
         <activity android:name=".databinding.DataBindingAty"/>
         <activity
             android:name=".test.TestAty"
@@ -64,7 +64,6 @@
         <activity android:name=".widget.view.scroll.ScrollAty"/>
         <activity
             android:name=".test.TestListViewAty"/>
-        <activity android:name=".widget.view.ViewPagerAty"/>
         <activity android:name=".widget.view.viewpager.InfiniteAutoScrollViewPagerActivity"/>
         <activity android:name=".hotfix.HotFixActivity"/>
         <activity android:name=".plugin.droidplugin.PluginActivity">
@@ -76,7 +75,8 @@
         <activity android:name=".plugin.droidplugin.PluginActivityStub"/>
         <activity android:name=".ipc.binder.AIDLActivity"/>
         <activity android:name=".MainActivity2"/>
-        <activity android:name=".widget.recyclerview.RecyclerViewActivity"/>
+        <activity android:name=".widget.recyclerview.RecyclerViewActivity"
+                  android:theme="@style/AppTheme.OldTransitionTheme"/>
         <activity android:name=".widget.view.custom.CustomViewAty"/>
         <activity android:name=".widget.view.window.WindowActivity"/>
         <activity android:name=".profile.ProfileAty"/>
