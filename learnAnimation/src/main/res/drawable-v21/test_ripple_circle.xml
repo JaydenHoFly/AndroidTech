@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+        android:color="#ff0000"> <!--波纹颜色-->
+
+    <!--添item时，如果不指定id为@android:id/mask，那么不点击时会显示出该item指定的drawable-->
+    <!--添item时，如果指定id为@android:id/mask，那么不点击时不会显示出该item指定的drawable，而仅仅在点击的时候才出现-->
+    <item android:id="@android:id/mask">
+        <shape
+            android:shape="oval">
+            <!-- 填充背景色-->
+            <solid android:color="#ffffff"/>
+        </shape>
+    </item>
+</ripple>

@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
+        <item name="android:colorControlHighlight">@android:color/darker_gray</item>
     </style>
 
     <style name="ActivityAnim" parent="@android:style/Animation.Activity">
