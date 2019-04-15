@@ -97,6 +97,10 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
         canvas.drawBitmap(bitmap, 0, 0, mPaint);
     }
 
+    /**
+     * Xfermode的坑：两个图形相交，形成最终图形，google还给出了各种Xfermode的效果，但是要注意，两个图形坐在的bitmap宽高必须一致，
+     * 也就是说两个图形其实是一样大小的，只是周围的部分透明，如果两个图形大小不一致，效果就乱了。参考：https://blog.csdn.net/harvic880925/article/details/51264653
+     */
     protected Bitmap getMaskBitmap() {
         Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
