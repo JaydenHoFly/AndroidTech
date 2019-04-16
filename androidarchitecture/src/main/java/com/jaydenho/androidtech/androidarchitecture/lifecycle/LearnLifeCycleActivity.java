@@ -13,6 +13,6 @@ public class LearnLifeCycleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLifecycle().addObserver(new LearnLifeCycleObserver(getLifecycle()));
+        getLifecycle().addObserver(new LearnLifeCycleObserver());
     }
 }

@@ -22,6 +22,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jaydenho.androidtech.androidarchitecture.lifecycle.LearnLifeCycleActivity2;
 import com.jaydenho.androidtech.androidarchitecture.paging.PagingActivity;
 import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.hack.vpn.SgToolVpnClient;
@@ -176,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent("com.jayden.plugin1.launchactivity"));
                         break;
                     case DashboardIds.ANDROID_ARCHITECTURE:
-                        startActivity(new Intent(mContext, PagingActivity.class));
+                        startActivity(new Intent(mContext, LearnLifeCycleActivity2.class));
                         break;
                     case DashboardIds.PROFILE:
                         startActivity(new Intent(mContext, ProfileAty.class));

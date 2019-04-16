@@ -13,7 +13,7 @@ public class LearnLifeCycleOwner implements LifecycleOwner {
     private LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
 
     public LearnLifeCycleOwner() {
-        getLifecycle().addObserver(new LearnLifeCycleObserver(getLifecycle()));
+        getLifecycle().addObserver(new LearnLifeCycleObserver());
     }
 
     public void onCreate() {

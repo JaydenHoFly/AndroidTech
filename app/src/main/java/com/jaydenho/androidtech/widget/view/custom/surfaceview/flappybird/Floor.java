@@ -51,7 +51,7 @@ public class Floor implements IGameComponent {
     }
 
     public void draw(Canvas canvas, Paint paint) {
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         paint.setShader(bricksBS);
         canvas.translate(x, y);
         //x是负值，canvas向左平移后，坐标系也会向左平移，-x位置就是屏幕左边缘，-x+gameWidth就是屏幕右边缘。相当于将一块超大的画往左拉动，就产生了背景向右移动的效果。

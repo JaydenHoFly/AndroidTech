@@ -12,18 +12,16 @@ import android.util.Log;
 public class LearnLifeCycleObserver implements LifecycleObserver {
     private static final String TAG = "LearnLifeCycleObserver";
 
-    private Lifecycle mLifecycle = null;
-
-    public LearnLifeCycleObserver(Lifecycle lifecycle) {
-        mLifecycle = lifecycle;
+    public LearnLifeCycleObserver() {
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     public void onCreate() {
-
+        Log.d(TAG,"onCreate");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     public void onStop() {
+        Log.d(TAG,"onStop");
     }
 }

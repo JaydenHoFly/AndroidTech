@@ -176,7 +176,7 @@ public class BasicAttrsView extends View {
 
     private void learnCanvas(Canvas canvas) {
         canvas.drawColor(Color.RED);
-        int id1 = canvas.saveLayer(0, 0, 500, 500, mPaint, Canvas.MATRIX_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG);
+        int id1 = canvas.saveLayer(0, 0, 500, 500, mPaint, Canvas.ALL_SAVE_FLAG);
         canvas.rotate(40);
         mPaint.setColor(Color.GREEN);
         canvas.drawRect(100, 100, 200, 200, mPaint);

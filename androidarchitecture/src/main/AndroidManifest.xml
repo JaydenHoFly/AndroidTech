@@ -6,6 +6,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
 
+        <activity android:name=".lifecycle.LearnLifeCycleActivity2"/>
         <activity android:name=".lifecycle.LearnLifeCycleActivity"/>
         <activity android:name=".livedata.LearnLiveDataActivity"/>
         <activity android:name=".viewmodel.LearnViewModelActivity"/>

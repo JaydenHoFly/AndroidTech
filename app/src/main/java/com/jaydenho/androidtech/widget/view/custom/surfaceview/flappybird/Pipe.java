@@ -189,7 +189,7 @@ public class Pipe implements IGameComponent {
         }
 
         public void draw(Canvas canvas, Paint paint) {
-            canvas.save(Canvas.MATRIX_SAVE_FLAG);
+            canvas.save();
             if (isUpPipe()) {
                 canvas.translate(x, 0);
                 canvas.drawBitmap(mBitmap, null, new Rect(0, 0, mPipeWidth, mHeight), paint);
