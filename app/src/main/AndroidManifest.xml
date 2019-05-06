@@ -34,6 +34,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:finishOnTaskLaunch="true"
             android:theme="@style/AppTheme.OldTransitionTheme"/>
         <activity android:name=".databinding.DataBindingAty"/>
         <activity
