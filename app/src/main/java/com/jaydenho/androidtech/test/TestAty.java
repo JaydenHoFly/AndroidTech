@@ -58,6 +58,7 @@ import com.jaydenho.androidtech.annotation.AnnotationInfo;
 import com.jaydenho.androidtech.annotation.DBInterpreter;
 import com.jaydenho.androidtech.intent.LearnIntent;
 import com.jaydenho.androidtech.storage.LearnFileStorage;
+import com.jaydenho.androidtech.thread.Test;
 import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.util.FileUtils;
 import com.jaydenho.androidtech.util.LocationProvider;
@@ -106,6 +107,7 @@ public class TestAty extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aty_test);
+        Test.test();
         Toast.makeText(this, "toast", Toast.LENGTH_SHORT).show();
         mNameTV = (TextView) findViewById(R.id.tv_name);
         String userAgent = System.getProperty("http.agent");
@@ -229,7 +231,7 @@ public class TestAty extends FragmentActivity {
         dateTV.setText(getString(R.string.test_translate, 23));
         dateTV.setText(getString(R.string.test_multi, 1, 2));
         testEditTextCount();
-        testProgressBar();
+//        testProgressBar();
 
         startService(new Intent(this, OppoNotiService.class));
 
