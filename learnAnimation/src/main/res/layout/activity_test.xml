@@ -24,8 +24,8 @@
         android:layout_height="48dp"
         app:lottie_autoPlay="true"
         android:background="#000000"
-        app:lottie_fileName="lottie/bottomtab/download/success/data.json"
-        app:lottie_imageAssetsFolder="lottie/bottomtab/download/success/images"
+        app:lottie_fileName="lottie/playervoiceopen2/data.json"
+        app:lottie_imageAssetsFolder="lottie/playervoiceopen2/images"
         app:lottie_loop="true"/>
 
     <com.airbnb.lottie.LottieAnimationView

@@ -1,7 +1,5 @@
 package com.jaydenho.androidtech.algorithm.common.divideandconquer;
 
-import android.nfc.Tag;
-
 import com.morgoo.helper.Log;
 
 /**

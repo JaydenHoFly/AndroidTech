@@ -15,6 +15,8 @@ public class Test {
     private final Queue<String> queue = new ArrayDeque<>();
     private long consumeTime;
     private long consumeThreadTime;
+    private long consumeElapsedRealtime;
+    private long consumeUptime;
 
     public static void test() {
         Test t = new Test();
@@ -27,8 +29,7 @@ public class Test {
             @Override
             public void run() {
                 synchronized (queue) {
-                    consumeTime = System.currentTimeMillis();
-                    consumeThreadTime = SystemClock.currentThreadTimeMillis();
+                    updateTime();
                     while (true) {
                         if (queue.isEmpty()) {
                             try {
@@ -43,6 +44,13 @@ public class Test {
                 }
             }
         }).start();
+    }
+
+    private void updateTime() {
+        consumeTime = System.currentTimeMillis();
+        consumeThreadTime = SystemClock.currentThreadTimeMillis();
+        consumeElapsedRealtime = SystemClock.elapsedRealtime();
+        consumeUptime = SystemClock.uptimeMillis();
     }
 
     private void startB() {
@@ -77,9 +85,15 @@ public class Test {
     }
 
     private void consume() {
-        Log.d(TAG, "consume--consumeTime=" + (System.currentTimeMillis() - consumeTime) + "|consumeThreadTime=" + (SystemClock.currentThreadTimeMillis() - consumeThreadTime));
-        consumeTime = System.currentTimeMillis();
-        consumeThreadTime = SystemClock.currentThreadTimeMillis();
+        Log.d(TAG, "consume--consumeTime=" + (System.currentTimeMillis() - consumeTime) +
+                "|consumeThreadTime=" + (SystemClock.currentThreadTimeMillis() - consumeThreadTime) +
+                "|consumeElapsedRealtime=" + (SystemClock.elapsedRealtime() - consumeElapsedRealtime) +
+                "|consumeUptime=" + (SystemClock.uptimeMillis() - consumeUptime));
+        //result:
+        //D/Test: consume--consumeTime=3001|consumeThreadTime=0|consumeElapsedRealtime=3002|consumeUptime=3002
+        //D/Test: consume--consumeTime=1|consumeThreadTime=0|consumeElapsedRealtime=0|consumeUptime=0
+        //D/Test: consume--consumeTime=0|consumeThreadTime=0|consumeElapsedRealtime=0|consumeUptime=0
+        updateTime();
         queue.remove();
     }
 }
