@@ -36,6 +36,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
@@ -57,6 +58,7 @@ import com.jaydenho.androidtech.R;
 import com.jaydenho.androidtech.annotation.AnnotationInfo;
 import com.jaydenho.androidtech.annotation.DBInterpreter;
 import com.jaydenho.androidtech.intent.LearnIntent;
+import com.jaydenho.androidtech.logger.LearnLogger;
 import com.jaydenho.androidtech.storage.LearnFileStorage;
 import com.jaydenho.androidtech.thread.Test;
 import com.jaydenho.androidtech.util.CommonUtil;
@@ -106,97 +108,101 @@ public class TestAty extends FragmentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            setDisplayCutoutMode(getWindow(), WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER);
+        }
         setContentView(R.layout.aty_test);
-        Test.test();
-        Toast.makeText(this, "toast", Toast.LENGTH_SHORT).show();
-        mNameTV = (TextView) findViewById(R.id.tv_name);
-        String userAgent = System.getProperty("http.agent");
-        Log.d(TAG, "userAgent: " + userAgent);
-        String userAgent2 = getUserAgent();
-        Log.d(TAG, "userAgent2: " + userAgent2);
-       /*
-        String name = "一二三四五六七";
-        String testStr = "你好，测试。saf,.;1；2：3？4！";
-     *//*   String regex = "[\\u3002\\uff1b\\uff0c\\uff1a\\u201c\\u201d\\uff08\\uff09\\u3001\\uff1f\\u300a\\u300b]";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(testStr);
-        if (m.find()) {
-            Log.d(TAG,"group0: " + m.group(0));
-        }*//*
+        LearnLogger.learn();
+//        Test.test();
+//        Toast.makeText(this, "toast", Toast.LENGTH_SHORT).show();
+//        mNameTV = (TextView) findViewById(R.id.tv_name);
+//        String userAgent = System.getProperty("http.agent");
+//        Log.d(TAG, "userAgent: " + userAgent);
+//        String userAgent2 = getUserAgent();
+//        Log.d(TAG, "userAgent2: " + userAgent2);
+//       /*
+//        String name = "一二三四五六七";
+//        String testStr = "你好，测试。saf,.;1；2：3？4！";
+//     *//*   String regex = "[\\u3002\\uff1b\\uff0c\\uff1a\\u201c\\u201d\\uff08\\uff09\\u3001\\uff1f\\u300a\\u300b]";
+//        Pattern p = Pattern.compile(regex);
+//        Matcher m = p.matcher(testStr);
+//        if (m.find()) {
+//            Log.d(TAG,"group0: " + m.group(0));
+//        }*//*
 //        mNameTV.setText(cutTextEllipseEnd(name, 5));
-        mNameTV.setText(Html.fromHtml("&quot;你好&quot;"));
+//        mNameTV.setText(Html.fromHtml("&quot;你好&quot;"));
 
 //        String[] strArray = testStr.split("[\\u3002\\uff1b\\uff0c\\uff1a\\u201c\\u201d\\uff08\\uff09\\u3001\\uff1f\\u300a\\u300b]");
-        String[] strArray = testStr.split("[\\u3002|\\uff1f|\\uff01|\\uff0c|\\u3001|\\uff1b|\\uff1a|\\u201c|\\u201d|\\u2018|\\u2019|\\uff08|\\uff09|\\u300a|\\u300b|\\u3008|\\u3009|\\u3010|\\u3011|\\u300e|\\u300f|\\u300c|\\u300d|\\ufe43|\\ufe44|\\u3014|\\u3015|\\u2026|\\u2014|\\uff5e|\\ufe4f|\\uffe5]");
-        for (String str : strArray) {
-            Log.d(TAG, " str: " + str);
-        }
+//        String[] strArray = testStr.split("[\\u3002|\\uff1f|\\uff01|\\uff0c|\\u3001|\\uff1b|\\uff1a|\\u201c|\\u201d|\\u2018|\\u2019|\\uff08|\\uff09|\\u300a|\\u300b|\\u3008|\\u3009|\\u3010|\\u3011|\\u300e|\\u300f|\\u300c|\\u300d|\\ufe43|\\ufe44|\\u3014|\\u3015|\\u2026|\\u2014|\\uff5e|\\ufe4f|\\uffe5]");
+//        for (String str : strArray) {
+//            Log.d(TAG, " str: " + str);
+//        }
 
-        List<Integer> list = new ArrayList<>();
-        list.add(2);
-        list.add(1);
-        Log.d(TAG, "list.contains(1): " + list.contains(1));
-        list.remove(Integer.valueOf(1));
-        list.remove(list.indexOf(2));
-        Log.d(TAG, Arrays.toString(list.toArray()));
-
-        mImageLoaderTestIv = (ImageView) findViewById(R.id.test_image_loader_iv);
-        *//*ImageLoader.getInstance().displayImage("http://pic34.nipic.com/20131021/11569127_170602617166_2.jpg", mImageLoaderTestIv, getSujectIconDisplayOptions());
-        ImageLoader.getInstance().loadImage("http://pic60.nipic.com/file/20150303/12216461_110913232000_2.jpg", getSujectIconDisplayOptions(), new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String s, View view) {
-
-            }
-
-            @Override
-            public void onLoadingFailed(String s, View view, FailReason failReason) {
-
-            }
-
-            @Override
-            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-
-            }
-
-            @Override
-            public void onLoadingCancelled(String s, View view) {
-
-            }
-        });*//*
-        String str = "我是原始值";
-        checkString(str);
-        Log.d(TAG, "checkString: " + str);
-
-        testProbability();
-
-        mHandler.sendEmptyMessageDelayed(1, 2000);
-
-        a();
-
-        Log.d(TAG, "onCreate");
-        if (savedInstanceState != null) {
-            mRestore = savedInstanceState.getBoolean("restore", mRestore);
-        }
-
-        Log.d(TAG, "branch: " + getPhoneBrand() + " model: " + Build.MODEL + " devide: " + Build.DEVICE + " product" + Build.PRODUCT);
-
-        IdentityHashMap<String, String> map = new IdentityHashMap<>();
-        map.put("show", "1323");
-        map.put("show", "1323");
-        map.put("show", "1324");
-
-        List<String> orderIds = new ArrayList<>();
-        orderIds.add("11377");
-        orderIds.add("11374");
-        orderIds.add("11378");
-        orderIds.add("11371");
-        testSortString(orderIds);*/
-
-        mImageLoaderTestIv = (ImageView) findViewById(R.id.test_image_loader_iv);
-        ImageLoader.getInstance().displayImage("http://pic34.nipic.com/20131021/11569127_170602617166_2.jpg", mImageLoaderTestIv, getSujectIconDisplayOptions());
-        initPPW();
-
-        startLocation();
+//        List<Integer> list = new ArrayList<>();
+//        list.add(2);
+//        list.add(1);
+//        Log.d(TAG, "list.contains(1): " + list.contains(1));
+//        list.remove(Integer.valueOf(1));
+//        list.remove(list.indexOf(2));
+//        Log.d(TAG, Arrays.toString(list.toArray()));
+//
+//        mImageLoaderTestIv = (ImageView) findViewById(R.id.test_image_loader_iv);
+//        *//*ImageLoader.getInstance().displayImage("http://pic34.nipic.com/20131021/11569127_170602617166_2.jpg", mImageLoaderTestIv, getSujectIconDisplayOptions());
+//        ImageLoader.getInstance().loadImage("http://pic60.nipic.com/file/20150303/12216461_110913232000_2.jpg", getSujectIconDisplayOptions(), new ImageLoadingListener() {
+//            @Override
+//            public void onLoadingStarted(String s, View view) {
+//
+//            }
+//
+//            @Override
+//            public void onLoadingFailed(String s, View view, FailReason failReason) {
+//
+//            }
+//
+//            @Override
+//            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+//
+//            }
+//
+//            @Override
+//            public void onLoadingCancelled(String s, View view) {
+//
+//            }
+//        });*//*
+//        String str = "我是原始值";
+//        checkString(str);
+//        Log.d(TAG, "checkString: " + str);
+//
+//        testProbability();
+//
+//        mHandler.sendEmptyMessageDelayed(1, 2000);
+//
+//        a();
+//
+//        Log.d(TAG, "onCreate");
+//        if (savedInstanceState != null) {
+//            mRestore = savedInstanceState.getBoolean("restore", mRestore);
+//        }
+//
+//        Log.d(TAG, "branch: " + getPhoneBrand() + " model: " + Build.MODEL + " devide: " + Build.DEVICE + " product" + Build.PRODUCT);
+//
+//        IdentityHashMap<String, String> map = new IdentityHashMap<>();
+//        map.put("show", "1323");
+//        map.put("show", "1323");
+//        map.put("show", "1324");
+//
+//        List<String> orderIds = new ArrayList<>();
+//        orderIds.add("11377");
+//        orderIds.add("11374");
+//        orderIds.add("11378");
+//        orderIds.add("11371");
+//        testSortString(orderIds);*/
+//
+//        mImageLoaderTestIv = (ImageView) findViewById(R.id.test_image_loader_iv);
+//        ImageLoader.getInstance().displayImage("http://pic34.nipic.com/20131021/11569127_170602617166_2.jpg", mImageLoaderTestIv, getSujectIconDisplayOptions());
+//        initPPW();
+//
+//        startLocation();
 //        jump();
 
   /*      new Thread(new Runnable() {
@@ -214,55 +220,71 @@ public class TestAty extends FragmentActivity {
 
 //        printThread();
 
-        time();
-
-        testIntent("ctrip://wireless/InlandHotel?checkInDate=20170504&checkOutDate=20170505&hotelId=687592&allianceid=288562&sid=960124&sourceid=2504&ouid=Android_Singapore_687592");
-        testIntent("tbopen://m.taobao.com/tbopen/index.html?action=ali.open.nav&module=h5&bootImage=0&source=alimama&h5Url=http%3A%2F%2Fmo.m.taobao.com%2Fpage_201708301727368&appkey=24570756&visa=f9a9733e34b4e74f&packageName=&backURL=");
-        testIntent("thunder://QUFodHRwOi8vZGwwMS44MHMuaW06OTIwLzE1MDQvW+eBq+W9seW/jeiAheWJp+WcuueJiF3kuInml6XmnIjlspvkuIrnmoTliqjnianpqprkubEvW+eBq+W9seW/jeiAheWJp+WcuueJiF3kuInml6XmnIjlspvkuIrnmoTliqjnianpqprkubFfYmQubXA0Wlo=");
-
-        ADIntentUtils.isAcceptedScheme("taobao://item.taobao.com/item.htm?spm=a1z10.3-c.w4002-9705227192.14.6nS5Xy&id=525291527981&c=359c9d34a4c185dfa2338711e8ac3d82&did=ANDROID-09309950e8e545dda88578b6465298ef&taskid=4T5@S-0918100421-RMP-0918-r5J5tvfYJc9NDg11111f16&s=getui");
-
-        MyNotification.notifyTaskNotification(this, "", "", "", 323);
-
-        dateTV = findViewById(R.id.tv_date);
+//        time();
+//
+//        testIntent("ctrip://wireless/InlandHotel?checkInDate=20170504&checkOutDate=20170505&hotelId=687592&allianceid=288562&sid=960124&sourceid=2504&ouid=Android_Singapore_687592");
+//        testIntent("tbopen://m.taobao.com/tbopen/index.html?action=ali.open.nav&module=h5&bootImage=0&source=alimama&h5Url=http%3A%2F%2Fmo.m.taobao.com%2Fpage_201708301727368&appkey=24570756&visa=f9a9733e34b4e74f&packageName=&backURL=");
+//        testIntent("thunder://QUFodHRwOi8vZGwwMS44MHMuaW06OTIwLzE1MDQvW+eBq+W9seW/jeiAheWJp+WcuueJiF3kuInml6XmnIjlspvkuIrnmoTliqjnianpqprkubEvW+eBq+W9seW/jeiAheWJp+WcuueJiF3kuInml6XmnIjlspvkuIrnmoTliqjnianpqprkubFfYmQubXA0Wlo=");
+//
+//        ADIntentUtils.isAcceptedScheme("taobao://item.taobao.com/item.htm?spm=a1z10.3-c.w4002-9705227192.14.6nS5Xy&id=525291527981&c=359c9d34a4c185dfa2338711e8ac3d82&did=ANDROID-09309950e8e545dda88578b6465298ef&taskid=4T5@S-0918100421-RMP-0918-r5J5tvfYJc9NDg11111f16&s=getui");
+//
+//        MyNotification.notifyTaskNotification(this, "", "", "", 323);
+//
+//        dateTV = findViewById(R.id.tv_date);
     /*    long time = 1513670339000L;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         dateTV.setText(sdf.format(new Date(time)));*/
-        dateTV.setText(getString(R.string.test_translate, 23));
-        dateTV.setText(getString(R.string.test_multi, 1, 2));
-        testEditTextCount();
-//        testProgressBar();
+//        dateTV.setText(getString(R.string.test_translate, 23));
+//        dateTV.setText(getString(R.string.test_multi, 1, 2));
+//        testEditTextCount();
+////        testProgressBar();
+//
+//        startService(new Intent(this, OppoNotiService.class));
+//
+////        LearnIntent.testDeeplink(this);
+//
+//        LearnIntent.testIntentAndUri();
+//
+//        Log.d(TAG, "getExternalFilesDir(null) == null: " + (getExternalFilesDir(null) == null));
+//
+//        AnnotationInfo info = new AnnotationInfo();
+//        String createTableSql = new DBInterpreter().createTableSql(info.getClass());
+//        Log.d(TAG, "createTableSql: " + createTableSql);
+//
+//        testSamsung();
+//
+////        jump();
+//
+//        Calling call = new Calling();
+//        call.call();
+//
+//        Log.d(TAG, "startAlarm1.");
+////        new LearnAlarmManager().startAlarm(this);
+//
+////        jump();
+//        testMkdirs();
+//
+//        LearnFileStorage.printPath(this);
+//        LearnFileStorage.traverse(getCacheDir().getParentFile());
+//
+//        testBackslash();
+//        testFakeUnicode();
+    }
 
-        startService(new Intent(this, OppoNotiService.class));
-
-//        LearnIntent.testDeeplink(this);
-
-        LearnIntent.testIntentAndUri();
-
-        Log.d(TAG, "getExternalFilesDir(null) == null: " + (getExternalFilesDir(null) == null));
-
-        AnnotationInfo info = new AnnotationInfo();
-        String createTableSql = new DBInterpreter().createTableSql(info.getClass());
-        Log.d(TAG, "createTableSql: " + createTableSql);
-
-        testSamsung();
-
-//        jump();
-
-        Calling call = new Calling();
-        call.call();
-
-        Log.d(TAG, "startAlarm1.");
-//        new LearnAlarmManager().startAlarm(this);
-
-//        jump();
-        testMkdirs();
-
-        LearnFileStorage.printPath(this);
-        LearnFileStorage.traverse(getCacheDir().getParentFile());
-
-        testBackslash();
-        testFakeUnicode();
+    /**
+     * android P 设置刘海屏显示模式
+     * @param window
+     * @param mode LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT 默认非全屏使用刘海，全屏不使用刘海
+     *             LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES 此flag下不进行应用窗口的限制，窗口可以显示到刘海区域
+     *             LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER 此flag下应用窗口一直被限制在刘海区域以下
+     */
+    public static void setDisplayCutoutMode(Window window, int mode){
+        if (window != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            WindowManager.LayoutParams lp = window.getAttributes();
+            lp.layoutInDisplayCutoutMode = mode;
+            window.setAttributes(lp);
+        }
     }
 
     /**
@@ -991,10 +1013,10 @@ public class TestAty extends FragmentActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (!a) {
-            showPPW(mNameTV);
-        }
-        a = true;
+//        if (!a) {
+//            showPPW(mNameTV);
+//        }
+//        a = true;
     }
 
     private void initPPW() {
