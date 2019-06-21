@@ -32,6 +32,7 @@ import com.jaydenho.androidtech.plugin.droidplugin.Utils;
 import com.jaydenho.androidtech.process.ProcessActivity;
 import com.jaydenho.androidtech.profile.ProfileAty;
 import com.jaydenho.androidtech.test.TestAty;
+import com.jaydenho.androidtech.test.TestAty2;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
 import com.jaydenho.androidtech.widget.anim.transitions.TransitionsOutAty;
 import com.jaydenho.androidtech.widget.recyclerview.RecyclerViewActivity;

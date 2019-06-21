@@ -1,5 +1,7 @@
 package com.jaydenho.androidtech.logger;
 
+import android.util.Log;
+
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.DiskLogStrategy;
@@ -35,5 +37,8 @@ public class LearnLogger {
         Logger.log(Logger.INFO, "LearnLogger", "learn disk", null);
         Logger.clearLogAdapters();
         Logger.d("end");
+
+        Log.println(Log.ASSERT,"LearnLogger","learn assert");
+        Log.wtf("LearnLogger","Learn wtf");
     }
 }
