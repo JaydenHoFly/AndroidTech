@@ -1,4 +1,4 @@
-include ':app', ':extensionalviewpager', ':learnbinder', ':DroidPlugin', ':plugin1', ':androidarchitecture', ':testcompile', ':testcompile2', ':alive', ':learnproguard3', ':learnndk', ':learnokhttp', ':learnretrofit', ':learnAnimation', ':learnrxjava', ':learnkotlin'
+include ':app', ':extensionalviewpager', ':learnbinder', ':DroidPlugin', ':plugin1', ':androidarchitecture', ':testcompile', ':testcompile2', ':alive', ':learnproguard3', ':learnndk', ':learnokhttp', ':learnretrofit', ':learnAnimation', ':learnrxjava', ':learnkotlin', ':learnbenchmark'
 // 添加Flutter Module start
 /*setBinding(new Binding([gradle: this]))                                 // new
 evaluate(new File(                                                      // new

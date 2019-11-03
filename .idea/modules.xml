@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/extensionalviewpager/extensionalviewpager.iml" filepath="$PROJECT_DIR$/extensionalviewpager/extensionalviewpager.iml" />
       <module fileurl="file://$PROJECT_DIR$/learnAnimation/learnAnimation.iml" filepath="$PROJECT_DIR$/learnAnimation/learnAnimation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/learnbenchmark/learnbenchmark.iml" filepath="$PROJECT_DIR$/learnbenchmark/learnbenchmark.iml" />
       <module fileurl="file://$PROJECT_DIR$/learnbinder/learnbinder.iml" filepath="$PROJECT_DIR$/learnbinder/learnbinder.iml" />
       <module fileurl="file://$PROJECT_DIR$/learnkotlin/learnkotlin.iml" filepath="$PROJECT_DIR$/learnkotlin/learnkotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/learnndk/learnndk.iml" filepath="$PROJECT_DIR$/learnndk/learnndk.iml" />

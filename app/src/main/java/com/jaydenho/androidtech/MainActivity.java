@@ -36,6 +36,7 @@ import com.jaydenho.androidtech.test.TestAty2;
 import com.jaydenho.androidtech.widget.anim.AttrAty;
 import com.jaydenho.androidtech.widget.anim.transitions.TransitionsOutAty;
 import com.jaydenho.androidtech.widget.recyclerview.RecyclerViewActivity;
+import com.jaydenho.androidtech.widget.view.LearnTouchAty;
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.morgoo.helper.compat.PackageManagerCompat;
 
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(mContext, TransitionsOutAty.class), bundle);
                         break;
                     case DashboardIds.VIEW:
-                        startActivity(new Intent(mContext, RecyclerViewActivity.class));
+                        startActivity(new Intent(mContext, LearnTouchAty.class));
                         break;
                     case DashboardIds.HOT_FIX:
                         startActivity(new Intent(mContext, HotFixActivity.class));
