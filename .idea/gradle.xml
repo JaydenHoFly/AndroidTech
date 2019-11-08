@@ -8,7 +8,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/ApplyProcessor" />
             <option value="$PROJECT_DIR$/DroidPlugin" />
+            <option value="$PROJECT_DIR$/LearnProcessor" />
             <option value="$PROJECT_DIR$/alive" />
             <option value="$PROJECT_DIR$/androidarchitecture" />
             <option value="$PROJECT_DIR$/app" />
@@ -25,6 +27,7 @@
             <option value="$PROJECT_DIR$/plugin1" />
             <option value="$PROJECT_DIR$/testcompile" />
             <option value="$PROJECT_DIR$/testcompile2" />
+            <option value="$PROJECT_DIR$/useprocessor" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

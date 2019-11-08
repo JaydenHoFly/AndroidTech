@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidTech.iml" filepath="$PROJECT_DIR$/AndroidTech.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ApplyProcessor/ApplyProcessor.iml" filepath="$PROJECT_DIR$/ApplyProcessor/ApplyProcessor.iml" />
       <module fileurl="file://$PROJECT_DIR$/DroidPlugin/DroidPlugin.iml" filepath="$PROJECT_DIR$/DroidPlugin/DroidPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LearnProcessor/LearnProcessor.iml" filepath="$PROJECT_DIR$/LearnProcessor/LearnProcessor.iml" />
       <module fileurl="file://$PROJECT_DIR$/alive/alive.iml" filepath="$PROJECT_DIR$/alive/alive.iml" />
       <module fileurl="file://$PROJECT_DIR$/androidarchitecture/androidarchitecture.iml" filepath="$PROJECT_DIR$/androidarchitecture/androidarchitecture.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
@@ -20,6 +22,7 @@
       <module fileurl="file://$PROJECT_DIR$/plugin1/plugin1.iml" filepath="$PROJECT_DIR$/plugin1/plugin1.iml" />
       <module fileurl="file://$PROJECT_DIR$/testcompile/testcompile.iml" filepath="$PROJECT_DIR$/testcompile/testcompile.iml" />
       <module fileurl="file://$PROJECT_DIR$/testcompile2/testcompile2.iml" filepath="$PROJECT_DIR$/testcompile2/testcompile2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/useprocessor/useprocessor.iml" filepath="$PROJECT_DIR$/useprocessor/useprocessor.iml" />
     </modules>
   </component>
 </project>

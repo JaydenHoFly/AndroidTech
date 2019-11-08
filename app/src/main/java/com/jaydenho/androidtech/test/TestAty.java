@@ -1,6 +1,7 @@
 package com.jaydenho.androidtech.test;
 
 import android.app.Activity;
+import android.app.Person;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -67,6 +68,7 @@ import com.jaydenho.androidtech.util.LocationProvider;
 import com.jaydenho.androidtech.widget.view.dialog.LoadingDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.xunlei.applyprocessor.Jayden;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -111,6 +113,7 @@ public class TestAty extends FragmentActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             setDisplayCutoutMode(getWindow(), WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER);
         }
+        com.xunlei.applyprocessor.Jayden jayden = new Jayden();
         setContentView(R.layout.aty_test);
         LearnLogger.learn();
 //        Test.test();

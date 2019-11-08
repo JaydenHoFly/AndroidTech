@@ -100,6 +100,7 @@ repositories {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
+
     api 'com.android.support:appcompat-v7:' + SUPPORT_V7_VERSION
     api 'com.android.support:recyclerview-v7:' + SUPPORT_V7_VERSION
     implementation 'com.android.support:support-v4:' + SUPPORT_V4_VERSION
