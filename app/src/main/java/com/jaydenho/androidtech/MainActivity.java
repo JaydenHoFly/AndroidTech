@@ -28,6 +28,7 @@ import com.jaydenho.androidtech.databinding.DataBindingAty;
 import com.jaydenho.androidtech.hack.vpn.SgToolVpnClient;
 import com.jaydenho.androidtech.hotfix.HotFixActivity;
 import com.jaydenho.androidtech.ipc.binder.AIDLActivity;
+import com.jaydenho.androidtech.oom.OOMActivity;
 import com.jaydenho.androidtech.plugin.droidplugin.Utils;
 import com.jaydenho.androidtech.process.ProcessActivity;
 import com.jaydenho.androidtech.profile.ProfileAty;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int PROFILE = 10;
         int VPN = 11;
         int PROCESS = 12;
+        int OOM = 13;
     }
 
     @Override
@@ -126,6 +128,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         DashboardInfo androidArchitecture = new DashboardInfo(DashboardIds.ANDROID_ARCHITECTURE, "Android Architecture");
         mDashboardInfos.add(androidArchitecture);
+
+        DashboardInfo oom = new DashboardInfo(DashboardIds.OOM, "OOM");
+        mDashboardInfos.add(oom);
 
         mDashboardAdapter = new DashboardAdapter();
     }
@@ -189,6 +194,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case DashboardIds.PROCESS:
                         startActivity(new Intent(mContext, ProcessActivity.class));
+                        break;
+                    case DashboardIds.OOM:
+                        startActivity(new Intent(mContext, OOMActivity.class));
                         break;
                 }
             }
