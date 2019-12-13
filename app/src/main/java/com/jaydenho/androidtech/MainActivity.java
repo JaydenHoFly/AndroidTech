@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent("com.jayden.plugin1.launchactivity"));
                         break;
                     case DashboardIds.ANDROID_ARCHITECTURE:
-                        startActivity(new Intent(mContext, LearnLifeCycleActivity2.class));
+                        startActivity(new Intent(mContext, PagingActivity.class));
                         break;
                     case DashboardIds.PROFILE:
                         startActivity(new Intent(mContext, ProfileAty.class));

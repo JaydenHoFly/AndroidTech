@@ -1,7 +1,6 @@
 package com.jaydenho.androidtech.test;
 
 import android.app.Activity;
-import android.app.Person;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,24 +51,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.jayden.testcompile2.Calling;
 import com.jaydenho.androidtech.AndroidApplicationLike;
 import com.jaydenho.androidtech.R;
-import com.jaydenho.androidtech.annotation.AnnotationInfo;
-import com.jaydenho.androidtech.annotation.DBInterpreter;
-import com.jaydenho.androidtech.intent.LearnIntent;
 import com.jaydenho.androidtech.logger.LearnLogger;
-import com.jaydenho.androidtech.storage.LearnFileStorage;
-import com.jaydenho.androidtech.thread.Test;
 import com.jaydenho.androidtech.util.CommonUtil;
 import com.jaydenho.androidtech.util.FileUtils;
 import com.jaydenho.androidtech.util.LocationProvider;
 import com.jaydenho.androidtech.widget.view.dialog.LoadingDialog;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xunlei.applyprocessor.Jayden;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -113,7 +104,6 @@ public class TestAty extends FragmentActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             setDisplayCutoutMode(getWindow(), WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER);
         }
-        com.xunlei.applyprocessor.Jayden jayden = new Jayden();
         setContentView(R.layout.aty_test);
         LearnLogger.learn();
 //        Test.test();
@@ -272,6 +262,15 @@ public class TestAty extends FragmentActivity {
 //
 //        testBackslash();
 //        testFakeUnicode();
+        startXLAty();
+    }
+
+    private void startXLAty(){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setData(Uri.parse("shouleirenew://contract_super"));
+        startActivity(intent);
     }
 
     /**
