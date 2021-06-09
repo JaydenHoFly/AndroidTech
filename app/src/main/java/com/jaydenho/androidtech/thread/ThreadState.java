@@ -21,6 +21,9 @@ public class ThreadState {
             //当前线程进入waiting状态，等待thread线程Dead后才恢复，内部使用wait方法实现，所以允许
             //多个线程调用thread.join()。
             thread.join();
+            thread.join(1000);
+
+            Thread.yield();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

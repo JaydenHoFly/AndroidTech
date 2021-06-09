@@ -21,7 +21,6 @@
             <option value="$PROJECT_DIR$/learnbenchmark" />
             <option value="$PROJECT_DIR$/learnbinder" />
             <option value="$PROJECT_DIR$/learnkotlin" />
-            <option value="$PROJECT_DIR$/learnndk" />
             <option value="$PROJECT_DIR$/learnokhttp" />
             <option value="$PROJECT_DIR$/learnproguard3" />
             <option value="$PROJECT_DIR$/learnretrofit" />
@@ -33,6 +32,7 @@
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>
   </component>

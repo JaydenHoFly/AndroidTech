@@ -2,48 +2,26 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidTech.iml" filepath="$PROJECT_DIR$/AndroidTech.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ApplyProcessor/AndroidTech-ApplyProcessor.iml" filepath="$PROJECT_DIR$/.idea/modules/ApplyProcessor/AndroidTech-ApplyProcessor.iml" group="AndroidTech/ApplyProcessor" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DroidPlugin/AndroidTech-DroidPlugin.iml" filepath="$PROJECT_DIR$/.idea/modules/DroidPlugin/AndroidTech-DroidPlugin.iml" group="AndroidTech/DroidPlugin" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LearnProcessor/AndroidTech-LearnProcessor.iml" filepath="$PROJECT_DIR$/.idea/modules/LearnProcessor/AndroidTech-LearnProcessor.iml" group="AndroidTech/LearnProcessor" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/alive/AndroidTech-alive.iml" filepath="$PROJECT_DIR$/.idea/modules/alive/AndroidTech-alive.iml" group="AndroidTech/alive" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/androidarchitecture/AndroidTech-androidarchitecture.iml" filepath="$PROJECT_DIR$/.idea/modules/androidarchitecture/AndroidTech-androidarchitecture.iml" group="AndroidTech/androidarchitecture" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidTech-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidTech-app.iml" group="AndroidTech/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/extensionalviewpager/AndroidTech-extensionalviewpager.iml" filepath="$PROJECT_DIR$/.idea/modules/extensionalviewpager/AndroidTech-extensionalviewpager.iml" group="AndroidTech/extensionalviewpager" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnAnimation/AndroidTech-learnAnimation.iml" filepath="$PROJECT_DIR$/.idea/modules/learnAnimation/AndroidTech-learnAnimation.iml" group="AndroidTech/learnAnimation" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnbenchmark/AndroidTech-learnbenchmark.iml" filepath="$PROJECT_DIR$/.idea/modules/learnbenchmark/AndroidTech-learnbenchmark.iml" group="AndroidTech/learnbenchmark" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnbinder/AndroidTech-learnbinder.iml" filepath="$PROJECT_DIR$/.idea/modules/learnbinder/AndroidTech-learnbinder.iml" group="AndroidTech/learnbinder" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnkotlin/AndroidTech-learnkotlin.iml" filepath="$PROJECT_DIR$/.idea/modules/learnkotlin/AndroidTech-learnkotlin.iml" group="AndroidTech/learnkotlin" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnndk/AndroidTech-learnndk.iml" filepath="$PROJECT_DIR$/.idea/modules/learnndk/AndroidTech-learnndk.iml" group="AndroidTech/learnndk" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnokhttp/AndroidTech-learnokhttp.iml" filepath="$PROJECT_DIR$/.idea/modules/learnokhttp/AndroidTech-learnokhttp.iml" group="AndroidTech/learnokhttp" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnproguard3/AndroidTech-learnproguard3.iml" filepath="$PROJECT_DIR$/.idea/modules/learnproguard3/AndroidTech-learnproguard3.iml" group="AndroidTech/learnproguard3" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnretrofit/AndroidTech-learnretrofit.iml" filepath="$PROJECT_DIR$/.idea/modules/learnretrofit/AndroidTech-learnretrofit.iml" group="AndroidTech/learnretrofit" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnrxjava/AndroidTech-learnrxjava.iml" filepath="$PROJECT_DIR$/.idea/modules/learnrxjava/AndroidTech-learnrxjava.iml" group="AndroidTech/learnrxjava" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/plugin1/AndroidTech-plugin1.iml" filepath="$PROJECT_DIR$/.idea/modules/plugin1/AndroidTech-plugin1.iml" group="AndroidTech/plugin1" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/testcompile/AndroidTech-testcompile.iml" filepath="$PROJECT_DIR$/.idea/modules/testcompile/AndroidTech-testcompile.iml" group="AndroidTech/testcompile" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/testcompile2/AndroidTech-testcompile2.iml" filepath="$PROJECT_DIR$/.idea/modules/testcompile2/AndroidTech-testcompile2.iml" group="AndroidTech/testcompile2" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/useprocessor/AndroidTech-useprocessor.iml" filepath="$PROJECT_DIR$/.idea/modules/useprocessor/AndroidTech-useprocessor.iml" group="AndroidTech/useprocessor" />
-      <module fileurl="file://$PROJECT_DIR$/ApplyProcessor/ApplyProcessor.iml" filepath="$PROJECT_DIR$/ApplyProcessor/ApplyProcessor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DroidPlugin/DroidPlugin.iml" filepath="$PROJECT_DIR$/DroidPlugin/DroidPlugin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/LearnProcessor/LearnProcessor.iml" filepath="$PROJECT_DIR$/LearnProcessor/LearnProcessor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/alive/alive.iml" filepath="$PROJECT_DIR$/alive/alive.iml" />
-      <module fileurl="file://$PROJECT_DIR$/androidarchitecture/androidarchitecture.iml" filepath="$PROJECT_DIR$/androidarchitecture/androidarchitecture.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/extensionalviewpager/extensionalviewpager.iml" filepath="$PROJECT_DIR$/extensionalviewpager/extensionalviewpager.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jayden-AndroidTech.iml" filepath="$PROJECT_DIR$/.idea/modules/jayden-AndroidTech.iml" group="AndroidTech" />
-      <module fileurl="file://$PROJECT_DIR$/learnAnimation/learnAnimation.iml" filepath="$PROJECT_DIR$/learnAnimation/learnAnimation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/learnbenchmark/learnbenchmark.iml" filepath="$PROJECT_DIR$/learnbenchmark/learnbenchmark.iml" />
-      <module fileurl="file://$PROJECT_DIR$/learnbinder/learnbinder.iml" filepath="$PROJECT_DIR$/learnbinder/learnbinder.iml" />
-      <module fileurl="file://$PROJECT_DIR$/learnkotlin/learnkotlin.iml" filepath="$PROJECT_DIR$/learnkotlin/learnkotlin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/learnndk/learnndk.iml" filepath="$PROJECT_DIR$/learnndk/learnndk.iml" />
-      <module fileurl="file://$PROJECT_DIR$/learnokhttp/learnokhttp.iml" filepath="$PROJECT_DIR$/learnokhttp/learnokhttp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/learnproguard3/learnproguard3.iml" filepath="$PROJECT_DIR$/learnproguard3/learnproguard3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/learnretrofit/learnretrofit.iml" filepath="$PROJECT_DIR$/learnretrofit/learnretrofit.iml" />
-      <module fileurl="file://$PROJECT_DIR$/learnrxjava/learnrxjava.iml" filepath="$PROJECT_DIR$/learnrxjava/learnrxjava.iml" />
-      <module fileurl="file://$PROJECT_DIR$/plugin1/plugin1.iml" filepath="$PROJECT_DIR$/plugin1/plugin1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/testcompile/testcompile.iml" filepath="$PROJECT_DIR$/testcompile/testcompile.iml" />
-      <module fileurl="file://$PROJECT_DIR$/testcompile2/testcompile2.iml" filepath="$PROJECT_DIR$/testcompile2/testcompile2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/useprocessor/useprocessor.iml" filepath="$PROJECT_DIR$/useprocessor/useprocessor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidTech.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidTech.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ApplyProcessor/AndroidTech.ApplyProcessor.iml" filepath="$PROJECT_DIR$/.idea/modules/ApplyProcessor/AndroidTech.ApplyProcessor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DroidPlugin/AndroidTech.DroidPlugin.iml" filepath="$PROJECT_DIR$/.idea/modules/DroidPlugin/AndroidTech.DroidPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LearnProcessor/AndroidTech.LearnProcessor.iml" filepath="$PROJECT_DIR$/.idea/modules/LearnProcessor/AndroidTech.LearnProcessor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/alive/AndroidTech.alive.iml" filepath="$PROJECT_DIR$/.idea/modules/alive/AndroidTech.alive.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/androidarchitecture/AndroidTech.androidarchitecture.iml" filepath="$PROJECT_DIR$/.idea/modules/androidarchitecture/AndroidTech.androidarchitecture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidTech.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidTech.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/extensionalviewpager/AndroidTech.extensionalviewpager.iml" filepath="$PROJECT_DIR$/.idea/modules/extensionalviewpager/AndroidTech.extensionalviewpager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnAnimation/AndroidTech.learnAnimation.iml" filepath="$PROJECT_DIR$/.idea/modules/learnAnimation/AndroidTech.learnAnimation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnbenchmark/AndroidTech.learnbenchmark.iml" filepath="$PROJECT_DIR$/.idea/modules/learnbenchmark/AndroidTech.learnbenchmark.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnbinder/AndroidTech.learnbinder.iml" filepath="$PROJECT_DIR$/.idea/modules/learnbinder/AndroidTech.learnbinder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnkotlin/AndroidTech.learnkotlin.iml" filepath="$PROJECT_DIR$/.idea/modules/learnkotlin/AndroidTech.learnkotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnokhttp/AndroidTech.learnokhttp.iml" filepath="$PROJECT_DIR$/.idea/modules/learnokhttp/AndroidTech.learnokhttp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnproguard3/AndroidTech.learnproguard3.iml" filepath="$PROJECT_DIR$/.idea/modules/learnproguard3/AndroidTech.learnproguard3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnretrofit/AndroidTech.learnretrofit.iml" filepath="$PROJECT_DIR$/.idea/modules/learnretrofit/AndroidTech.learnretrofit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/learnrxjava/AndroidTech.learnrxjava.iml" filepath="$PROJECT_DIR$/.idea/modules/learnrxjava/AndroidTech.learnrxjava.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/plugin1/AndroidTech.plugin1.iml" filepath="$PROJECT_DIR$/.idea/modules/plugin1/AndroidTech.plugin1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/testcompile/AndroidTech.testcompile.iml" filepath="$PROJECT_DIR$/.idea/modules/testcompile/AndroidTech.testcompile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/testcompile2/AndroidTech.testcompile2.iml" filepath="$PROJECT_DIR$/.idea/modules/testcompile2/AndroidTech.testcompile2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/useprocessor/AndroidTech.useprocessor.iml" filepath="$PROJECT_DIR$/.idea/modules/useprocessor/AndroidTech.useprocessor.iml" />
     </modules>
   </component>
 </project>
